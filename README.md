@@ -14,6 +14,17 @@
 
 필요한 것: Python 3, (위키 작업 시) Node/npm + Codex CLI + ChatGPT 로그인.
 
+저장소 (비공개):
+
+| 용도 | 주소 |
+|---|---|
+| 게임 | `github.com/godrazy7174/route66-life` |
+| 위키 소스 | `github.com/godrazy7174/route66-life-wiki` |
+| 위키 작업 지시서 | `github.com/godrazy7174/route66-life-tasks` |
+
+위키 소스 저장소는 코덱스 샌드박스 계정이 만든 것이라 clone 후
+`git config --global --add safe.directory <경로>` 가 필요할 수 있다.
+
 ---
 
 ## 1. 파일 지도
@@ -23,7 +34,7 @@
 | `ROUTE66_LIFE_EN.ow` | **진실 원본.** 모든 수정은 여기에 한다 |
 | `ROUTE66_LIFE.ow` | 한국어 클라이언트용 산출물. **직접 고치지 말 것** (매번 재생성됨) |
 | `to_korean.py` | EN → KO 변환기 |
-| `lint.py` | 주 검사기 (9개 항목) |
+| `lint.py` | 주 검사기 (11개 항목). **깨끗한 파일에서는 `!!` 가 하나도 나오지 않는다** — `!!` 는 전부 진짜 신호다 |
 | `blockcheck.py` | If/For/While ↔ End 균형 |
 | `enumcheck.py` | 변수 색인 중복·범위 |
 | `paircheck.py` | 엔티티 생성/파괴 짝 |
@@ -53,7 +64,7 @@ python to_korean.py ROUTE66_LIFE_EN.ow ROUTE66_LIFE.ow
   (`[조작 03a]`~`[조작 03f]`가 그렇게 갈라진 것)
 - **플레이어 변수 128칸 — 이미 꽉 찼다.** 새 변수가 필요하면 기존 변수를 겸용하거나
   자릿수 패킹을 쓴다. 예: `Giant`는 1의 자리 = 오늘의 계약 진행도, 10의 자리 = 마스터리
-- **전역 변수 128칸** (현재 80)
+- **전역 변수 128칸** (현재 77)
 - **Custom String은 128자를 넘으면 잘려서 렌더링**된다 (lint가 검사)
 - **Custom String의 형식 인자는 최대 3개**(`{0}`~`{2}`). 더 필요하면 문자열을 중첩한다 (lint가 검사)
 
