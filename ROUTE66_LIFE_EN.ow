@@ -59,13 +59,10 @@ variables
 		5: OrePrice
 		6: HidePrice
 		7: EventKind
-		8: EventEnd
 		9: TaxOn
 		10: Ready
-		11: Anchor
 		12: SignIds
 		13: ArchOn
-		14: ArchIdx
 		15: TaxRound
 		16: Idx
 		18: WagonOn
@@ -310,9 +307,7 @@ rule("[코어 01] 월드 초기화")
 		Set Global Variable(OrePrice, 2);
 		Set Global Variable(HidePrice, 5);
 		Set Global Variable(EventKind, 0);
-		Set Global Variable(EventEnd, 0);
 		Set Global Variable(ArchOn, 0);
-		Set Global Variable(ArchIdx, 0);
 		Set Global Variable(SellMult, 1);
 		Set Global Variable(DailyGoal, 384);
 		Set Global Variable(TodayJob, Random Integer(1, 6));
@@ -372,7 +367,6 @@ rule("[코어 02] BuildWorld")
 		Set Global Variable(TrainPos, Nearest Walkable Position(Multiply(Add(Value In Array(Global Variable(LocPos), 11), Value In Array(Global Variable(LocPos), 6)), 0.5)));
 		Set Global Variable(SpotPos, Append To Array(Global Variable(RaidPath), Global Variable(LocPos)));
 		Create In-World Text(All Players(All Teams), Custom String("협곡 철길목 — 사흘에 한 번, 저녁 8시 열차"), Add(Global Variable(TrainPos), Vector(0, 2.2, 0)), 1.2, Do Not Clip, Visible To and Position, Color(Orange), Default Visibility);
-		Set Global Variable(Anchor, Value In Array(Global Variable(LocPos), 0));
 		Set Global Variable(LocRad, Array(7, 7, 7, 6, 6, 6, 10, 6, 8, 5, 6, 6, 7, 5, 5));
 		Create In-World Text(All Players(All Teams), Custom String("식당"), Add(Value In Array(Global Variable(LocPos), 0), Vector(0, 2.6, 0)), 1.7, Do Not Clip, Visible To and Position, Color(Yellow), Default Visibility);
 		Create In-World Text(And(Distance Between(Local Player, Value In Array(Global Variable(LocPos), 0)) < 13, Local Player.TutOn == 0) ? Local Player : False, Custom String("{0}{1}", Custom String("따뜻한 식사 $18 — 허기와 갈증을 한 번에 채운다\r\n일을 하는 순간 그 직업이 된다 — 경험은 직업마다 남는다\r\n일할수록 레벨이 오르고, Lv.4면 그 일터에서 승급한다\r\n"), Custom String("[{0}] 행동 선택      [{1}] 실행", Input Binding String(Button(Reload)), Input Binding String(Button(Interact)))), Add(Value In Array(Global Variable(LocPos), 0), Vector(0, 1.5, 0)), 0.95, Do Not Clip, Visible To Position and String, Color(White), Default Visibility);

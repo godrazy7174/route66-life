@@ -177,7 +177,7 @@ def main(path):
 
     bad_g = sorted(used_g - gvars)
     known_words = {'Player','Target'}
-    bad_p = sorted(x for x in used_p if x not in pvars and x not in gvars and not x[0].islower() and x not in ('Player',))
+    bad_p = sorted(x for x in used_p if x not in pvars and x not in gvars and x[0].isascii() and x[0].isupper() and x not in ('Player',))
     bad_s = sorted(used_subs - subs)
     declared_sub_rules = set(re.findall(r'Subroutine;\s*\n\s*(\w+);', raw))
 
@@ -238,22 +238,37 @@ def dup_check(path):
 dup_check(sys.argv[1])
 
 # --- 전역 변수 초기화 누락 검사 (추가) ---
-def init_check(path):
+def globaluse_check(path):
+    """전역 변수의 읽기/쓰기 균형.
+
+    이전 판은 [코어 01] 안에서만 대입을 찾아, BuildWorld 나 각 시스템이
+    직접 초기화하는 전역 27개를 매번 오탐으로 뱉었다. 그 노이즈 때문에
+    진짜 '!!' 가 묻혔다. 정확한 불변식 두 가지로 바꾼다.
+    """
     raw = io.open(path, encoding='utf-8').read()
-    a = raw.index('rule("[코어 01]')
-    b = raw.index('\nrule(', a + 5)
-    inited = set(re.findall(r'Set Global Variable\((\w+),', raw[a:b]))
     blk = re.search(r'variables\s*\{(.*?)\n\}', raw, re.S).group(1)
     gsec = re.search(r'global:(.*?)(player:|$)', blk, re.S)
     gvars = [n for _, n in re.findall(r'(\d+):\s*(\w+)', gsec.group(1))]
-    SKIP = {'Idx', 'Tmp', 'Anchor', 'LocPos', 'LocRad', 'BotHome', 'ArchHud'}
-    miss = [g for g in gvars if g not in inited and g not in SKIP]
-    if miss:
-        print('!! 초기화 누락 전역: ' + ', '.join(miss))
-    else:
-        print('전역 초기화 검사 완료')
+    body = raw[raw.index(chr(10) + 'rule('):]
+    written = set()
+    for pat in (r'Set Global Variable\((\w+),',
+                r'Set Global Variable At Index\((\w+),',
+                r'Modify Global Variable\((\w+),',
+                r'For Global Variable\((\w+),'):
+        written |= set(re.findall(pat, body))
+    read = set(re.findall(r'Global Variable\((\w+)\)', body))
+    no_write = [g for g in gvars if g in read and g not in written]
+    no_read = [g for g in gvars if g in written and g not in read]
+    if no_write:
+        print('!! 읽기만 하고 아무도 쓰지 않는 전역: ' + ', '.join(no_write))
+    if no_read:
+        print('!! 쓰기만 하고 아무도 읽지 않는 전역(죽은 상태): ' + ', '.join(no_read))
+    if not no_write and not no_read:
+        print('전역 읽기/쓰기 균형: OK')
 
-init_check(sys.argv[1])
+
+globaluse_check(sys.argv[1])
+
 
 # --- 액션/조건 한 줄 완결성 검사 (추가) ---
 # patch31 회귀 대응: 문자열 안에 진짜 개행이 들어가면 액션 한 줄이
@@ -605,3 +620,57 @@ def payoutmsg_check(path):
 
 
 payoutmsg_check(sys.argv[1])
+
+
+def zonename_check(path):
+    """구역/건물 이름 배열이 실제 간판 이름과 어긋나지 않는지.
+
+    같은 이름 목록이 HUD·정거장 배달지·부동산 등 여러 곳에 복제되어 있다.
+    LocPos 순서가 바뀌거나 건물명을 고칠 때 한 곳만 고치면 조용히 어긋난다.
+    """
+    raw = io.open(path, encoding='utf-8').read()
+    truth = {}
+    for m in re.finditer(
+            r'Create In-World Text\(All Players\(All Teams\), Custom String\("([^"]+)"\), '
+            r'Add\(Value In Array\(Global Variable\(LocPos\), (\d+)\)', raw):
+        truth[int(m.group(2))] = m.group(1)
+    if not truth:
+        print('zone name check: 간판 이름을 찾지 못함')
+        return
+
+    def close_paren(s, i):
+        d = 0
+        for j in range(i, len(s)):
+            if s[j] == '(':
+                d += 1
+            elif s[j] == ')':
+                d -= 1
+                if d == 0:
+                    return j
+        return -1
+
+    bad = []
+    for m in re.finditer(r'Value In Array\(Array\(', raw):
+        o = m.end() - 1
+        c = close_paren(raw, o)
+        if c < 0:
+            continue
+        names = re.findall(r'Custom String\("([^"]*)"\)', raw[o + 1:c])
+        if not names or truth.get(0) not in names:
+            continue
+        idx = raw[c + 1:c + 80]
+        off = 1 if ('Zone, 1)' in idx or names[0] != truth.get(0)) else 0
+        for i, n in enumerate(names):
+            z = i - off
+            if z in truth and truth[z] != n:
+                ln = raw[:m.start()].count(chr(10)) + 1
+                bad.append('L%d idx%d "%s" != 간판 "%s"' % (ln, i, n, truth[z]))
+    if bad:
+        print('!! zone name array mismatch:')
+        for b in bad[:10]:
+            print('   ' + b)
+    else:
+        print('zone name check: OK')
+
+
+zonename_check(sys.argv[1])
