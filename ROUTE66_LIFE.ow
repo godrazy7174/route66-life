@@ -5784,6 +5784,28 @@ rule("[감옥 01] 만기 출소")
 	}
 }
 
+rule("[감옥 03] 유치장에서는 손발이 묶인다")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	condition
+	{
+		Is Dummy Bot(Event Player) == False;
+		Event Player.JailOn == 1;
+		Event Player.Busy == 0;
+	}
+
+	action
+	{
+		Set Player Variable(Event Player, Busy, 1);
+	}
+}
+
 rule("[감옥 02] 벽 부수기 (V 연타)")
 {
 	event

@@ -325,6 +325,8 @@ def busy_check(path):
         name = p.split(chr(34))[1]
         if name.startswith("[조작 03c]"):
             continue   # 세이브 입력 시작 — 해제는 세이브 02/03/04 와 사망 정리가 담당
+        if name.startswith("[감옥 03]"):
+            continue   # 유치장 잠금 재확립 — 해제는 감옥 01/02 와 사망 정리가 담당
         if p.count("Busy, 1)") and not p.count("Busy, 0)"):
             bad.append(name)
     if bad:
