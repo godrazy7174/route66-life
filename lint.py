@@ -674,3 +674,114 @@ def zonename_check(path):
 
 
 zonename_check(sys.argv[1])
+
+
+EVENT_ARITY = {
+    'Ongoing - Global': 1,
+    'Ongoing - Each Player': 3,
+    'Player Died': 3,
+    'Player Left Match': 3,
+    'Player Joined Match': 3,
+    'Player Dealt Damage': 3,
+    'Player Took Damage': 3,
+    'Player Dealt Final Blow': 3,
+    'Player Earned Elimination': 3,
+    'Subroutine': 2,
+}
+
+
+def event_check(path):
+    """이벤트 이름이 실재하고, event 블록 줄 수가 그 이벤트에 맞는지.
+
+    이름 오타나 줄 수 부족은 게임에서 임포트가 거부되는데
+    지금까지 어떤 검사기도 이걸 보지 않았다.
+    """
+    raw = io.open(path, encoding='utf-8').read()
+    bad = []
+    for m in re.finditer(r'rule\("([^"]+)"\)\s*\{\s*event\s*\{\n(.*?)\n\t\}', raw, re.S):
+        lines = [l.strip() for l in m.group(2).split(chr(10)) if l.strip()]
+        if not lines:
+            bad.append('%s: event 블록이 비었다' % m.group(1))
+            continue
+        ev = lines[0].rstrip(';')
+        if ev not in EVENT_ARITY:
+            bad.append('%s: 알 수 없는 이벤트 "%s"' % (m.group(1), ev))
+        elif len(lines) != EVENT_ARITY[ev]:
+            bad.append('%s: %s 는 %d줄이어야 하는데 %d줄'
+                       % (m.group(1), ev, EVENT_ARITY[ev], len(lines)))
+    if bad:
+        print('!! event block problems:')
+        for b in bad[:10]:
+            print('   ' + b)
+    else:
+        print('event block check: OK')
+
+
+def retrigger_check(path):
+    """버튼을 누른 채로 액션이 반복 발동할 수 있는 룰.
+
+    Ongoing 룰은 조건이 false->true 로 바뀔 때만 발동한다. 그래서 액션이
+    자기 조건 변수를 1로 켰다가 0으로 되돌리면, 버튼을 계속 누르고 있는 동안
+    연타처럼 재발동한다(모텔 숙박이 F 홀드로 $90씩 반복되던 사고).
+    서브루틴 호출까지 따라가 디바운스 유무를 본다.
+    """
+    raw = io.open(path, encoding='utf-8').read()
+    blocks = re.split(r'(?=^rule\(")', raw, flags=re.M)
+    R = {}
+    for b in blocks:
+        m = re.match(r'rule\("([^"]+)"\)', b)
+        if not m:
+            continue
+        cd = re.search(r'conditions\n\t\{\n(.*?)\t\}', b, re.S)
+        ac = b[b.index('actions'):] if 'actions' in b else ''
+        sn = re.search(r'Subroutine;\s*\n\s*(\w+);', b)
+        R[m.group(1)] = (cd.group(1) if cd else '', ac, sn.group(1) if sn else None)
+    SUB = {v[2]: k for k, v in R.items() if v[2]}
+
+    def own_toggles(name):
+        ac = R[name][1]
+        return {v for v in re.findall(r'Set Player Variable\(Event Player, (\w+), 0\)', ac)
+                if re.search(r'Set Player Variable\(Event Player, %s, 1\)' % v, ac)}
+
+    def own_debounce(name):
+        return 'Wait Until(Not(Is Button Held' in R[name][1]
+
+    def sources(name, seen=None):
+        """(토글하는 변수, 그 토글이 일어나는 룰) 쌍. 경로별로 따진다."""
+        seen = seen or set()
+        if name in seen:
+            return set()
+        seen.add(name)
+        out = {(v, name) for v in own_toggles(name)}
+        for c in set(re.findall(r'Call Subroutine\((\w+)\)', R[name][1])):
+            if c in SUB:
+                out |= sources(SUB[c], seen)
+        return out
+
+    # 이미 검토해 안전하다고 판단한 룰 (성공 시 조건 자체가 꺼지거나 쿨타임이 막는다)
+    REVIEWED = {'[조작 03e] 행동 실행 — 정거장', '[범죄 01] 황야에서 강도 / 체포 (F)',
+                '[열차 01] 화약 설치 (F 8초)', '[열차 03] 금고 개방 (F 5초)',
+                '[밀수 02] 접선 인계 (F 3초)', '[호송 02] 금괴 인계 (F 3초)',
+                '[밤 02] 금고 마차 털기 (F 5초)'}
+    bad = []
+    for n, (cond, ac, sn) in R.items():
+        if 'Is Button Held' not in cond or n in REVIEWED:
+            continue
+        cvars = set(re.findall(r'Event Player\.(\w+)', cond))
+        for v, src in sorted(sources(n)):
+            if v not in cvars:
+                continue
+            # 그 토글이 일어나는 곳 자신이나 호출한 룰이 디바운스를 가져야 한다
+            if own_debounce(src) or own_debounce(n):
+                continue
+            bad.append('%s -> %s 가 %s 를 토글' % (n, src, v))
+    if bad:
+        print('!! 버튼 홀드 재발동 위험 (디바운스 없음):')
+        for b in bad[:10]:
+            print('   ' + b)
+    else:
+        print('retrigger check: OK')
+
+
+event_check(sys.argv[1])
+retrigger_check(sys.argv[1])

@@ -940,7 +940,7 @@ rule("[코어 18] 무한 탄창")
 		Is Dummy Bot(Event Player) == False;
 		Event Player.Init == 1;
 		Is Alive(Event Player) == True;
-		Or(Ammo(Event Player, 0) < Max Ammo(Event Player, 0), Max Ammo(Event Player, 0) < 999) == True;
+		Ammo(Event Player, 0) < Max Ammo(Event Player, 0);
 	}
 
 	action
@@ -3813,6 +3813,7 @@ rule("[생활 01] DoSleep")
 		Set Global Variable At Index(NoticeEnd, Slot Of(Event Player), Add(Total Time Elapsed(), 2.5));
 		Play Effect(Event Player, Good Explosion, Color(Sky Blue), Position Of(Event Player), 2);
 		Play Effect(Event Player, Buff Explosion Sound, Color(Sky Blue), Position Of(Event Player), 130);
+		Wait Until(Not(Is Button Held(Event Player, Button(Interact))), 3);
 		Set Player Variable(Event Player, Busy, 0);
 	}
 }
