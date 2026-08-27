@@ -1,0 +1,37 @@
+rule lines: 2110 ~ 2606
+--- header ---
+rule("[조작 03c] 행동 실행 — 안내소·대장간·정거장·목장")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Dummy Bot(Event Player) == False;
+		Event Player.Init == 1;
+		Event Player.Busy == 0;
+		Event Player.Zone != -1;
+		Is Alive(Event Player) == True;
+		Global Variable(ArchOn) == 0;
+		Or(Event Player.Escort == 0, Distance Between(Position Of(Event Player), Event Player.EscortPos) >= 4) == True;
+		Or(Global Variable(WagonOn) == 0, Distance Between(Position Of(Event Player), Global Variable(WagonPos)) >= 4) == True;
+		Or(Global Variable(HuntPhase) != 1, Distance Between(Position Of(Event Player), Global Variable(HuntTrackPos)) >= 5) == True;
+		Is Button Held(Event Player, Button(Crouch)) == False;
+		Is Button Held(Event Player, Button(Interact)) == True;
+--- Zone 분기 위치 ---
+  2141: If(Event Player.Zone == 9);
+  2216: Else If(Event Player.Zone == 10);
+  2317: Else If(Event Player.Zone == 11);
+  2506: Else If(Event Player.Zone == 12);
+--- tail ---
+					Small Message(Event Player, Custom String("돈이 모자란다 ($5000 필요)"));
+					Play Effect(Event Player, Debuff Impact Sound, Color(Red), Position Of(Event Player), 45);
+				End;
+			End;
+		End;
+	}
+}

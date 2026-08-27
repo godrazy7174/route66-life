@@ -1,0 +1,10 @@
+=== 코드 실측: SaveC 패킹 ===
+  Set Player Variable(Event Player, SaveC, Add(Add(Add(Multiply(Event Player.Rebuild, 100000), Multiply(Event Player.Rebirth, 10000)), Multiply(Min(9, Round To Integer(Divide(Event Player.Giant, 10), Down)), 1000)), Multiply(Min(99, Round To Integer(Di
+=== 코드 실측: 검증식 마지막 항 ===
+  변경됨(단일 조건)
+ Roll%1000 잔존: False
+=== 코드 실측: 복원 ===
+  있음 Set Player Variable\(Event Player, Earned, Multiply\(Modulo\
+  있음 Set Player Variable\(Event Player, DayStart, Event Player\.E
+
+=== 무작위 4000건 라운드트립: 거부 0건 ===

@@ -1,0 +1,32 @@
+ 3314 rule("[광산 02] 가스 분출 주기")
+ 3315 {
+ 3316 	event
+ 3317 	{
+ 3318 		Ongoing - Global;
+ 3319 	}
+ 3320 
+ 3321 	conditions
+ 3322 	{
+ 3323 		Global Variable(Ready) == 1;
+ 3324 	}
+ 3325 
+ 3326 	actions
+ 3327 	{
+ 3328 		Wait(Random Real(8, 13), Ignore Condition);
+ 3329 		Destroy Effect(Global Variable(GasFx));
+ 3330 		Create Effect(All Players(All Teams), Light Shaft, Color(Yellow), Value In Array(Global Variable(LocPos), 1), 2.2, Visible To Position Radius and Color);
+ 3331 		Set Global Variable(GasFx, Last Created Entity());
+ 3332 		Small Message(Players Within Radius(Value In Array(Global Variable(LocPos), 1), 16, All Teams, Off), Custom String("광산이 부글거린다 — 분출 전조다, 손을 멈춰라!"));
+ 3333 		Play Effect(Players Within Radius(Value In Array(Global Variable(LocPos), 1), 16, All Teams, Off), Debuff Impact Sound, Color(Yellow), Value In Array(Global Variable(LocPos)
+ 3334 		Wait(2, Ignore Condition);
+ 3335 		Destroy Effect(Global Variable(GasFx));
+ 3336 		Set Global Variable(GasOn, 1);
+ 3337 		Create Effect(All Players(All Teams), Sphere, Color(Yellow), Value In Array(Global Variable(LocPos), 1), 9, Visible To Position Radius and Color);
+ 3338 		Set Global Variable(GasFx, Last Created Entity());
+ 3339 		Play Effect(All Players(All Teams), Bad Explosion, Color(Yellow), Value In Array(Global Variable(LocPos), 1), 6);
+ 3340 		Wait(1.8, Ignore Condition);
+ 3341 		Set Global Variable(GasOn, 0);
+ 3342 		Destroy Effect(Global Variable(GasFx));
+ 3343 		Loop();
+ 3344 	}
+ 3345 }

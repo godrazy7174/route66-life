@@ -1,0 +1,53 @@
+ 6131 rule("[밤 02] 금고 마차 털기 (F 5초)")
+ 6132 {
+ 6133 	event
+ 6134 	{
+ 6135 		Ongoing - Each Player;
+ 6136 		All;
+ 6137 		All;
+ 6138 	}
+ 6139 
+ 6140 	conditions
+ 6141 	{
+ 6142 		Is Dummy Bot(Event Player) == False;
+ 6143 		Event Player.Init == 1;
+ 6144 		Event Player.Busy == 0;
+ 6145 		Global Variable(ArchOn) == 0;
+ 6146 		Global Variable(WagonOn) == 1;
+ 6147 		Is Alive(Event Player) == True;
+ 6148 		Distance Between(Position Of(Event Player), Global Variable(WagonPos)) < 4;
+ 6149 		Is Button Held(Event Player, Button(Crouch)) == False;
+ 6150 		Is Button Held(Event Player, Button(Interact)) == True;
+ 6151 	}
+ 6152 
+ 6153 	actions
+ 6154 	{
+ 6155 		Set Player Variable(Event Player, Busy, 1);
+ 6156 		Set Player Variable(Event Player, WorkProg, 0);
+ 6157 		Destroy Progress Bar HUD Text(Event Player.WorkBar);
+ 6158 		Small Message(All Players(All Teams), Custom String("누군가 금고 마차에 손을 댔다!"));
+ 6159 		Create Progress Bar HUD Text(Event Player, Event Player.WorkProg, Custom String("금고를 터는 중..."), Top, 0, Color(Orange), Color(White), Visible To Valu
+ 6160 		Set Player Variable(Event Player, WorkBar, Last Text ID());
+ 6161 		Chase Player Variable Over Time(Event Player, WorkProg, 100, 5, Destination and Duration);
+ 6162 		Wait Until(Or(Or(Distance Between(Position Of(Event Player), Global Variable(WagonPos)) > 6, Not(Is Alive(Event Player))), Event Player.WorkProg >= 
+ 6163 		Stop Chasing Player Variable(Event Player, WorkProg);
+ 6164 		Destroy Progress Bar HUD Text(Event Player.WorkBar);
+ 6165 		If(Or(Or(Distance Between(Position Of(Event Player), Global Variable(WagonPos)) > 6, Not(Is Alive(Event Player))), Event Player.WorkProg < 99));
+ 6166 			Small Message(Event Player, Custom String("손을 뗐다"));
+ 6167 		Else If(Global Variable(WagonOn) == 0);
+ 6168 			Small Message(Event Player, Custom String("한발 늦었다 — 금고가 비어 있다"));
+ 6169 		Else;
+ 6170 			Set Global Variable(WagonOn, 0);
+ 6171 			Destroy Effect(Global Variable(WagonFx));
+ 6172 			Destroy Icon(Global Variable(WagonIco));
+ 6173 			Set Player Variable(Event Player, Loot, Random Integer(250, 450));
+ 6174 			Modify Player Variable(Event Player, Money, Add, Event Player.Loot);
+ 6175 			Set Player Variable(Event Player, Noto, Min(100, Add(Event Player.Noto, 10)));
+ 6176 			Set Global Variable(TickerMsg, Custom String("{0}이(가) 금고 마차를 털었다! (+$ {1}, 악명 +10)", Event Player, Event Player.Loot));
+ 6177 			Set Global Variable(TickerEnd, Add(Total Time Elapsed(), 3));
+ 6178 			Play Effect(All Players(All Teams), Ring Explosion, Color(Orange), Position Of(Event Player), 4);
+ 6179 			Play Effect(All Players(All Teams), Explosion Sound, Color(Orange), Position Of(Event Player), 180);
+ 6180 		End;
+ 6181 		Set Player Variable(Event Player, Busy, 0);
+ 6182 	}
+ 6183 }

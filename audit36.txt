@@ -1,0 +1,37 @@
+ 4787 rule("[대사냥 01] 대야수의 흔적")
+ 4788 {
+ 4789 	event
+ 4790 	{
+ 4791 		Ongoing - Global;
+ 4792 	}
+ 4793 
+ 4794 	conditions
+ 4795 	{
+ 4796 		Global Variable(Ready) == 1;
+ 4797 		Modulo(Global Variable(Day), 3) == 1;
+ 4798 		Global Variable(Day) >= 4;
+ 4799 		Global Variable(Day) > Global Variable(HuntDay);
+ 4800 		Global Variable(IsNight) == 0;
+ 4801 	}
+ 4802 
+ 4803 	actions
+ 4804 	{
+ 4805 		Set Global Variable(HuntDay, Global Variable(Day));
+ 4806 		Set Global Variable(HuntPhase, 1);
+ 4807 		Set Global Variable(HuntTrackPos, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), Random Integer(0, 12)), Vector(Random Real(-
+ 4808 		If(Distance Between(Global Variable(HuntTrackPos), Global Variable(SpawnPos)) < 18);
+ 4809 			Set Global Variable(HuntTrackPos, Nearest Walkable Position(Add(Global Variable(SpawnPos), Multiply(Direction Towards(Global Variable(SpawnPos), Gl
+ 4810 		End;
+ 4811 		Destroy Icon(Global Variable(HuntTrackIco));
+ 4812 		Destroy Effect(Global Variable(HuntTrackFx));
+ 4813 		Create Effect(All Players(All Teams), Light Shaft, Color(Orange), Global Variable(HuntTrackPos), 1.5, Visible To Position Radius and Color);
+ 4814 		Set Global Variable(HuntTrackFx, Last Created Entity());
+ 4815 		Create Icon(All Players(All Teams), Add(Global Variable(HuntTrackPos), Vector(0, 3, 0)), Circle, Visible To and Position, Color(Orange), True);
+ 4816 		Set Global Variable(HuntTrackIco, Last Created Entity());
+ 4817 		Big Message(All Players(All Teams), Custom String("대사냥의 날 — 대야수의 흔적이 나타났다! 주황 표식을 조사하라"));
+ 4818 		Play Effect(All Players(All Teams), Buff Impact Sound, Color(Orange), Global Variable(HuntTrackPos), 200);
+ 4819 	}
+ 4820 }
+
+Day 초기값: 1
+Clock 초기값: 420

@@ -1,0 +1,28 @@
+=== [열차 02] (line 4440) — Wait 종류: ['Wait Until(And(Modulo(Global Variable(Day), 3) == 0, Global Variable(Clock) >= 1', 'Wait Until(Or(Global Variable(TrainOn) == 0, Total Time Elapsed() > Global Varia', 'Wait Until(Modulo(Global Variable(Day), 3) != 0, 99999);'] ===
+conditions
+{
+Global Variable(Ready) == 1;
+}
+
+actions
+{
+Wait Until(And(Modulo(Global Variable(Day), 3) == 0, Global Variable(Clock) >= 1200), 99999);
+If(Global Variable(PowderSet) == 0);
+Set Global Variable(TickerMsg, Custom String("열차가 협곡을 무사히 지나갔다"));
+Set Global Variable(TickerEnd, Add(Total Time Elapsed(), 3));
+Else;
+
+=== [밤 01] (line 6076) — Wait 종류: ['Wait Until(Global Variable(IsNight) == 1, 99999);', 'Wait Until(Or(Global Variable(WagonOn) == 0, Global Variable(IsNight) == 0), 400', 'Wait Until(Global Variable(IsNight) == 0, 99999);'] ===
+conditions
+{
+Global Variable(Ready) == 1;
+}
+
+actions
+{
+Wait Until(Global Variable(IsNight) == 1, 99999);
+Set Global Variable(WagonPos, Add(Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), Random Integer(0
+If(Distance Between(Global Variable(WagonPos), Global Variable(SpawnPos)) < 18);
+Set Global Variable(WagonPos, Nearest Walkable Position(Add(Global Variable(SpawnPos), Multiply(Direction Towards(Global
+End;
+

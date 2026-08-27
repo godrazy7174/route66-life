@@ -1,0 +1,23 @@
+선언 총 138개
+=== 읽기 0회 (쓰기만) — 회수 1순위 ===
+  HudIds         등장   0 쓰기   0 읽기 0
+  WantedIco      등장   0 쓰기   0 읽기 0
+=== 등장 3회 이하 — 회수 2순위 ===
+  LastMine       등장   2 쓰기   1 읽기 1
+  TutDone        등장   2 쓰기   1 읽기 1
+  JailEnd        등장   2 쓰기   1 읽기 1
+  SaveHud        등장   2 쓰기   1 읽기 1
+  PadA           등장   2 쓰기   1 읽기 1
+  PadB           등장   2 쓰기   1 읽기 1
+  PadC           등장   2 쓰기   1 읽기 1
+  SmuggleFlash   등장   2 쓰기   1 읽기 1
+  Tier           등장   3 쓰기   2 읽기 1
+  TutHud         등장   3 쓰기   1 읽기 2
+  LastDay        등장   3 쓰기   2 읽기 1
+  NameId         등장   3 쓰기   2 읽기 1
+  NameSig        등장   3 쓰기   2 읽기 1
+  HeistEnd       등장   3 쓰기   1 읽기 2
+  EscortCd       등장   3 쓰기   1 읽기 2
+=== 등장 0회 (완전 미사용) ===
+  HudIds
+  WantedIco

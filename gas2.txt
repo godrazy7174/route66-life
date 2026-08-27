@@ -1,0 +1,36 @@
+ 3360 rule("[광산 02] 가스 분출 주기")
+ 3361 {
+ 3362 event
+ 3363 {
+ 3364 Ongoing - Global;
+ 3365 }
+ 3366 
+ 3367 conditions
+ 3368 {
+ 3369 Global Variable(Ready) == 1;
+ 3370 }
+ 3371 
+ 3372 actions
+ 3373 {
+ 3374 Wait(Random Real(8, 13), Ignore Condition);
+ 3375 Destroy Effect(Global Variable(GasFx));
+ 3376 Create Effect(All Players(All Teams), Light Shaft, Color(Yellow), Value In Array(Global Variable(LocPos), 1), 2.2, Visible To Position Radius and Color);
+ 3377 Set Global Variable(GasFx, Last Created Entity());
+ 3378 Small Message(Filtered Array(Players Within Radius(Value In Array(Global Variable(LocPos), 1), 16, All Teams, Off), Player Variable(Current Array Element, Job) == 1)
+ 3379 Play Effect(Filtered Array(Players Within Radius(Value In Array(Global Variable(LocPos), 1), 16, All Teams, Off), Player Variable(Current Array Element, Job) == 1), 
+ 3380 Wait(2, Ignore Condition);
+ 3381 Destroy Effect(Global Variable(GasFx));
+ 3382 Set Global Variable(GasOn, 1);
+ 3383 Create Effect(All Players(All Teams), Sphere, Color(Yellow), Value In Array(Global Variable(LocPos), 1), 9, Visible To Position Radius and Color);
+ 3384 Set Global Variable(GasFx, Last Created Entity());
+ 3385 Play Effect(All Players(All Teams), Bad Explosion, Color(Yellow), Value In Array(Global Variable(LocPos), 1), 6);
+ 3386 Wait(1.8, Ignore Condition);
+ 3387 Set Global Variable(GasOn, 0);
+ 3388 Destroy Effect(Global Variable(GasFx));
+ 3389 Loop();
+ 3390 }
+ 3391 }
+
+=== GasOn 사용처(피해 판정) ===
+  115 [] 62: GasOn
+ 2808 [[직업 01] DoMine] If(Global Variable(GasOn) == 1);

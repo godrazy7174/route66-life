@@ -1,0 +1,26 @@
+=== Team 2 / 야수 참조 전수 ===
+11 [                      ] Max Team 2 Players: 0
+376 [[코어 02] BuildWorld    ] Create In-World Text(And(Distance Between(Local Player, Value In Array(Global Variable(LocPos), 6)) < 13, Local Player.TutOn == 0) ? Local Player : Fa
+401 [[코어 02] BuildWorld    ] Create Dummy Bot(Hero(Jetpack Cat), Team 2, 0, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 6), Vector(Random Real(-7, 7), 0,
+403 [[코어 02] BuildWorld    ] Create Dummy Bot(Hero(Jetpack Cat), Team 2, 1, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 6), Vector(Random Real(-7, 7), 0,
+405 [[코어 02] BuildWorld    ] Create Dummy Bot(Hero(Jetpack Cat), Team 2, 2, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 6), Vector(Random Real(-7, 7), 0,
+1320 [[코어 13] 2팀은 야수 전용     ] Team 2;
+1333 [[코어 13] 2팀은 야수 전용     ] If(Team Of(Event Player) == Team 2);
+2892 [[직업 03-5] 야수 정원 감시 — 항] If(Not(Entity Exists(Players In Slot(0, Team 2))));
+2893 [[직업 03-5] 야수 정원 감시 — 항] Create Dummy Bot(Hero(Jetpack Cat), Team 2, 0, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 6), Vector(Random Real(-7, 7), 0,
+2895 [[직업 03-5] 야수 정원 감시 — 항] If(Not(Entity Exists(Players In Slot(1, Team 2))));
+2896 [[직업 03-5] 야수 정원 감시 — 항] Create Dummy Bot(Hero(Jetpack Cat), Team 2, 1, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 6), Vector(Random Real(-7, 7), 0,
+2898 [[직업 03-5] 야수 정원 감시 — 항] If(Not(Entity Exists(Players In Slot(2, Team 2))));
+2899 [[직업 03-5] 야수 정원 감시 — 항] Create Dummy Bot(Hero(Jetpack Cat), Team 2, 2, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 6), Vector(Random Real(-7, 7), 0,
+2921 [[직업 02] DoHunt        ] Set Player Variable(Event Player, Target, Filtered Array(All Players(Team 2), And(And(Is Dummy Bot(Current Array Element), Is Alive(Current Array Elem
+2987 [[직업 03] 야수 은신         ] Team 2;
+3030 [[직업 03-3] 야수 배회       ] Team 2;
+3081 [[직업 03-4] 야수 위치 표시    ] Team 2;
+3109 [[직업 03-2] 야수 처치       ] Team 2;
+3355 [[야수 06] 급소의 빛         ] Set Damage Received(All Players(Team 2), 250);
+3357 [[야수 06] 급소의 빛         ] Create Effect(Player Variable(Value In Array(All Players(Team 2), 0), RevealEnd) > Total Time Elapsed() ? All Players(All Teams) : Null, Sphere, Color
+3359 [[야수 06] 급소의 빛         ] Create Effect(Player Variable(Value In Array(All Players(Team 2), 1), RevealEnd) > Total Time Elapsed() ? All Players(All Teams) : Null, Sphere, Color
+3361 [[야수 06] 급소의 빛         ] Create Effect(Player Variable(Value In Array(All Players(Team 2), 2), RevealEnd) > Total Time Elapsed() ? All Players(All Teams) : Null, Sphere, Color
+3365 [[야수 06] 급소의 빛         ] Set Damage Received(All Players(Team 2), 60);
+4660 [[대사냥 02] 흔적 조사 (F)    ] Set Global Variable(HuntBeast, First Of(Filtered Array(All Players(Team 2), And(Is Dummy Bot(Current Array Element), Is Alive(Current Array Element)))
+4708 [[대사냥 04] 대야수 토벌       ] Team 2;

@@ -1,0 +1,59 @@
+ 1154 rule("[월드 09] 낮 — 해가 뜬다")
+ 1155 {
+ 1156 	event
+ 1157 	{
+ 1158 		Ongoing - Global;
+ 1159 	}
+ 1160 
+ 1161 	conditions
+ 1162 	{
+ 1163 		Global Variable(Ready) == 1;
+ 1164 		Global Variable(IsNight) == 0;
+ 1165 	}
+ 1166 
+ 1167 	actions
+ 1168 	{
+ 1169 		For Global Variable(Idx, 0, 19, 1);
+ 1170 			Destroy Effect(Value In Array(Global Variable(SignIds), Global Variable(Idx)));
+ 1171 		End;
+ 1172 		Set Global Variable(SignIds, Empty Array);
+ 1173 		Create Effect(All Players(All Teams), Light Shaft, Color(White), Value In Array(Global Variable(LocPos), 0), 1.2, Visible To Position Radius and Color);
+ 1174 		Modify Global Variable(SignIds, Append To Array, Last Created Entity());
+ 1175 		Create Effect(All Players(All Teams), Light Shaft, Color(White), Value In Array(Global Variable(LocPos), 1), 1.2, Visible To Position Radius and Color);
+ 1176 		Modify Global Variable(SignIds, Append To Array, Last Created Entity());
+ 1177 		Create Effect(All Players(All Teams), Light Shaft, Color(White), Value In Array(Global Variable(LocPos), 2), 1.2, Visible To Position Radius and Color);
+ 1178 		Modify Global Variable(SignIds, Append To Array, Last Created Entity());
+ 1179 		Create Effect(All Players(All Teams), Light Shaft, Color(White), Value In Array(Global Variable(LocPos), 3), 1.2, Visible To Position Radius and Color);
+ 1180 		Modify Global Variable(SignIds, Append To Array, Last Created Entity());
+ 1181 		Create Effect(All Players(All Teams), Light Shaft, Color(White), Value In Array(Global Variable(LocPos), 4), 1.2, Visible To Position Radius and Color);
+ 1182 		Modify Global Variable(SignIds, Append To Array, Last Created Entity());
+ 1183 		Create Effect(All Players(All Teams), Light Shaft, Color(White), Value In Array(Global Variable(LocPos), 5), 1.2, Visible To Position Radius and Color);
+ 1184 		Modify Global Variable(SignIds, Append To Array, Last Created Entity());
+ 1185 		Create Effect(All Players(All Teams), Light Shaft, Color(White), Value In Array(Global Variable(LocPos), 6), 1.2, Visible To Position Radius and Color);
+ 1186 		Modify Global Variable(SignIds, Append To Array, Last Created Entity());
+ 1187 		Create Effect(All Players(All Teams), Light Shaft, Color(White), Value In Array(Global Variable(LocPos), 7), 1.2, Visible To Position Radius and Color);
+ 1188 		Modify Global Variable(SignIds, Append To Array, Last Created Entity());
+ 1189 		Create Effect(All Players(All Teams), Light Shaft, Color(White), Value In Array(Global Variable(LocPos), 8), 1.2, Visible To Position Radius and Color);
+ 1190 		Modify Global Variable(SignIds, Append To Array, Last Created Entity());
+ 1191 		Create Effect(All Players(All Teams), Light Shaft, Color(Aqua), Value In Array(Global Variable(LocPos), 9), 1.2, Visible To Position Radius and Color);
+ 1192 		Modify Global Variable(SignIds, Append To Array, Last Created Entity());
+ 1193 		Create Effect(All Players(All Teams), Sphere, Color(Yellow), Add(Divide(Add(Value In Array(Global Variable(LocPos), 0), Value In Array(Global Variable(LocPos)
+ 1194 		Modify Global Variable(SignIds, Append To Array, Last Created Entity());
+ 1195 		Create Effect(All Players(All Teams), Good Aura, Color(White), Add(Divide(Add(Value In Array(Global Variable(LocPos), 0), Value In Array(Global Variable(LocPo
+ 1196 		Modify Global Variable(SignIds, Append To Array, Last Created Entity());
+ 1197 		Create Effect(All Players(All Teams), Good Aura, Color(White), Add(Value In Array(Global Variable(LocPos), 0), Vector(0, 55, 0)), 30, Visible To Position Radi
+ 1198 		Modify Global Variable(SignIds, Append To Array, Last Created Entity());
+ 1199 		Create Effect(All Players(All Teams), Good Aura, Color(White), Add(Value In Array(Global Variable(LocPos), 4), Vector(0, 55, 0)), 30, Visible To Position Radi
+ 1200 		Modify Global Variable(SignIds, Append To Array, Last Created Entity());
+ 1201 		Create Effect(All Players(All Teams), Good Aura, Color(White), Add(Value In Array(Global Variable(LocPos), 7), Vector(0, 55, 0)), 30, Visible To Position Radi
+ 1202 		Modify Global Variable(SignIds, Append To Array, Last Created Entity());
+ 1203 		Create Effect(All Players(All Teams), Light Shaft, Color(White), Value In Array(Global Variable(LocPos), 11), 1.2, Visible To Position Radius and Color);
+ 1204 		Modify Global Variable(SignIds, Append To Array, Last Created Entity());
+ 1205 		Create Effect(All Players(All Teams), Light Shaft, Color(White), Value In Array(Global Variable(LocPos), 12), 1.2, Visible To Position Radius and Color);
+ 1206 		Modify Global Variable(SignIds, Append To Array, Last Created Entity());
+ 1207 		Create Effect(All Players(All Teams), Light Shaft, Color(White), Value In Array(Global Variable(LocPos), 13), 1.2, Visible To Position Radius and Color);
+ 1208 		Modify Global Variable(SignIds, Append To Array, Last Created Entity());
+ 1209 		Create Effect(All Players(All Teams), Light Shaft, Color(White), Value In Array(Global Variable(LocPos), 14), 1.2, Visible To Position Radius and Color);
+ 1210 		Modify Global Variable(SignIds, Append To Array, Last Created Entity());
+ 1211 	}
+ 1212 }

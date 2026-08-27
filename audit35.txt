@@ -1,0 +1,15 @@
+=== 주기/타이머 이벤트의 첫 발동 시점 ===
+  [[월드 01] 시간 흐름             ] 조건=[] 첫Wait=Wait(2, Ignore Condition);
+  [[월드 07] 재산 순위 갱신          ] 조건=[] 첫Wait=Wait(3, Ignore Condition);
+  [[광산 02] 가스 분출 주기          ] 조건=[] 첫Wait=Wait(Random Real(8, 13), Ignore Condition);
+  [[쥐 01] 쥐떼의 습격             ] 조건=['Total Time Elapsed() >= Global Variable(RatNext);'] 첫Wait=Wait(0.5, Ignore Condition);
+  [[야수 06] 급소의 빛             ] 조건=[] 첫Wait=Wait(2.5, Ignore Condition);
+  [[세금 01] 징수원 도착            ] 조건=[] 첫Wait=Wait Until(And(Modulo(Global Variable(Day), 2) == 0, Global 
+  [[열차 02] 열차 통과             ] 조건=[] 첫Wait=Wait Until(And(Modulo(Global Variable(Day), 3) == 0, Global 
+  [[대사냥 01] 대야수의 흔적          ] 조건=['Modulo(Global Variable(Day), 3) == 1;'] 첫Wait=-
+  [[기금 03] 축제의 밤             ] 조건=[] 첫Wait=Wait(1.2, Ignore Condition);
+  [[재건 01] 랜드마크 오브           ] 조건=[] 첫Wait=Wait(0.1, Ignore Condition);
+  [[코어 10] 서버 부하 보호          ] 조건=[] 첫Wait=Wait(2, Abort When False);
+  [[밤 01] 금고 마차 출현           ] 조건=[] 첫Wait=Wait Until(Global Variable(IsNight) == 1, 99999);
+  [[도파민 02] 보물 상자 출현         ] 조건=[] 첫Wait=Wait(Random Integer(240, 420), Ignore Condition);
+  [[이벤트 01] 주기적 사건 발생        ] 조건=[] 첫Wait=Wait(Random Integer(190, 330), Ignore Condition);

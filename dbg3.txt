@@ -1,0 +1,3 @@
+cnt EP.Tier = 0
+cnt , Tier, = 1
+2515 Set Player Variable(Event Player, Tier, 0);

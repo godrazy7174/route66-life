@@ -1,0 +1,20 @@
+=== 금괴 호송 수주 게이트 (역순) ===
+ 2479 Else If(Event Player.MenuIdx == 2);
+ 2480 If(Event Player.Escort == 1);
+ 2483 Else If(Event Player.HasParcel >= 1);
+ 2484 Small Message(Event Player, Custom String("화물을 진 채로 금괴까지는 못 맡는다"));
+ 2486 Else If(Event Player.Bounty > 0);
+ 2487 Small Message(Event Player, Custom String("현상금 붙은 자에게 금괴를 맡길 수는 없다"));
+ 2489 Else If(Total Time Elapsed() < Event Player.EscortCd);
+ 2490 Small Message(Event Player, Custom String("다음 금괴 마차가 아직이다 — {0}초 뒤에 다시", Round To Integer(Subtract(Event Player.EscortCd
+ 2492 Else If(Event Player.CowOn >= 1);
+ 2493 Small Message(Event Player, Custom String("소를 몰면서 금괴는 못 나른다"));
+ 2495 Else If(Event Player.Plan >= 1);
+ 2496 Small Message(Event Player, Custom String("역마차를 쫓는 중에는 금괴를 맡을 수 없다"));
+ 2498 Else If(Event Player.Energy < 4);
+ 2501 Else;
+ 2503 If(Distance Between(Event Player.EscortPos, Global Variable(SpawnPos)) < 18);
+ 2507 If(Global Variable(FundTier) >= 2);
+
+=== "/ 3)" 위치 ===
+  4304: 철컥 — 핀이 물렸다 ({0} / 3)

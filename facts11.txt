@@ -1,0 +1,36 @@
+=== 부흥 기금 갹출 지점 ===
+  979: Create HUD Text(Local Player.TutOn == 0 ? Local Player : False, Custom String("{0}일차   {1}시   {2}", Global Variable(Day), Round To Integer(Divide(Global Variable(Clock), 
+  2495: Modify Global Variable(Fund, Add, 1000);
+  5139: Modify Global Variable(FundTier, Add, 1);
+
+=== [직업 03-3] 야수 배회 ===
+rule("[직업 03-3] 야수 배회")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 2;
+		All;
+	}
+
+	conditions
+	{
+		Is Dummy Bot(Event Player) == True;
+		Global Variable(Ready) == 1;
+		Is Alive(Event Player) == True;
+		Event Player.RevealEnd > Total Time Elapsed();
+	}
+
+	actions
+	{
+		If(Distance Between(Position Of(Event Player), Value In Array(Global Variable(LocPos), 6)) > 11);
+			Teleport(Event Player, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 6), Vector(Random Real(-4, 4), 0, Random Real(-4, 4)))));
+			Play Effect(All Players(All Teams), Ring Explosion, Color(Orange), Position Of(Event Player), 1);
+			Wait(0.2, Ignore Condition);
+		Else If(Random Integer(1, 100) <= 0);
+			Set Move Speed(Event Player, Random Integer(175, 215));
+			Set Jump Vertical Speed(Event Player, Random Integer(100, 250));
+			Start Throttle In Direction(Event Player, Vector(Random Real(-1, 1), 0, Random Real(-1, 1)), 1, To World, Replace existing throttle, None);
+			Set Facing(Event Player, Vector(Random Real(-1, 1), Random Real(-0.6, 0.6), Random Real(-1, 1)), To World);
+			Press Button(Event Player, Button(Jump));
+			Wait(Random Real(0.08, 0.2), Ignore Condition);

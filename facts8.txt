@@ -1,0 +1,22 @@
+rule("[도파민 04] 칭호 승급")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.Init == 1;
+		Add(Add(Add(Add(Event Player.Money >= 300, Event Player.Money >= 1000), Event Player.Money >= 2500), Event Player.Money >= 6000), Event Player.Money >= 15000) > Event Player.Tier
+	}
+
+	actions
+	{
+		Wait(1, Ignore Condition);
+		Set Player Variable(Event Player, Tier, Add(Add(Add(Add(Event Player.Money >= 300, Event Player.Money >= 1000), Event Player.Money >= 2500), Event Player.Money >= 6000), Event Pl
+		Play Effect(Event Player, Buff Explosion Sound, Color(Lime Green), Position Of(Event Player), 200);
+	}
+}

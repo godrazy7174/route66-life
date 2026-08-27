@@ -1,0 +1,21 @@
+--- Init writes ---
+438 Set Player Variable(Event Player, Init, 1);
+--- pairing ---
+unpaired: 0
+--- indent mismatches ---
+mismatches: 0
+--- rules containing NoticeMsg writes ---
+  [조작 03c] 행동 실행 — 안내소·대장간·정거장·목장
+  [직업 00] 일이 곧 직업 — 자동 전직
+  [직업 01] DoMine
+  [직업 02] DoHunt
+  [직업 03-2] 야수 처치
+  [생활 01] DoSleep
+  [파발 01] 배달 도착 — 자동 정산
+  [목동 01] 소몰이
+  [장물 01] 자루 정산 — 은신처
+  [양조 01] 밀주 숙성 완료
+  [목장 02] 소가 다 컸다
+  [파발 02] 흔들리는 화물
+  [파발 03] 그림자 강도
+  [목동 02] 날뛰는 소

@@ -1,0 +1,80 @@
+=== KO settings 블록 ===
+settings
+{
+	main
+	{
+		모드 이름: "66번 국도 — 서부 인생게임"
+		설명: "서부 66번 국도에서 살아남아라. 캐서디와 애쉬, 좌클릭만으로."
+	}
+
+	lobby
+	{
+		최대 1팀 플레이어 수: 9
+		최대 2팀 플레이어 수: 3
+		최대 관전자 수: 12
+		대기실로 돌아가기: 안 함
+	}
+
+	modes
+	{
+		연습 전투
+		{
+			영웅 변경 허용: 활성화
+
+			enabled maps
+			{
+				66번 국도 972777519512068153
+			}
+		}
+
+		일반
+		{
+			게임 모드 시작: 즉시
+			생명력 팩 생성: 비활성화
+			실시간 처치 정보: 비활성화
+			영웅 제한: 비활성화
+			적 생명력 막대: 비활성화
+		}
+	}
+
+	heroes
+	{
+		일반
+		{
+			생명력 지속 재생: 비활성화
+
+			enabled heroes
+			{
+				애쉬
+				캐서디
+			}
+		}
+	}
+}
+
+
+=== EN 로비 ===
+lobby
+	{
+		Max Team 1 Players: 8
+		Max Team 2 Players: 4
+		Max FFA Players: 0
+		Max Spectators: 2
+		Return To Lobby: Never
+	}
+
+	modes
+	{
+		Skirmish
+		{
+			Enable Perks: Off
+
+			enabled maps
+			{
+				Route 66
+			}
+		}
+
+		General
+		{
+			Game Mode Start: Immediat

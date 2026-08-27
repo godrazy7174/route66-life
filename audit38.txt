@@ -1,0 +1,15 @@
+=== 가격/정산 계산식 전수 (명성·악명 보정 포함) ===
+  [[조작 03a]] Set Player Variable(Event Player, Amt, Round To Integer(Multiply(18, Subtract(1, Multiply(Subtract(Event Player.Fame, Event Player.Noto), 0.002))), To Nearest));
+  [[조작 03a]] Set Player Variable(Event Player, Amt, Round To Integer(Multiply(22, Subtract(1, Multiply(Subtract(Event Player.Fame, Event Player.Noto), 0.002))), To Nearest));
+  [[조작 03a]] Set Player Variable(Event Player, Amt, Round To Integer(Multiply(15, Subtract(1, Multiply(Subtract(Event Player.Fame, Event Player.Noto), 0.002))), To Nearest));
+  [[조작 03a]] Set Player Variable(Event Player, Amt, Round To Integer(Multiply(95, Subtract(1, Multiply(Subtract(Event Player.Fame, Event Player.Noto), 0.002))), To Nearest));
+  [[조작 03a]] Set Player Variable(Event Player, SellSum, Round To Integer(Multiply(Multiply(Multiply(Add(Multiply(Value In Array(Event Player.Inv, 2), Global Variable(OrePrice)), Multiply(V
+  [[조작 03b]] Set Player Variable(Event Player, Amt, Round To Integer(Multiply(38, Subtract(1, Multiply(Subtract(Event Player.Fame, Event Player.Noto), 0.002))), To Nearest));
+  [[조작 03b]] Set Player Variable(Event Player, SellSum, Multiply(Event Player.BrewReady, 48));
+  [[조작 03b]] Set Player Variable(Event Player, Amt, Round To Integer(Multiply(Add(Event Player.Money, Event Player.Deposit), Event Player.Fame >= 70 ? 0.025 : 0.05), Down));
+  [[조작 03b]] Set Player Variable(Event Player, SellSum, Add(Multiply(Value In Array(Event Player.Inv, 2), Global Variable(OrePrice)), Multiply(Value In Array(Event Player.Inv, 3), Global V
+  [[조작 03b]] Set Player Variable(Event Player, SellSum, Round To Integer(Multiply(Event Player.SellSum, 1.8), Down));
+  [[조작 03e]] Set Player Variable(Event Player, RunPay, Round To Integer(Add(12, Multiply(Distance Between(Value In Array(Global Variable(LocPos), 11), Value In Array(Global Variable(LocPos
+  [[조작 03e]] Set Player Variable(Event Player, EscortPay, Round To Integer(Add(60, Multiply(Distance Between(Value In Array(Global Variable(LocPos), 11), Event Player.EscortPos), 3)), To N
+  [[조작 03e]] Set Player Variable(Event Player, EscortPay, Round To Integer(Multiply(Event Player.EscortPay, 1.15), To Nearest));
+  [[조작 03e]] Set Player Variable(Event Player, SellSum, Multiply(Event Player.SellQty, Event Player.Amt));

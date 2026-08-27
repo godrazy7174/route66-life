@@ -1,0 +1,17 @@
+=== 환생 리셋부에서 Rebuild 처리 ===
+472: Set Player Variable(Event Player, Bounty, 0);
+1977: Set Player Variable(Event Player, Bounty, 0);
+2253: Set Player Variable(Event Player, Deposit, 0);
+2552: Set Player Variable(Event Player, Deposit, 0);
+2559: Set Player Variable(Event Player, Rebuild, 0);
+2560: Set Player Variable(Event Player, Bounty, 0);
+
+=== DoSleep 회복량 ===
+3670: Set Player Variable(Event Player, Amt, Round To Integer(Multiply(90, Subtract(1, Multiply(Subtract(Event Player.Fame, Event Player.Noto), 0.002))), To
+3671: If(Event Player.Money < Event Player.Amt);
+3672: Small Message(Event Player, Custom String("숙박비가 모자란다 ($ {0} 필요)", Event Player.Amt));
+3676: Modify Player Variable(Event Player, Money, Subtract, Event Player.Amt);
+3680: Set Player Variable(Value In Array(Global Variable(BldOwner), 3), Rent, Max(1, Round To Integer(Multiply(Event Player.Amt, 0.1), To Nearest)));
+3682: Small Message(Value In Array(Global Variable(BldOwner), 3), Custom String("임대 수입 +$ {0}", Player Variable(Value In Array(Global Variable(BldOwner), 3)
+3693: Set Player Variable(Event Player, Energy, Min(100, Add(Event Player.Energy, Multiply(Event Player.HasHome == 1 ? 80 : 40, Event Player.Rebuild >= 4 ? 
+3697: Set Global Variable At Index(NoticeMsg, Slot Of(Event Player), Custom String("잘 잤다 — 피로 {0}", Round To Integer(Event Player.Energy, Down)));

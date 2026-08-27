@@ -1,0 +1,12 @@
+--- 398 ---
+Create In-World Text(And(Distance Between(Local Player, Value In Array(Global Variable(LocPos), 11)) < 13, Local Player.TutOn == 0) ? Local Player : False, Custom String("{0}{1}", Custom String("{0}{1}", Custom String("화물을 받아 찍힌 곳까지 달려라 — 도착하면 자동 정산\r\n보수는 거리만큼 · 화물을 든 채 털리면 빼앗긴다\r\n배달 완료 — 허기 2 · 갈증 3 · 피로 4\r\n금괴 호송 — 수배 없는 자만 · 질주 불가 · 악명 높"), Custom String("은 자들이 노린다\r\n가축 출하 — 목장에서 기른 소, 마리당 $48\r\n새 출발의 기차 — 재건을 마친 자는 전 재산을 두고 다시 태어난다\r\n부흥 기금 — $1000씩 모아 쉼터·급행로·대축제를 연다\r\n")), Custom String("[{0}] 행동 선택      [{1}] 실행", Input Binding String(Button(Reload)), Input Binding String(Button(In
+--- 986 ---
+Create HUD Text(Local Player.TutOn == 0 ? Local Player : False, Custom String("{0}일차   {1}시   {2}", Global Variable(Day), Round To Integer(Divide(Global Variable(Clock), 60), Down), Custom String("{0} · {1}의 날", Value In Array(Array(Custom String("낮"), Custom String("밤")), Global Variable(IsNight)), Value In Array(Array(Custom String("뜨내기"), Custom String("광부"), Custom String("사냥꾼"), Custom String("현상금 사냥꾼"), Custom String("무법자"), Custom String("파발꾼"), Custom String("목동")), Global Variable(TodayJob)))), Custom String("소지금   $ {0}   예금 $ {1}", Local Player.Money, Local Player.Deposit), Custom S
+--- 990 ---
+Create HUD Text(Local Player.TutOn == 0 ? Local Player : False, Value In Array(Array(Custom String("황야"), Custom String("식당"), Custom String("협곡 광산"), Custom String("주유소 잡화점"), Custom String("모텔"), Custom String("정비소 고물상"), Custom String("술집"), Custom String("협곡 개활지"), Custom String("보안관 초소"), Custom String("무법자 은신처"), Custom String("안내소"), Custom String("대장간"), Custom String("역마차 정거장"), Custom String("목장"), Custom String("식당 2호점"), Custom String("식당 3호점")), Add(Local Player.Zone, 1)), Custom String("▶  {0}      ({1}/{2})", Value In Array(Array(Custom String("행동 없음 — 마을로 가라"), Custom String("-
+--- 5466 ---
+Big Message(All Players(All Teams), Custom String("부흥 기금 1단계!! 길손의 쉼터가 세워졌다 — 길목의 모닥불에서 몸을 데워라"));
+--- 5468 ---
+Big Message(All Players(All Teams), Custom String("부흥 기금 2단계!! 역마차 급행로 개통 — 배달·금괴 호송 보수 +15%"));
+--- 5470 ---
+Big Message(All Players(All Teams), Custom String("부흥 기금 3단계!! 국도 대축제 — 오늘의 직업 1.75배 · 밤마다 불꽃놀이 · 아침마다 명성 +1"));

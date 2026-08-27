@@ -1,0 +1,75 @@
+===== 재건 (Rebuild) =====
+rule("[재건 02] 오페라의 밤")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Dummy Bot(Event Player) == False;
+		Event Player.Init == 1;
+		Event Player.Rebuild >= 4;
+		Global Variable(IsNight) == 1;
+		Event Player.Zone == 5;
+		Is Alive(Event Player) == True;
+	}
+
+	actions 
+---
+rule("[재건 01] 랜드마크 오브")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	conditions
+	{
+		Global Variable(RebuildMax) > Global Variable(RebuildFxN);
+	}
+
+	actions
+	{
+		Create Effect(All Players(All Teams), Sphere, Color(Yellow), Add(Value In Array(Global Variable(LocPos), 9), Value In Array(Array(Vector(2.5, 2, 0), Vector(1.2, 2.6, 2.2), Vector(-1.2
+		Modify Global Variable(RebuildFxN, Add, 1);
+		Wait(0.1, Ignore Condition);
+		Loop If(Global Variable(RebuildMax) > Global Variable(RebuildFxN));
+	}
+} 
+---
+===== 야수 스폰 =====
+rule("[야수 06] 급소의 빛")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	conditions
+	{
+		Global Variable(Ready) == 1;
+	}
+
+	actions
+	{
+		Wait(2.5, Ignore Condition);
+		Set Global Variable(WeakOn, 1);
+		Set Damage Received(All Players(Team 2), 250);
+		Set Global Variable(WeakFx, Empty Array);
+		Create Effect(Player Variable(Value In Array(All Players(Team 2), 0), RevealEnd) > Total Time Elapsed() ? All Players(All Teams) : Null, Sphere, Color(Red), Add(Position Of(Value In A
+		Modify Global Variable(WeakFx, Append To Array, Last Created Entity());
+		Create Effect(Player Variable(Value In Array(All Players(Team 2), 1), RevealEnd) > Total Time Elapsed() ? All Players(All Teams) : Null, Sphere, Color(Red), Add(Position Of(Value In A
+		Modify Global Variable(WeakFx, Append To Array, Last Created Entity());
+		Create Effect(Player Variable(Value In Array(All Players(Team 2), 2), RevealEnd) > Total Time Elapsed() ? All Players(All Teams) : Null, Sphere, Color(Red), Add(Position Of(Value In A
+		Modify Global Variable(WeakFx, Append To Array, Last Created Entity());
+		Wait(2.5, Ignore Condition);
+		Set Global Variable(WeakOn, 0);
+		Set Damage Received(All Players(Team 2), 60);
+		Destroy Effect(Value In Array(Global Variable(WeakFx), 0));
+		Destroy Effect(Value In Array(Global Variable(WeakFx), 1));
+		Destroy Effect(Value In Array(Global Variable(WeakFx), 2)); 
+---

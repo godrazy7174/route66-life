@@ -1,0 +1,20 @@
+=== JobXP 획득량 (직업별) ===
+
+=== 승급(Adv) 요구 XP ===
+  job 1: 750 XP 필요
+  job 2: 750 XP 필요
+  job 3: 750 XP 필요
+  job 4: 750 XP 필요
+  job 5: 750 XP 필요
+  job 6: 750 XP 필요
+
+=== 마스터리/장인 조건 ===
+   rule("[마스터리 01] 한 길의 장인")
+   Big Message(All Players(All Teams), Custom String("{0} — 한 길의 장인이 되었다! (마스터리 {1}) +$1,000", Event Player, Round To Integer(Divide(Event Player.Giant, 10), Down)));
+
+=== 주요 가격 ===
+  [4800] Set Global Variable(BldPrice, Array(30000, 0, 48000, 42000, 54000, 36000, 0, 0, 0, 0, 60000));
+  [11000] Create In-World Text(And(Distance Between(Local Player, Value In Array(Global Variable(LocPos), 10)) < 13, Local Player.TutOn == 0) ? Local Player : False, Cust
+  [22000] Create In-World Text(And(Distance Between(Local Player, Value In Array(Global Variable(LocPos), 3)) < 13, Local Player.TutOn == 0) ? Local Player : False, Custo
+  [BldPrice] 33: BldPrice
+  [40000] Create In-World Text(And(Distance Between(Local Player, Value In Array(Global Variable(LocPos), 10)) < 13, Local Player.TutOn == 0) ? Local Player : False, Cust

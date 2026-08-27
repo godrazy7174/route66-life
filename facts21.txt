@@ -1,0 +1,17 @@
+=== 늑대 시작부 ===
+	{
+		Wait(Random Real(18, 30), Ignore Condition);
+		If(And(And(Event Player.CowOn >= 1, Is Alive(Event Player)), Random Integer(1, 100) <= 45));
+			Set Player Variable(Event Player, DialTgt, Nearest Walkable Position(Add(Event Player.CowPos, Multiply(Direction From Angles(Random Real(-180, 180), 0), 20))));
+			Set Player Variable(Event Player, DialPin, 0);
+			Set Player Variable(Event Player, DialCur, 0);
+			Destroy Effect(Event Player.EscortFlash);
+			Create Effect(All Players(All Teams), Sphere, Color(Gray), Event Player.DialTgt, 0.9, Visible To Position Radius and Color);
+			Set Player Variable(Event Player, EscortFlash, Last Created Entity());
+			Small Message(Event Player, Custom String("늑대다! 소에게 달려든다 — 쏴서 쫓아내라 (회색 그림자)"));
+			Play Effect(Event Player, Debuff Impact Sound, Color(Red), Position Of(Event Player), 80);
+			While(And(And(Event Player.CowOn >= 1, Is Alive(Event Player)), And(Event Player.DialCur < 12, Event Player.DialPin < 3)));
+=== 정산 조건 (목동 01) ===
+3821 If(Distance Between(Event Player.CowPos, Value In Array(Global Variable(LocPos), 12)) < 6);
+=== 소 스폰 ===
+2623 Set Player Variable(Event Player, CowPos, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 12), Multiply(Direction Towards(Value In Array(Global Variable(LocPos), 12), Value In Array(Global Variable(

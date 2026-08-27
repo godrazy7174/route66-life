@@ -1,0 +1,26 @@
+=== [코어 13] 2팀은 야수 전용 — 쥐 봇이 걸리는가 ===
+rule("[코어 13] 2팀은 야수 전용")
+{
+event
+{
+Ongoing - Each Player;
+Team 2;
+All;
+}
+
+conditions
+{
+Is Dummy Bot(Event Player) == False;
+}
+
+actions
+{
+Move Player to Team(Event Player, Team 1, -1);
+Wait(1.5, Ignore Condition);
+If(Team Of(Event Player) == Team 2);
+Small Message(Event Player, Custom String("2팀은 야수의 자리다 — 1팀이 비면 알아서 옮겨준다"));
+Wait(3, Ignore Condition);
+Loop();
+End;
+}
+}

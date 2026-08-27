@@ -1,0 +1,460 @@
+!=
+<
+<=
+==
+>
+>=
+Ability 1
+Ability 2
+Abort When False
+Acknowledge
+Add
+Add to existing throttle
+All
+All Barriers Block LOS
+All Damage Dealt
+All Teams
+Always
+Ana Biotic Grenade Explosion Effect
+Ana Biotic Grenade Explosion Sound
+Ana Biotic Grenade Increased Healing Effect
+Ana Biotic Grenade Increased Healing Sound
+Ana Biotic Grenade No Healing Effect
+Ana Biotic Grenade No Healing Sound
+Ana Nano Boosted Effect
+Ana Nano Boosted Sound
+Ana Sleeping Effect
+Ana Sleeping Sound
+Append To Array
+Aqua
+Armor
+Arrow: Down
+Arrow: Left
+Arrow: Right
+Arrow: Up
+Ashe Dynamite Burning Material Effect
+Ashe Dynamite Burning Particle Effect
+Ashe Dynamite Explosion Effect
+Ashe Dynamite Explosion Sound
+Asleep
+Assisters and Targets
+Asterisk
+Attacking
+Bad Aura
+Bad Aura Sound
+Bad Beam
+Bad Explosion
+Bad Pickup Effect
+Baptiste Biotic Launcher
+Baptiste Biotic Launcher Explosion Effect
+Baptiste Biotic Launcher Explosion Sound
+Baptiste Immortality Field Protected Effect
+Baptiste Immortality Field Protected Sound
+Barrier Damage Dealt
+Barriers Do Not Block LOS
+Bastion A-36 Tactical Grenade
+Bastion Tank Cannon Explosion Effect
+Bastion Tank Cannon Explosion Sound
+Beacon Sound
+Black
+Blue
+Bolt
+Brigitte Flail Chain Beam
+Brigitte Repair Pack Armor Effect
+Brigitte Repair Pack Armor Sound
+Brigitte Repair Pack Impact Effect
+Brigitte Repair Pack Impact Sound
+Brigitte Whip Shot Heal Area Effect
+Brigitte Whip Shot Heal Area Sound
+Buff Explosion Sound
+Buff Impact Sound
+Burning
+Cancel Contrary Motion
+Cancel Contrary Motion XYZ
+Cassidy Flashbang Explosion Effect
+Cassidy Flashbang Explosion Sound
+Cassidy Flashbang Stunned Effect
+Checkmark
+Circle
+Clip Against Surfaces
+Cloud
+Club
+Color
+Countdown
+Critical Hit Accuracy
+Critical Hits
+Crouch
+DVa Micro Missiles Explosion Effect
+DVa Micro Missiles Explosion Sound
+DVa Self Destruct Explosion Effect
+DVa Self Destruct Explosion Sound
+Damage
+Damage Blocked
+Damage Taken
+Deaths
+Debuff Impact Sound
+Decal Sound
+Default
+Default Visibility
+Defending
+Defensive Assists
+Destination and Duration
+Destination and Rate
+Diamond
+Direction Rate and Max Speed
+Direction and Magnitude
+Direction and Turn Rate
+Divide
+Dizzy
+Do Not Clip
+Do Nothing
+Doomfist Meteor Strike Impact Effect
+Doomfist Meteor Strike Impact Sound
+Doomfist Rising Uppercut Impact Effect
+Doomfist Rising Uppercut Impact Sound
+Doomfist Rising Uppercut Leap Effect
+Doomfist Rising Uppercut Leap Sound
+Down
+Echo Cloning Effect
+Echo Cloning Sound
+Echo Focusing Beam
+Echo Focusing Beam Sound
+Echo Sticky Bomb
+Echo Sticky Bomb Explosion Effect
+Echo Sticky Bomb Explosion Sound
+Eliminations
+Emote Down
+Emote Left
+Emote Right
+Emote Up
+Enemies
+Enemy Barriers Block LOS
+Energy Sound
+Environmental Deaths
+Environmental Kills
+Exclamation Mark
+Explosion Sound
+Eye
+Fall Back
+Final Blows
+Fire
+Flag
+Friendly To
+Friendly To Position Direction and Size
+Frozen
+Genji Shuriken
+Go
+Going In
+Good Aura
+Good Aura Sound
+Good Beam
+Good Explosion
+Good Pickup Effect
+Goodbye
+Grapple Beam
+Gray
+Green
+Group Up
+Hacked
+Halo
+Hanzo Sonic Arrow Initial Pulse Effect
+Hanzo Sonic Arrow Initial Pulse Sound
+Happy
+Heal
+Heal Target Active Effect
+Heal Target Effect
+Healing Dealt
+Healing Received
+Health
+Heart
+Hello
+Hero Damage Dealt
+Ignore Condition
+Incoming
+Incorporate Contrary Motion
+Interact
+Invincible
+Jump
+Junkrat Concussion Mine Explosion Effect
+Junkrat Concussion Mine Explosion Sound
+Junkrat Frag Launcher Explosion Effect
+Junkrat Frag Launcher Explosion Sound
+Junkrat RIP Tire Explosion Effect
+Junkrat RIP Tire Explosion Sound
+Junkrat Trap Chain Beam
+Junkrat Trap Chain Sound
+Knocked Down
+Left
+Light Shaft
+Lime Green
+Lucio Sonic Amplifier
+Lúcio Sound Barrier Cast Effect
+Lúcio Sound Barrier Cast Sound
+Lúcio Sound Barrier Protected Effect
+Lúcio Sound Barrier Protected Sound
+Max
+Mei Frozen Effect
+Mei Frozen Sound
+Mei Icicle
+Melee
+Mercy Boost Beam
+Mercy Boost Beam Sound
+Mercy Caduceus Blaster
+Mercy Damage Boosted Effect
+Mercy Damage Boosted Sound
+Mercy Heal Beam
+Mercy Heal Beam Sound
+Min
+Modulo
+Moira Coalescence Beam
+Moira Coalescence Sound
+Moira Damage Orb
+Moira Fade Disappear Effect
+Moira Fade Disappear Sound
+Moira Fade Reappear Effect
+Moira Fade Reappear Sound
+Moira Grasp Connected Beam
+Moira Grasp Connected Sound
+Moira Heal Orb
+Moira Orb Damage Beam
+Moira Orb Damage Sound
+Moira Orb Heal Beam
+Moira Orb Heal Sound
+Moon
+Multikill Best
+Multikills
+Multiply
+Need Healing
+Need Help
+No
+None
+Objective Kills
+Occluded
+Off
+Offensive Assists
+Omnic Slicer Beam
+Omnic Slicer Beam Sound
+On My Way
+Orange
+Orb
+Orb Projectile
+Orisa Amplifier Beam
+Orisa Amplifier Sound
+Orisa Fusion Driver
+Orisa Halt Implosion Effect
+Orisa Halt Implosion Sound
+Orisa Halt Tendril Beam
+Orisa Halt Tendril Sound
+Pharah Barrage Explosion Effect
+Pharah Barrage Explosion Sound
+Pharah Concussive Blast Effect
+Pharah Concussive Blast Sound
+Pharah Rocket
+Pharah Rocket Launcher Explosion Effect
+Pharah Rocket Launcher Explosion Sound
+Phased Out
+Pick-up Sound
+Plus
+Poison
+Poison 2
+Position
+Position Direction and Size
+Position Radius and Color
+Position Values and Color
+Position and Color
+Position and Radius
+Position and Values
+Press the Attack
+Primary Fire
+Purple
+Push Forward
+Question Mark
+Radioactive
+Raise To Power
+Ramattra Ravenous Vortex Sphere
+Ready
+Reaper Wraith Form Effect
+Reaper Wraith Form Sound
+Receivers Damagers and Damage Percent
+Receivers Healers and Healing Percent
+Receivers and Damagers
+Receivers and Healers
+Recycle
+Red
+Reinhardt Fire Strike
+Reinhardt Fire Strike Target Impact Effect
+Reinhardt Fire Strike Target Impact Sound
+Reload
+Remove From Array By Index
+Remove From Array By Value
+Replace existing throttle
+Restart Rule
+Restart When True
+Right
+Ring
+Ring Explosion
+Ring Explosion Sound
+Ring Thick
+Ring Thin
+Roadhog Scrap
+Roadhog Scrap Ball
+Rooted
+Rose
+Rotation
+Rotation And Translation
+Sad
+Scoped Accuracy
+Scoped Critical Hit Accuracy
+Scoped Critical Hit Kills
+Scoped Critical Hits
+Scoped Hits
+Scoped Shots
+Secondary Fire
+Self Healing
+Shields
+Shots Fired
+Shots Hit
+Shots Missed
+Sigma Accretion Impact Effect
+Sigma Accretion Impact Sound
+Sigma Gravitic Flux Target Effect
+Sigma Gravitic Flux Target Sound
+Sigma Hypersphere
+Sigma Hypersphere Implosion Effect
+Sigma Hypersphere Implosion Sound
+Skull
+Sky Blue
+Smoke Sound
+Soldier: 76 Sprint Start Sound
+Soldier: 76 Sprinting Effect
+Solo Kills
+Sombra EMP Explosion Effect
+Sombra EMP Explosion Sound
+Sombra Hacked Looping Effect
+Sombra Hacked Sound
+Sombra Hacked Starting Effect
+Sombra Hacking Sound
+Sombra Logo Effect
+Sombra Logo Sound
+Sombra Translocating Material Effect
+Sombra Translocating Sound
+Sombra Translocator Disappear Effect
+Sombra Translocator Disappear Sound
+Sombra Translocator Reappear Effect
+Sombra Translocator Reappear Sound
+Sorry
+Sort Order
+Sort Order String and Color
+Sort Order and Color
+Sort Order and String
+Spade
+Sparkles
+Sparkles Sound
+Sphere
+Spiral
+Spray Down
+Spray Left
+Spray Right
+Spray Up
+Stop
+String
+String and Color
+Stunned
+Subtract
+Surfaces
+Surfaces And All Barriers
+Surfaces And Enemy Barriers
+Symmetra Photon Projector
+Symmetra Projector Beam
+Symmetra Projector Sound
+Symmetra Teleporter Reappear Effect
+Symmetra Teleporter Reappear Sound
+Symmetra Turret Beam
+Team 1
+Team 2
+Thanks
+To Nearest
+To Player
+To World
+Top
+Torbjörn Overloading Effect
+Torbjörn Overloading Sound
+Torbjörn Turret Sight Beam
+Tracer Recall Disappear Effect
+Tracer Recall Disappear Sound
+Tracer Recall Reappear Effect
+Tracer Recall Reappear Sound
+Trashcan
+Turquoise
+Ultimate
+Ultimate Status
+Ultimates Earned
+Ultimates Used
+Unkillable
+Up
+Values
+Values and Color
+Violet
+Visible Always
+Visible Never
+Visible To
+Visible To Friendly To
+Visible To Friendly To Position Direction and Size
+Visible To Position Direction and Size
+Visible To Position Radius and Color
+Visible To Position String and Color
+Visible To Position Values and Color
+Visible To Position and Color
+Visible To Position and Radius
+Visible To Position and String
+Visible To Position and Values
+Visible To Sort Order String and Color
+Visible To Sort Order and Color
+Visible To Sort Order and String
+Visible To String and Color
+Visible To Values and Color
+Visible To and Color
+Visible To and Position
+Visible To and Sort Order
+Visible To and String
+Visible To and Values
+Voice Line Down
+Voice Line Left
+Voice Line Right
+Voice Line Up
+Warning
+Weapon Accuracy
+White
+Widowmaker Venom Mine Explosion Effect
+Widowmaker Venom Mine Explosion Sound
+Widowmaker Venom Mine Target Effect
+Widowmaker Venom Mine Target Sound
+Winston Jump Pack Landing Effect
+Winston Jump Pack Landing Sound
+Winston Primal Rage Effect
+Winston Primal Rage Sound
+Winston Tesla Cannon Beam
+Winston Tesla Cannon Sound
+Winston Tesla Cannon Target Effect
+Winston Tesla Cannon Target Sound
+With You
+Wrecking Ball Adaptive Shield Target Effect
+Wrecking Ball Adaptive Shield Target Sound
+Wrecking Ball Minefield Explosion Effect
+Wrecking Ball Minefield Explosion Sound
+Wrecking Ball Piledriver Fire Effect
+Wrecking Ball Piledriver Fire Sound
+Wrecking Ball Piledriver Impact Effect
+Wrecking Ball Piledriver Impact Sound
+X
+Yellow
+Yes
+You are Welcome
+Zarya Graviton
+Zarya Particle Beam
+Zarya Particle Beam Sound
+Zarya Particle Cannon
+Zarya Particle Cannon Explosion Effect
+Zarya Particle Cannon Explosion Sound
+Zenyatta Orb of Discord Target Effect
+Zenyatta Orb of Discord Target Sound

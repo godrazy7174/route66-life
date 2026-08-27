@@ -1,0 +1,21 @@
+=== Set Move Speed 전수 ===
+ 1091 [[월드 03] 결핍 패널티            ] Set Move Speed(Event Player, 70);
+ 1097 [[월드 03] 결핍 패널티            ] Set Move Speed(Event Player, 80);
+ 1102 [[월드 03] 결핍 패널티            ] Set Move Speed(Event Player, And(Event Player.HasBag == 0, Event Player.HasHorse == 0) ? 110 : 100);
+ 1463 [[조작 04] 달리기 (Shift)       ] Set Move Speed(Event Player, 165);
+ 1469 [[조작 04] 달리기 (Shift)       ] Set Move Speed(Event Player, 70);
+ 1471 [[조작 04] 달리기 (Shift)       ] Set Move Speed(Event Player, 80);
+ 1473 [[조작 04] 달리기 (Shift)       ] Set Move Speed(Event Player, And(Event Player.HasBag == 0, Event Player.HasHorse == 0) ? 110 : 100);
+ 1502 [[조작 05] 바이크 질주 (시온 E)     ] Set Move Speed(Event Player, 200);
+ 1507 [[조작 05] 바이크 질주 (시온 E)     ] Set Move Speed(Event Player, 70);
+ 1509 [[조작 05] 바이크 질주 (시온 E)     ] Set Move Speed(Event Player, 80);
+ 1511 [[조작 05] 바이크 질주 (시온 E)     ] Set Move Speed(Event Player, And(Event Player.HasBag == 0, Event Player.HasHorse == 0) ? 110 : 100);
+ 3020 [[직업 03] 야수 은신             ] Set Move Speed(Event Player, 0);
+ 3055 [[직업 03-3] 야수 배회           ] Set Move Speed(Event Player, Random Integer(175, 215));
+ 3062 [[직업 03-3] 야수 배회           ] Set Move Speed(Event Player, Random Integer(1, 100) <= 35 ? Random Integer(175, 215) : Random Integer(110, 148));
+ 3367 [[쥐 01] 쥐떼의 습격             ] Set Move Speed(Players In Slot(3, Team 2), 130);
+
+=== 프레야 강제 ===
+  687 [[코어 20] 프레야 스킬 봉인 (조준 허용) ] Hero Of(Event Player) == Hero(Freja);
+  914 [[코어 21] 현상금 사냥꾼은 프레야      ] Start Forcing Player To Be Hero(Event Player, Hero(Freja));
+  932 [[코어 22] 배지를 반납하면          ] Hero Of(Event Player) == Hero(Freja);

@@ -1,0 +1,36 @@
+=== [은행 01] 다이얼 돌리기 — 진입 조건 ===
+conditions
+{
+Event Player.DialOn == 1;
+Is Button Held(Event Player, Button(Reload)) == True;
+}
+
+actions
+{
+Set Player Variable(Event Player, DialCur, Modulo(Add(Event Player.DialCur, 1), 10));
+Play Effect(Event Player, Debuff Impact Sound, Color(White), Position Of(Event Player), 35);
+}
+}
+
+=== [은행 02] 다이얼 시도 — 조건 ===
+conditions
+{
+Event Player.DialOn == 1;
+Is Button Held(Event Player, Button(Interact)) == True;
+}
+
+actions
+{
+If(Event Player.DialCur == Event Player.DialTgt);
+Modify Player Variable(Event Player, DialPin, Add, 1);
+Play Effect(Event Player, Buff Impact Sound, Color(Orange), Position Of(Event Player), 70);
+If(Event Player.DialPin > 3);
+Set Player Variable(Event Player, DialOn, 0);
+Set Player Variable(Event Player, DrillOn, 1);
+
+=== [범죄 01]의 Dial* 사용 ===
+  Set Player Variable(Event Player, DialOn, 1);
+  Set Player Variable(Event Player, DialTgt, Random Integer(0, 9));
+  Set Player Variable(Event Player, DialPin, 1);
+  Set Player Variable(Event Player, DialCur, 0);
+  Create HUD Text(Event Player, Custom String("은행 다이얼   [ {0} ]", Event Player.DialCur), Custom String("핀 {0} / 3", Event Player.DialPin), Custom String

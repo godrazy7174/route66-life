@@ -1,0 +1,30 @@
+rule("[목동 01] 소몰이")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.Init == 1;
+		Event Player.CowOn >= 1;
+	}
+
+	actions
+	{
+		If(Or(Not(Is Alive(Event Player)), Total Time Elapsed() > Event Player.CowEnd));
+			Set Player Variable(Event Player, CowOn, 0);
+			Destroy Effect(Event Player.CowFx);
+			Destroy Icon(Event Player.CowIco);
+			Small Message(Event Player, Custom String("소를 잃어버렸다..."));
+			Play Effect(Event Player, Debuff Impact Sound, Color(Red), Position Of(Event Player), 60);
+			Abort;
+		End;
+		If(Distance Between(Event Player.CowPos, Value In Array(Global Variable(LocPos), 12)) < 6);
+			Destroy Effect(Event Player.CowFx);
+			Destroy Icon(Event Player.CowIco);
+			Set Player Variable(Event Player, RunPay, Add(220, Multiply(4, Min(10, Round To Integer(Divide(Value In Array(Event Player.JobXP, 6), 250), Down)))));
+			If(And(Event Player.Job == 6, Value In Array(Event Player.Adv, Event Player.Job) == 1));

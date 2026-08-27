@@ -1,0 +1,41 @@
+=== 선착순 자원의 경합 처리 (플래그를 언제 내리는가) ===
+-- [도파민 03] --
+  actions 첫 줄들:
+     Set Global Variable(TreasureOn, 0);
+     Set Player Variable(Event Player, Prize, Random Integer(150, 350));
+     Modify Player Variable(Event Player, Money, Add, Event Player.Prize);
+     Modify Player Variable(Event Player, Earned, Add, Event Player.Prize);
+     Set Global Variable(TickerMsg, Custom String("{0} — 보물 상자를 차지했다!  $ {1}", Event Player, Event Player.Prize));
+  TreasureOn 갱신 위치: actions 0번째 줄
+  조건: ['Event Player.Init == 1;', 'Event Player.TutOn == 0;', 'Global Variable(TreasureOn) == 1;', 'Is Alive(Event Player) == True;']
+
+-- [밤 02] --
+  actions 첫 줄들:
+     Set Player Variable(Event Player, Busy, 1);
+     Set Player Variable(Event Player, WorkProg, 0);
+     Destroy Progress Bar HUD Text(Event Player.WorkBar);
+     Small Message(All Players(All Teams), Custom String("누군가 금고 마차에 손을 댔다!"));
+     Create Progress Bar HUD Text(Event Player, Event Player.WorkProg, Custom String("금고를 터는 중..."), Top, 0, Color(Orange), C
+  WagonOn 갱신 위치: actions 15번째 줄
+  조건: ['Is Dummy Bot(Event Player) == False;', 'Event Player.Init == 1;', 'Event Player.Busy == 0;', 'Global Variable(ArchOn) == 0;']
+
+-- [열차 03] --
+  actions 첫 줄들:
+     Set Player Variable(Event Player, Busy, 1);
+     Set Player Variable(Event Player, WorkProg, 0);
+     Destroy Progress Bar HUD Text(Event Player.WorkBar);
+     Create Progress Bar HUD Text(Event Player, Event Player.WorkProg, Custom String("금고를 뜯는 중..."), Top, 0, Color(Orange), C
+     Set Player Variable(Event Player, WorkBar, Last Text ID());
+  TrainVault 갱신 위치: 없음
+  조건: ['Is Dummy Bot(Event Player) == False;', 'Event Player.Init == 1;', 'Event Player.Busy == 0;', 'Global Variable(ArchOn) == 0;']
+
+-- [부동산 01] --
+  actions 첫 줄들:
+     If(Value In Array(Global Variable(BldPrice), Event Player.Zone) <= 0);
+     Small Message(Event Player, Custom String("여긴 살 수 있는 건물이 아니다"));
+     Play Effect(Event Player, Debuff Impact Sound, Color(Red), Position Of(Event Player), 45);
+     Else If(Value In Array(Global Variable(BldOwner), Event Player.Zone) == Event Player);
+     Small Message(Event Player, Custom String("내 건물이다 — 남이 노리는 값은 $ {0}", Value In Array(Global Variable(BldPrice), Event Pl
+  BldOwner 갱신 위치: actions 16번째 줄
+  조건: ['Is Dummy Bot(Event Player) == False;', 'Event Player.Init == 1;', 'Event Player.Busy == 0;', 'Global Variable(ArchOn) == 0;']
+

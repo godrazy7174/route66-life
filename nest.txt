@@ -1,0 +1,7 @@
+=== 남은 중첩 Filtered Array ===
+  L383 [[코어 02] BuildWorld] All Players(Team 2)
+  L2980 [[직업 02] DoHunt] All Players(Team 2)
+  L4901 [[대사냥 02] 흔적 조사 (F)] All Players(Team 2)
+
+=== 이벤트 위치 계열에 중첩이 남아 있는가 ===
+   없음

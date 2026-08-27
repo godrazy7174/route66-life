@@ -1,0 +1,40 @@
+rule("[쥐 02] 쥐의 약탈")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 2;
+		All;
+	}
+
+	conditions
+	{
+		Slot Of(Event Player) == 3;
+		Global Variable(RatOn) == 1;
+		Is Alive(Event Player) == True;
+	}
+
+	actions
+	{
+		Set Global Variable(RatTgt, First Of(Sorted Array(Filtered Array(All Players(Team 1), And(Is Alive(Current Array Element), Player Variable(Current Array Element, Init) == 1)), Distance Between(Position Of(Current Array Element), Position Of(Event Player)))));
+		If(And(Entity Exists(Global Variable(RatTgt)), Distance Between(Position Of(Global Variable(RatTgt)), Position Of(Event Player)) < 40));
+			Start Throttle In Direction(Event Player, Direction Towards(Position Of(Event Player), Position Of(Global Variable(RatTgt))), 1, To World, Replace existing throttle, None);
+			If(Distance Between(Position Of(Event Player), Position Of(Global Variable(RatTgt))) < 3.5);
+				Damage(Global Variable(RatTgt), Event Player, 20);
+				Play Effect(All Players(All Teams), Bad Explosion, Color(Red), Position Of(Event Player), 1.5);
+			End;
+		Else;
+			Start Throttle In Direction(Event Player, Direction Towards(Position Of(Event Player), Value In Array(Global Variable(LocPos), 2)), 1, To World, Replace existing throttle, None);
+		End;
+		If(Distance Between(Position Of(Event Player), Value In Array(Global Variable(LocPos), 2)) < 9);
+			Set Global Variable(JerkyStock, Max(0, Subtract(Global Variable(JerkyStock), 2)));
+			Play Effect(All Players(All Teams), Bad Explosion, Color(Orange), Position Of(Event Player), 1);
+		End;
+		Modify Player Variable(Event Player, Roll, Add, 1);
+		If(And(Modulo(Event Player.Roll, 12) == 0, Distance Between(Position Of(Event Player), Value In Array(Global Variable(LocPos), 2)) > 34));
+			Teleport(Event Player, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 2), Vector(Random Real(-5, 5), 0, Random Real(-5, 5)))));
+		End;
+		Wait(1, Ignore Condition);
+		Loop If(And(Global Variable(RatOn) == 1, Is Alive(Event Player)));
+	}
+}

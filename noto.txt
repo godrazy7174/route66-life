@@ -1,0 +1,35 @@
+=== 악명(Noto) 증가 지점 전수 ===
+ 1874 +  ? [Event Player] [[조작 03b] 행동 실행 — 술집·개활지·초소]
+ 1884 +  ? [Event Player] [[조작 03b] 행동 실행 — 술집·개활지·초소]
+ 2042 +  ? [Event Player] [[조작 03b] 행동 실행 — 술집·개활지·초소]
+ 3317 +  ? [Event Player] [[습격 01] 역마차 추격]
+ 3622 +  ? [Event Player] [[세금 03] 체납 처벌]
+ 4072 +  ? [Event Player] [[범죄 01] 황야에서 강도 / 체포 (F)]
+ 4084 +  ? [Event Player] [[범죄 01] 황야에서 강도 / 체포 (F)]
+ 4092 +  ? [Event Player] [[범죄 01] 황야에서 강도 / 체포 (F)]
+ 4101 +  ? [Event Player] [[범죄 01] 황야에서 강도 / 체포 (F)]
+ 4308 +  ? [Event Player] [[은행 03] 금고 굴착 (V 연타)]
+ 4392 +  ? [Event Player] [[열차 01] 화약 설치 (F 8초)]
+ 4496 +  ? [Event Player] [[열차 03] 금고 개방 (F 5초)]
+ 4601 +  ? [Event Player] [[밀수 02] 접선 인계 (F 3초)]
+ 5631 +  ? [Event Player] [[감옥 02] 벽 부수기 (V 연타)]
+ 5676 + 20 [Attacker    ] [[범죄 02] 살해와 처단]
+ 6121 +  ? [Event Player] [[밤 02] 금고 마차 털기 (F 5초)]
+
+=== 악명 감소 지점 ===
+  492 [[코어 04] SetupPlayer] Create In-World Text(All Players(All Teams), Custom String("{0}\r\n{1}", Custom String("『 {0} 』 {1}", Event Pl
+  543 [[코어 15] 머리 위 이름표 갱신] Create In-World Text(All Players(All Teams), Custom String("{0}\r\n{1}", Custom String("『 {0} 』 {1}", Event Pl
+ 1270 [[월드 05] 아침 정산] Set Player Variable(Event Player, Noto, Max(0, Subtract(Event Player.Noto, 2)));
+ 1580 [[조작 03a] 행동 실행 — 식당·광산·잡화점] Set Player Variable(Event Player, Amt, Round To Integer(Multiply(18, Subtract(1, Multiply(Subtract(Event Playe
+ 1631 [[조작 03a] 행동 실행 — 식당·광산·잡화점] Set Player Variable(Event Player, Amt, Round To Integer(Multiply(22, Subtract(1, Multiply(Subtract(Event Playe
+ 1652 [[조작 03a] 행동 실행 — 식당·광산·잡화점] Set Player Variable(Event Player, Amt, Round To Integer(Multiply(15, Subtract(1, Multiply(Subtract(Event Playe
+ 1669 [[조작 03a] 행동 실행 — 식당·광산·잡화점] Set Player Variable(Event Player, Amt, Round To Integer(Multiply(95, Subtract(1, Multiply(Subtract(Event Playe
+ 1694 [[조작 03a] 행동 실행 — 식당·광산·잡화점] Set Player Variable(Event Player, SellSum, Round To Integer(Multiply(Multiply(Multiply(Add(Multiply(Value In A
+ 1734 [[조작 03a] 행동 실행 — 식당·광산·잡화점] Set Player Variable(Event Player, SellSum, Round To Integer(Multiply(Multiply(Multiply(Event Player.SellQty, G
+ 1751 [[조작 03a] 행동 실행 — 식당·광산·잡화점] Set Player Variable(Event Player, SellSum, Round To Integer(Multiply(Multiply(Multiply(Event Player.SellQty, G
+ 1809 [[조작 03b] 행동 실행 — 술집·개활지·초소] Else If(Event Player.Money >= Round To Integer(Multiply(38, Subtract(1, Multiply(Subtract(Event Player.Fame, E
+ 1810 [[조작 03b] 행동 실행 — 술집·개활지·초소] Set Player Variable(Event Player, Amt, Round To Integer(Multiply(38, Subtract(1, Multiply(Subtract(Event Playe
+ 1823 [[조작 03b] 행동 실행 — 술집·개활지·초소] Small Message(Event Player, Custom String("돈이 모자란다 ($ {0} 필요)", Round To Integer(Multiply(38, Subtract(1, Mult
+ 1947 [[조작 03b] 행동 실행 — 술집·개활지·초소] Set Player Variable(Event Player, Noto, Max(0, Subtract(Event Player.Noto, 40)));
+ 3639 [[생활 01] DoSleep] Set Player Variable(Event Player, Amt, Round To Integer(Multiply(90, Subtract(1, Multiply(Subtract(Event Playe
+ 5596 [[감옥 01] 만기 출소] Set Player Variable(Event Player, Noto, Max(0, Subtract(Event Player.Noto, 20)));

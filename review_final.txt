@@ -1,0 +1,35 @@
+=== 회수/추가 변수 ===
+ player vars: 126
+  Tier 잔존: 25
+  HudIds 잔존: 0
+  WantedIco 잔존: 0
+  Contrib: 5  TownStage: 16  RatOn: 10
+=== 쥐 격리 검사 ===
+  MISSING FILTER: (379, '[코어 02] BuildWorld', 'Create In-World Text(And(Distance Between(Local Player, Value In Array(Global Variable(LocPos), 6)) ')
+  MISSING FILTER: (3490, '[야수 06] 급소의 빛', 'Create Effect(Player Variable(Value In Array(All Players(Team 2), 0), RevealEnd) > Total Time Elapse')
+  MISSING FILTER: (3492, '[야수 06] 급소의 빛', 'Create Effect(Player Variable(Value In Array(All Players(Team 2), 1), RevealEnd) > Total Time Elapse')
+  MISSING FILTER: (3494, '[야수 06] 급소의 빛', 'Create Effect(Player Variable(Value In Array(All Players(Team 2), 2), RevealEnd) > Total Time Elapse')
+=== 쥐 규칙 이벤트/조건 ===
+  [쥐 01] event=['Ongoing - Global;', '', 'conditions']
+  [쥐 02] event=['Ongoing - Each Player;', 'Team 2;', 'All;']
+  [쥐 03] event=['Player Took Damage;', 'Team 2;', 'All;']
+  [쥐 04] event=['Player Died;', 'Team 2;', 'All;']
+=== 마을 금고 ===
+  금고 갹출 지점: 2
+  단계 규칙: 1
+  기금 조건 TownStage화: True
+  구 재건가격 잔존: 0
+=== 늑대 ===
+  스폰 55~85: 1
+  목장 25m 제외: True
+  정산 보류: 1
+=== 알림 ===
+  2.5s/3s: 22 22
+  빈문자 분기: 1 1
+=== XP/칭호 ===
+  승급 1000: 8  채굴20: 1  사냥20: 1
+  칭호 Earned: 5
+=== 로비 ===
+   Max Team 1 Players: 8
+   Max Team 2 Players: 4
+   Max Spectators: 2

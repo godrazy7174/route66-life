@@ -1,0 +1,19 @@
+=== Money 증가 지점 중 Earned 누락 (수입인데 칭호에 반영 안 됨) ===
+  [[튜토리얼 01] DoTutorial      ] L588 Event Player += 50
+  [[월드 05] 아침 정산             ] L1291 Event Player += Event Player.Amt
+  [[월드 06] 일일 목표 달성          ] L1326 Event Player += Event Player.Rebuild >= 2 ? 400 : 200
+  [[조작 03b] 행동 실행 — 술집·개활지·초소] L1915 Event Player += Event Player.SellSum
+  [[조작 03c] 행동 실행 — 안내소      ] L2253 Event Player += Event Player.Deposit
+  [[직업 01] DoMine            ] L2876 Event Player += 20
+  [[범죄 01] 황야에서 강도 / 체포 (F)  ] L4080 Event Player += Event Player.Take
+  [[범죄 01] 황야에서 강도 / 체포 (F)  ] L4092 Event Player += Round To Integer(Multiply(Event Player.F
+  [[범죄 01] 황야에서 강도 / 체포 (F)  ] L4121 Event Player += Event Player.Take
+  [[범죄 01] 황야에서 강도 / 체포 (F)  ] L4134 Event Player += Event Player.Prize
+  [[범죄 01] 황야에서 강도 / 체포 (F)  ] L4142 Event Player += 80
+  [[범죄 01] 황야에서 강도 / 체포 (F)  ] L4151 Event Player += 120
+  [[장물 01] 자루 정산 — 은신처       ] L4256 Event Player += Event Player.Loot
+  [[밀수 02] 접선 인계 (F 3초)      ] L4651 Event Player += Event Player.SmugglePay
+  [[거래 01] 돈 건네기 (웅크리기+V)    ] L5098 Event Player.Target += 100
+  [[목장 03] 이웃의 손길            ] L5612 Event Player += 10
+  [[범죄 02] 살해와 처단            ] L5717 Attacker += Player Variable(Attacker, KillPay
+  [[밤 02] 금고 마차 털기 (F 5초)    ] L6174 Event Player += Event Player.Loot

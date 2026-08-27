@@ -1,0 +1,44 @@
+== DayLen: 0
+== Hour: 0
+== Rebirth: 8
+    Rebirth >= 1, Event Player.Earned > Event Player.DayStart));
+    Rebirth)), Down));
+    Rebirth), Event Player.Amt));
+    Rebirth >= 5);
+    Rebirth, Add, 1);
+    Rebirth));
+== RebuildMax: 8
+    RebuildMax, 0);
+    RebuildMax, Max(Global Variable(RebuildMax), Event Player.Rebuild));
+    RebuildMax) < 3);
+    RebuildMax) >= 3, Global Variable(Day) < Global Variable(BankLockDay))));
+    RebuildMax) >= 3));
+    RebuildMax, Max(Global Variable(RebuildMax), Event Player.Rebuild));
+== Mastery: 2
+    마스터리
+    마스터리
+=== 월드 01 head ===
+rule("[월드 01] 시간 흐름")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	conditions
+	{
+		Global Variable(Ready) == 1;
+	}
+
+	actions
+	{
+		Wait(2, Ignore Condition);
+		Modify Global Variable(Clock, Add, 4);
+		If(Global Variable(Clock) >= 1440);
+			Set Global Variable(Clock, 0);
+			Modify Global Variable(Day, Add, 1);
+			Set Global Variable(OrePrice, Random Integer(2, 5));
+			Set Global Variable(HidePrice, Random Integer(3, 6));
+			Set Global Variable(DailyGoal, Add(320, Multiply(Global Variable(Day), 64)));
+			Set Global Variable(TodayJob, Random Integer(1, 6));
+			Big Message(All Players(All Teams), Custom String("새 아침 — 오늘은 {0}의 날! 해당 직업 보수 1.5배", Value In Array(Array(Custom String("뜨내기"), Custom String("광

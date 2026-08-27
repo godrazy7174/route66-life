@@ -1,0 +1,13 @@
+--- line 565 ---
+Set Player Variable(Event Player, TutStep, 0);
+--- line 567 ---
+Create HUD Text(Event Player, Value In Array(Array(Custom String("66번 국도"), Custom String("굶주림과 목마름"), Custom String("피로
+    배열크기=18  인덱스= Min(17, Event Player.TutStep
+    배열크기=18  인덱스= Min(17, Event Player.TutStep
+--- line 569 ---
+For Player Variable(Event Player, TutStep, 0, 18, 1);
+--- line 571 ---
+Start Camera(Event Player, Ray Cast Hit Position(Add(Value In Array(Global Variable(LocPos), Value In Array(Array(0, 2, 
+    배열크기=18  인덱스= Event Player.TutStep
+    배열크기=18  인덱스= Event Player.TutStep
+    배열크기=16  인덱스= Event Player.TutStep

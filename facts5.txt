@@ -1,0 +1,16 @@
+=== JobXP 증가 지점 ===
+  [[직업 01] DoMine      ] Set Player Variable At Index(Event Player, JobXP, 1, Add(Value In Array(Event Player.JobXP, 1), 40));
+  [[직업 01] DoMine      ] Set Player Variable At Index(Event Player, JobXP, 1, Add(Value In Array(Event Player.JobXP, 1), 12));
+  [[직업 03-2] 야수 처치     ] Set Player Variable At Index(Attacker, JobXP, 2, Add(Value In Array(Player Variable(Attacker, JobXP), 2), 15));
+  [[직업 04] DoPlan      ] Set Player Variable At Index(Event Player, JobXP, 4, Add(Value In Array(Event Player.JobXP, 4), 15));
+  [[습격 01] 역마차 추격      ] Set Player Variable At Index(Event Player, JobXP, 4, Add(Value In Array(Event Player.JobXP, 4), 30));
+  [[파발 01] 배달 도착 — 자동 정] Set Player Variable At Index(Event Player, JobXP, 5, Add(Value In Array(Event Player.JobXP, 5), 25));
+  [[목동 01] 소몰이         ] Set Player Variable At Index(Event Player, JobXP, 6, Add(Value In Array(Event Player.JobXP, 6), 25));
+  [[범죄 01] 황야에서 강도 / 체포] Set Player Variable At Index(Event Player, JobXP, 3, Add(Value In Array(Event Player.JobXP, 3), 25));
+  [[범죄 01] 황야에서 강도 / 체포] Set Player Variable At Index(Event Player, JobXP, 4, Add(Value In Array(Event Player.JobXP, 4), 20));
+
+=== Mastery(Giant) 진행/조건 ===
+  conditions
+  Add(Add(Add(Add(Add(Add(Add(Add(Value In Array(Event Player.JobXP, 1) >= 2500, Value In Array(Event Player.JobXP, 1) >= 5000), Add(Value In Array(Event Player.JobXP, 1) >= 100
+  Modify Player Variable(Event Player, Giant, Add, 10);
+  Big Message(All Players(All Teams), Custom String("{0} — 한 길의 장인이 되었다! (마스터리 {1}) +$1,000", Event Player, Round To Integer(Divide(Event Player.Giant, 10), Down)));

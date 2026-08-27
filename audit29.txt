@@ -1,0 +1,34 @@
+ 5623 rule("[감옥 01] 만기 출소")
+ 5624 {
+ 5625 	event
+ 5626 	{
+ 5627 		Ongoing - Each Player;
+ 5628 		All;
+ 5629 		All;
+ 5630 	}
+ 5631 
+ 5632 	conditions
+ 5633 	{
+ 5634 		Event Player.Init == 1;
+ 5635 		Event Player.JailOn == 1;
+ 5636 		Total Time Elapsed() >= Event Player.JailEnd;
+ 5637 	}
+ 5638 
+ 5639 	actions
+ 5640 	{
+ 5641 		Set Player Variable(Event Player, JailOn, 0);
+ 5642 		Clear Status(Event Player, Rooted);
+ 5643 		Clear Status(Event Player, Phased Out);
+ 5644 		Set Primary Fire Enabled(Event Player, True);
+ 5645 		Set Player Variable(Event Player, Busy, 0);
+ 5646 		Set Player Variable(Event Player, Noto, Max(0, Subtract(Event Player.Noto, 20)));
+ 5647 		Big Message(Event Player, Custom String("만기 출소 — 죗값을 치렀다 (악명 -20)"));
+ 5648 		Play Effect(Event Player, Buff Impact Sound, Color(Sky Blue), Position Of(Event Player), 80);
+ 5649 	}
+ 5650 }
+
+=== JailEnd 초기화 여부 ===
+  SetupPlayer에서 JailEnd 초기화: False
+  206: 76: JailEnd
+  4097: Set Player Variable(Event Player.Target, JailEnd, Add(Total Time Elapsed(), Min(50, Add(30, Round To Integer(Divide(Player Variabl
+  5636: Total Time Elapsed() >= Event Player.JailEnd;

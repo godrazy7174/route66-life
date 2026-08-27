@@ -1,0 +1,27 @@
+ 3435 rule("[쥐 02] 쥐의 약탈")
+ 3436 {
+ 3437 	event
+ 3438 	{
+ 3439 		Ongoing - Each Player;
+ 3440 		Team 2;
+ 3441 		All;
+ 3442 	}
+ 3443 
+ 3444 	conditions
+ 3445 	{
+ 3446 		Slot Of(Event Player) == 3;
+ 3447 		Global Variable(RatOn) == 1;
+ 3448 		Is Alive(Event Player) == True;
+ 3449 	}
+ 3450 
+ 3451 	actions
+ 3452 	{
+ 3453 		Start Throttle In Direction(Event Player, Direction Towards(Position Of(Event Player), Value In Array(Global Variable(LocPos), 2)), 1, To World, Replace exist
+ 3454 		If(Distance Between(Position Of(Event Player), Value In Array(Global Variable(LocPos), 2)) < 9);
+ 3455 			Set Global Variable(JerkyStock, Max(0, Subtract(Global Variable(JerkyStock), 2)));
+ 3456 			Play Effect(All Players(All Teams), Bad Explosion, Color(Red), Position Of(Event Player), 1);
+ 3457 		End;
+ 3458 		Wait(2, Ignore Condition);
+ 3459 		Loop If(And(Global Variable(RatOn) == 1, Is Alive(Event Player)));
+ 3460 	}
+ 3461 }

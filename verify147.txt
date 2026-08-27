@@ -1,0 +1,17 @@
+=== 배지 수령 분기 ===
+Else;
+If(Event Player.Job == 3);
+Small Message(Event Player, Custom String("이미 현상금 사냥꾼이다"));
+Play Effect(Event Player, Debuff Impact Sound, Color(Red), Position Of(Event Player), 45);
+Else If(Event Player.Fame < 30);
+Small Message(Event Player, Custom String("마을의 신뢰가 모자란다 — 명성 {0} / 30", Event Player.Fame));
+Play Effect(Event Player, Debuff Impact Sound, Color(Red), Position Of(Event Player), 45);
+Else If(Event Player.Noto > 20);
+Small Message(Event Player, Custom String("죄지은 손에 배지를 맡길 수는 없다 — 악명 {0} (20 이하라야 한다)", Event Player.Noto));
+Play Effect(Event Player, Debuff Impact Sound, Color(Red), Position Of(Event Player), 45);
+Else;
+Set Player Variable(Event Player, JobArg, 3);
+Call Subroutine(BecomeJob);
+Big Message(Event Player, Custom String("배지를 받았다 — 석궁의 프레야가 된다. 전단이 붙은 자($300+)를 산 채로 잡아라"));
+Play Effect(Event Player, Buff Impact Sound, Color(Sky Blue), Position Of(Event Player), 80);
+End;

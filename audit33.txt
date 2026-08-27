@@ -1,0 +1,13 @@
+=== A) 조건부 HUD의 표시 조건에 쓰인 변수 ===
+=== B) 아이콘/이펙트를 만든 뒤 조건이 바뀌어도 남는지 (파괴 규칙 존재 여부) ===
+  DelIcon      (배달) 생성 1 / 파괴 4  
+  EscortIco    (금괴) 생성 2 / 파괴 6  
+  EscortFx     (금괴) 생성 2 / 파괴 6  
+  SmuggleIco   (밀수) 생성 1 / 파괴 4  
+  CowIco       (소) 생성 4 / 파괴 11  
+  CowFx        (소) 생성 5 / 파괴 13  
+  RatFx        (쥐) 생성 0 / 파괴 2  
+  AlarmIco     (은행경보) 생성 0 / 파괴 3  
+  WagonIco     (금고마차) 생성 0 / 파괴 2  
+=== C) 사망 시 아이콘 정리 ===
+   ['CowFx', 'CowIco', 'DelIcon', 'EscortFx', 'EscortIco', 'SmuggleIco']

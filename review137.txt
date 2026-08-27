@@ -1,0 +1,15 @@
+rules: 122
+TickerMsg sets: 22
+TickerEnd sets: 22
+NoticeMsg sets: 22
+NoticeEnd sets: 22
+Big Message: 78
+kept: 체포하려 한다(Big): 0
+kept: 총을 겨눴다(Big): 0
+globals 66-69: True
+new rule: 1
+HUD notice line: 1
+HUD ticker line: 1
+leftover ticker-target Big(ALL): 0
+leftover notice-target Big(EP): 0
+Big split EP/ALL/other: 32 46 0

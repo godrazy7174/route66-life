@@ -1,0 +1,65 @@
+=== [범죄 01] 조건 ===
+conditions
+{
+Is Dummy Bot(Event Player) == False;
+Event Player.Init == 1;
+Event Player.Busy == 0;
+Global Variable(ArchOn) == 0;
+Is Alive(Event Player) == True;
+Event Player.CowOn == 0;
+Is Button Held(Event Player, Button(Crouch)) == False;
+Is Button Held(Event Player, Button(Melee)) == True;
+}
+
+actions
+{
+If(Total Time Elapsed() < Event Player.RobCd);
+Small Message(Event Player, Custom String("아직 몸을 사려야 한다 — {0}초 뒤에 다시", Round To Integer(Subtract(Event Player.RobCd, Total Time Elapsed()), Up)));
+
+=== [파발 02] 샛길의 Dial* 사용 ===
+  Set Player Variable(Event Player, DialTgt, Random Value In Array(Filtered Array(Append To Array(Global Variable(RaidPath), Global Variable(L
+  Set Player Variable(Event Player, DialTgt, Add(Position Of(Event Player), Multiply(Direction From Angles(Add(Horizontal Angle From Direction
+  Set Player Variable(Event Player, DialTgt, Nearest Walkable Position(Add(Event Player.DialTgt, Vector(Random Real(-4, 4), 0, Random Real(-4,
+  If(Distance Between(Event Player.DialTgt, Global Variable(SpawnPos)) < 18);
+  Set Player Variable(Event Player, DialTgt, Nearest Walkable Position(Add(Global Variable(SpawnPos), Multiply(Direction Towards(Global Variab
+  Create Effect(All Players(All Teams), Light Shaft, Color(Yellow), Event Player.DialTgt, 1.2, None);
+  Set Player Variable(Event Player, DialPin, Last Created Entity());
+  Create Icon(Event Player, Add(Event Player.DialTgt, Vector(0, 2.5, 0)), Circle, Visible To and Position, Color(Yellow), True);
+  Set Player Variable(Event Player, DialCur, Last Created Entity());
+  Wait Until(Or(Or(Distance Between(Position Of(Event Player), Event Player.DialTgt) < 3, Event Player.Busy == 1), Or(Event Player.HasParcel =
+  Destroy Effect(Event Player.DialPin);
+  Destroy Icon(Event Player.DialCur);
+  If(And(And(Distance Between(Position Of(Event Player), Event Player.DialTgt) < 3, Event Player.HasParcel >= 1), Is Alive(Event Player)));
+
+=== [목동 04] 늑대의 Dial* 사용 ===
+  Set Player Variable(Event Player, DialTgt, Nearest Walkable Position(Add(Event Player.CowPos, Multiply(Direction From Angles(Random Real(-18
+  Set Player Variable(Event Player, DialPin, 0);
+  Set Player Variable(Event Player, DialCur, 0);
+  Create Effect(All Players(All Teams), Sphere, Color(Gray), Event Player.DialTgt, 0.9, Visible To Position Radius and Color);
+  While(And(And(Event Player.CowOn >= 1, Is Alive(Event Player)), And(Event Player.DialCur < 12, Event Player.DialPin < 3)));
+  Set Player Variable(Event Player, DialTgt, Nearest Walkable Position(Add(Event Player.DialTgt, Multiply(Direction Towards(Event Player.DialT
+  If(And(Is Button Held(Event Player, Button(Primary Fire)), And(Distance Between(Position Of(Event Player), Event Player.DialTgt) < 30, Dot P
+  Modify Player Variable(Event Player, DialPin, Add, 1);
+  Play Effect(Event Player, Buff Impact Sound, Color(Orange), Event Player.DialTgt, 40);
+  If(Distance Between(Event Player.DialTgt, Event Player.CowPos) < 2.5);
+  Set Player Variable(Event Player, DialCur, 99);
+  Modify Player Variable(Event Player, DialCur, Add, 0.3);
+  If(Event Player.DialPin >= 3);
+
+=== 은행 진입 지점(뒷문) 앞 게이트 ===
+Play Effect(Event Player, Debuff Impact Sound, Color(Red), Position Of(Event Player), 45);
+Abort;
+End;
+Set Player Variable(Event Player, Target, First Of(Sorted Array(Filtered Array(Players Within Radius(Eye Position(Event Player), 9
+If(Not(Entity Exists(Event Player.Target)));
+If(And(And(Event Player.Zone == 9, Global Variable(IsNight) == 1), And(And(Global Variable(RebuildMax) >= 3, Global Variable(Day) 
+Set Player Variable(Event Player, Busy, 1);
+Set Player Variable(Event Player, DialOn, 1);
+Set Player Variable(Event Player, DialTgt, Random Integer(0, 9));
+Set Player Variable(Event Player, DialPin, 1);
+Set Player Variable(Event Player, DialCur, 0);
+Destroy HUD Text(Event Player.KeyHud);
+Create HUD Text(Event Player, Custom String("은행 다이얼   [ {0} ]", Event Player.DialCur), Custom String("핀 {0} / 3", Event Player.Dia
+Set Player Variable(Event Player, KeyHud, Last Text ID());
+Big Message(Event Player, Custom String("은행 뒷문에 붙었다 — 다이얼을 맞혀라"));
+Small Message(Event Player, Custom String("아직은 조용하다 — 해정하는 순간 마을이 깬다"));

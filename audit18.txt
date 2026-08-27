@@ -1,0 +1,1 @@
+'1000"), Custom String("화약 $200 — 열차의 날"), Custom String("황금 동상 $40,000"), Custom String("-"), Custom String("배달 수주"), Custom String("승급: 역마차장 — Lv.4"), Custom String("금괴 호송 계약"), Custom String("가축 출하 — 마리당 $48"), Custom String("새 출발의 기차 — 환생"), Custom String("부흥 기금 기부 $1,000"), Custom String("소 몰기 시작"), Custom String("승급: 목장주 — Lv.4"), Custom Strin'

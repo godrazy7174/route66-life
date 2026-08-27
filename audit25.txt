@@ -1,0 +1,22 @@
+=== 부동산 임대 흐름 ===
+-- [부동산 01] --
+   If(Value In Array(Global Variable(BldPrice), Event Player.Zone) <= 0);
+   Small Message(Event Player, Custom String("여긴 살 수 있는 건물이 아니다"));
+   Else If(Value In Array(Global Variable(BldOwner), Event Player.Zone) == Event Player);
+   Small Message(Event Player, Custom String("내 건물이다 — 남이 노리는 값은 $ {0}", Value In Array(Global Variable(BldPrice), Event Player.Zone)));
+   Else If(Event Player.Money < Value In Array(Global Variable(BldPrice), Event Player.Zone));
+   Small Message(Event Player, Custom String("돈이 모자란다 ($ {0} 필요)", Value In Array(Global Variable(BldPrice), Event Player.Zone)));
+   Modify Player Variable(Event Player, Money, Subtract, Value In Array(Global Variable(BldPrice), Event Player.Zone));
+   If(Entity Exists(Value In Array(Global Variable(BldOwner), Event Player.Zone)));
+   Modify Player Variable(Value In Array(Global Variable(BldOwner), Event Player.Zone), Money, Add, Value In Array(Global Variable(BldPric
+   Big Message(All Players(All Teams), Custom String("{0}이(가) {1}에게서 {2}을(를) 인수했다!", Event Player, Value In Array(Global Variable(BldOwner
+   Big Message(All Players(All Teams), Custom String("{0} — {1}의 주인이 되었다!", Event Player, Value In Array(Array(Custom String("식당"), Custom
+   Set Global Variable At Index(BldOwner, Event Player.Zone, Event Player);
+   Set Global Variable At Index(BldPrice, Event Player.Zone, Round To Integer(Multiply(Value In Array(Global Variable(BldPrice), Event Pla
+
+-- [부동산 02] --
+   If(And(Value In Array(Global Variable(BldPrice), Global Variable(Idx)) > 0, And(Value In Array(Global Variable(BldOwner), Global Variab
+   Set Global Variable At Index(BldOwner, Global Variable(Idx), 0);
+   Set Global Variable At Index(BldPrice, Global Variable(Idx), Value In Array(Global Variable(BldBase), Global Variable(Idx)));
+   Big Message(All Players(All Teams), Custom String("{0}의 주인이 마을을 떠났다 — 은행이 회수해 매물로 내놨다", Value In Array(Array(Custom String("식당"), Custo
+

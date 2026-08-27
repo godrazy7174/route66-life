@@ -1,0 +1,21 @@
+=== DialTgt 설정 위치와 소속 규칙 ===
+  L4044 [[범죄 01] 황야에서 강도 / 체포 (F)]
+  L4046 [[범죄 01] 황야에서 강도 / 체포 (F)]
+
+=== 샛길 규칙 [파발 02] 현재 상태 ===
+  5174: actions
+  5175: {
+  5176: Wait(Random Real(7, 14), Ignore Condition);
+  5177: If(And(And(Event Player.HasParcel >= 1, Event Player.Busy == 0), Is Alive(Event Player)));
+  5178: Set Player Variable(Event Player, Roll, Random Integer(0, 11));
+  5179: Set Player Variable(Event Player, DialTgt, Add(Value In Array(Global Variable(RaidPath), Event Player.Roll), Multiply(Su
+  5180: If(Or(Distance Between(Event Player.DialTgt, Position Of(Event Player)) < 12, Distance Between(Event Player.DialTgt, Pos
+  5181: Set Player Variable(Event Player, Roll, Random Integer(0, 11));
+  5182: Set Player Variable(Event Player, DialTgt, Add(Value In Array(Global Variable(RaidPath), Event Player.Roll), Multiply(Su
+  5183: End;
+  5184: If(Or(Distance Between(Event Player.DialTgt, Position Of(Event Player)) < 12, Distance Between(Event Player.DialTgt, Pos
+  5185: Set Player Variable(Event Player, Roll, Random Integer(0, 11));
+  5186: Set Player Variable(Event Player, DialTgt, Add(Value In Array(Global Variable(RaidPath), Event Player.Roll), Multiply(Su
+  5187: End;
+  5188: If(Or(Distance Between(Event Player.DialTgt, Position Of(Event Player)) < 12, Distance Between(Event Player.DialTgt, Pos
+  5189: Set Player Variable(Event Player, DialTgt, Add(Position Of(Event Player), Multiply(Direction From Angles(Random Real(-18

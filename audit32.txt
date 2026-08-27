@@ -1,0 +1,50 @@
+=== [습격 01] 역마차 추격 — 종료 경로 ===
+ 3305 conditions
+ 3308 Event Player.Plan >= 1;
+ 3313 If(Not(Is Alive(Event Player)));
+ 3314 Set Player Variable(Event Player, Plan, 0);
+ 3319 Abort;
+ 3322 Set Player Variable(Event Player, Plan, 0);
+ 3328 Abort;
+ 3333 Modify Player Variable(Event Player, Plan, Add, Add(4, Multiply(2, Value In Array(Event Player.Adv, 4))));
+ 3340 If(Event Player.Plan >= 101);
+ 3341 Set Player Variable(Event Player, Plan, 0);
+ 3346 Set Player Variable(Event Player, PlanPay, Random Integer(260, 420));
+ 3348 Set Player Variable(Event Player, PlanPay, Round To Integer(Multiply(Player Variable(Event Player, PlanPay), Global Variable(FundTier) 
+ 3350 Modify Player Variable(Event Player, Money, Add, Event Player.PlanPay);
+ 3351 Modify Player Variable(Event Player, Earned, Add, Event Player.PlanPay);
+ 3354 Big Message(Event Player, Custom String("역마차를 털었다! +$ {0}", Event Player.PlanPay));
+ 3358 Abort;
+ 3361 Loop If(Event Player.Plan >= 1);
+
+=== [은행 04] 작업 중단 — 조건 ===
+ 4370 rule("[은행 04] 작업 중단")
+ 4371 {
+ 4372 event
+ 4373 {
+ 4374 Ongoing - Each Player;
+ 4375 All;
+ 4376 All;
+ 4377 }
+ 4378 
+ 4379 conditions
+ 4380 {
+ 4381 Add(Event Player.DialOn, Event Player.DrillOn) > 0;
+ 4382 Or(Or(Event Player.Zone != 9, Is Alive(Event Player) == False), Or(And(Event Player.DrillOn == 1, Total Time Elapsed() > Event Pla
+ 4383 }
+ 4384 
+ 4385 actions
+ 4386 {
+ 4387 If(Event Player.DrillOn == 1);
+ 4388 Set Global Variable(BankLockDay, Add(Global Variable(Day), 1));
+ 4389 Destroy Icon(Global Variable(AlarmIco));
+ 4390 Small Message(All Players(All Teams), Custom String("은행 경보가 멎었다 — 도둑은 빈손으로 사라졌다"));
+ 4391 End;
+ 4392 Set Player Variable(Event Player, DialOn, 0);
+ 4393 Set Player Variable(Event Player, DrillOn, 0);
+ 4394 Set Player Variable(Event Player, Busy, 0);
+ 4395 Destroy HUD Text(Event Player.KeyHud);
+ 4396 Big Message(Event Player, Custom String("금고가 잠겼다 — 빈손으로 물러난다"));
+ 4397 Play Effect(Event Player, Debuff Impact Sound, Color(Red), Position Of(Event Player), 70);
+ 4398 }
+ 4399 }

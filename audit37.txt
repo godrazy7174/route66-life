@@ -1,0 +1,34 @@
+=== A) 같은 버튼을 쓰는 규칙들의 조건 충돌 ===
+  [Jump] ['[튜토리얼 02] 건너뛰기 (점프)']
+  [Reload] ['[세이브 01] 숫자 +1 (R)', '[은행 01] 다이얼 돌리기 (R)', '[조작 01] 행동 커서 이동 (R)']
+  [Ability 2] ['[조작 02] 육포 먹기 (E)']
+  [Ultimate] ['[조작 02-2] 물 마시기 (Q)']
+  [Ability 1] ['[조작 04] 달리기 (Shift)']
+  [Interact] ['[대사냥 02] 흔적 조사 (F)', '[목장 03] 이웃의 손길', '[밀수 02] 접선 인계 (F 3초)', '[밤 02] 금고 마차 털기 (F 5초)', '[부동산 01] 건물 매입/인수 (웅크리기+F)', '[세이브 02] 자리 확정 (F)', '[열차 01] 화약 설치 (F 8초)', '[열차 03] 금고 개방 (F 5초)', '[은행 02] 다이얼 시도 (F)', '[조작 03a] 행동 실행 — 식당·광산·잡화점·모텔·', '[조작 03b] 행동 실행 — 술집·개활지·초소·은신처', '[조작 03c] 행동 실행 — 안내소', '[조작 03d] 행동 실행 — 대장간', '[조작 03e] 행동 실행 — 정거장', '[조작 03f] 행동 실행 — 목장', '[호송 02] 금괴 인계 (F 3초)']
+  [Crouch] ['[거래 01] 돈 건네기 (웅크리기+V)', '[목장 03] 이웃의 손길', '[부동산 01] 건물 매입/인수 (웅크리기+F)', '[세이브 03] 입력 취소 (웅크리기)', '[은행 04] 작업 중단']
+  [Melee] ['[감옥 02] 벽 부수기 (V 연타)', '[거래 01] 돈 건네기 (웅크리기+V)', '[범죄 01] 황야에서 강도 / 체포 (F)', '[세이브 02-1] 한 칸 지우기 (근접 공격)', '[은행 03] 금고 굴착 (V 연타)']
+  [Primary Fire] ['[목동 03] 총성에 놀란 소']
+
+=== B) 같은 값을 다르게 판정하는 곳 (전단/추방 임계) ===
+  전단(300): {'Bounty >= 300'}
+  추방(800): {'Bounty >= 800'}
+  체포가능: {'Bounty >= 800', 'Bounty >= 300'}
+
+=== C) 이동속도 규칙 간 우선순위 ===
+  [[월드 03] 결핍 패널티          ] Set Move Speed(Event Player, 70);
+  [[월드 03] 결핍 패널티          ] Set Move Speed(Event Player, 80);
+  [[월드 03] 결핍 패널티          ] Set Move Speed(Event Player, And(Event Player.HasBag == 0, Event Player.HasHorse == 0) ? 110 : 100);
+  [[월드 03] 결핍 패널티          ] Set Move Speed(Event Player, 115);
+  [[조작 04] 달리기 (Shift)     ] Set Move Speed(Event Player, 165);
+  [[조작 04] 달리기 (Shift)     ] Set Move Speed(Event Player, 70);
+  [[조작 04] 달리기 (Shift)     ] Set Move Speed(Event Player, 80);
+  [[조작 04] 달리기 (Shift)     ] Set Move Speed(Event Player, And(Event Player.HasBag == 0, Event Player.HasHorse == 0) ? 110 : 100);
+  [[조작 04] 달리기 (Shift)     ] Set Move Speed(Event Player, 115);
+  [[조작 05] 바이크 질주 (시온 E)   ] Set Move Speed(Event Player, 200);
+  [[조작 05] 바이크 질주 (시온 E)   ] Set Move Speed(Event Player, 70);
+  [[조작 05] 바이크 질주 (시온 E)   ] Set Move Speed(Event Player, 80);
+  [[조작 05] 바이크 질주 (시온 E)   ] Set Move Speed(Event Player, And(Event Player.HasBag == 0, Event Player.HasHorse == 0) ? 110 : 100);
+  [[조작 05] 바이크 질주 (시온 E)   ] Set Move Speed(Event Player, 115);
+  [[직업 03] 야수 은신           ] Set Move Speed(Event Player, 0);
+  [[직업 03-3] 야수 배회         ] Set Move Speed(Event Player, Random Integer(175, 215));
+  [[직업 03-3] 야수 배회         ] Set Move Speed(Event Player, Random Integer(1, 100) <= 35 ? Random Integer(175, 215) : Random Intege

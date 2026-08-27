@@ -1,0 +1,3 @@
+=== 수입 지점 Earned 반영 재확인 ===
+  L2257 미반영: Modify Player Variable(Event Player, Money, Add, Event Player.Deposit);
+남은 미반영: 1 (예금 인출·송금 수령만 정상)

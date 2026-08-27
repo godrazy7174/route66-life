@@ -1,0 +1,11 @@
+=== 쥐 규칙 상호작용 재점검 ===
+ 재귀 차단(Null 공격자): True
+ Attacker 존재 조건: True
+ 45초 후 RatOn 재확인: True
+ RatNext 갱신 위치 루프밖: 1
+ 야수처치 슬롯가드: True
+=== 마을 금고 경합 ===
+ TownStage 증가 먼저: True
+ Rebuild 부여 조건부: True
+=== 늑대 가드가 다른 정산을 막지 않는지 ===
+ 가드 위치(우리 6m 판정 앞): False

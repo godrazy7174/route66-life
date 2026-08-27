@@ -1,0 +1,96 @@
+===== [직업 00] 일이 곧 직업 — 자동 전직
+rule("[직업 00] 일이 곧 직업 — 자동 전직")
+{
+	event
+	{
+		Subroutine;
+		BecomeJob;
+	}
+
+	actions
+	{
+		If(Event Player.Job != Event Player.JobArg);
+			Set Player Variable(Event Player, Job, Event Player.JobArg);
+			Set Global Variable At Index(NoticeMsg, Slot Of(Event Player), Custom String("전직 — {0}", Value In Array(Array(Custom String("뜨내기"), Custom String("광부"), Custom String("사냥꾼"), Custom String("현상금 사냥꾼"), Custom String("무법자"), Custom String("파발꾼"), Custom String("목동")), Event Player.JobArg)));
+			Set Global Variable At Index(NoticeEnd, Slot Of(Event Player), Add(Total Time Elapsed(), 5));
+			Small Message(Event Player, Custom String("일이 곧 직업이다 — 이전 직업의 경험치와 승급은 그대로 남는다"));
+			Play Effect(Event Player, Buff Impact Sound, Color(Sky Blue), Position Of(Event Player), 70);
+			Play Effect(All Players(All Teams), Ring Explosion, Color(Sky Blue), Position Of(Event Player), 2);
+		End;
+	}
+}
+
+rule("[직업 01] DoMine")
+
+===== [직업 03-2] 야수 처치
+rule("[직업 03-2] 야수 처치")
+{
+	event
+	{
+		Player Died;
+		Team 2;
+		All;
+	}
+
+	conditions
+	{
+		Is Dummy Bot(Victim) == True;
+		Entity Exists(Attacker) == True;
+		Player Variable(Attacker, Init) == 1;
+	}
+
+	actions
+	{
+		Set Player Variable(Attacker, Yield, Random Integer(1, 3));
+		If(Player Variable(Attacker, Job) == 2);
+			Modify Player Variable(Attacker, Yield, Add, Value In Array(Player Variable(Attacker, Adv), 2));
+			Modify Player Variable(Attacker, Yield, Add, Min(2, Round To Integer(Divide(Value In Array(Player Variable(Attacker, JobXP), 2), 250), Down)));
+
+===== [양조 01] 밀주 숙성 완료
+rule("[양조 01] 밀주 숙성 완료")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.BrewVats >= 1;
+		Event Player.BrewEnd > 0;
+		Total Time Elapsed() >= Event Player.BrewEnd;
+	}
+
+	actions
+	{
+		Set Player Variable(Event Player, BrewEnd, 0);
+		Set Player Variable(Event Player, BrewReady, Multiply(3, Event Player.BrewVats));
+		Set Global Variable At Index(NoticeMsg, Slot Of(Event Player), Custom String("밀주가 익었다 — {0}병. 술집 뒷문이 기다린다", Event Player.BrewReady));
+		Set Global Variable At Index(NoticeEnd, Slot Of(Event Player), Add(Total Time Elapsed(), 5));
+
+===== [목장 02] 소가 다 컸다
+rule("[목장 02] 소가 다 컸다")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.RanchPens >= 1;
+		Event Player.RanchEnd > 0;
+		Total Time Elapsed() >= Event Player.RanchEnd;
+	}
+
+	actions
+	{
+		Set Player Variable(Event Player, RanchEnd, 0);
+		Set Player Variable(Event Player, RanchReady, Multiply(Event Player.RanchCare == 1 ? 3 : 1, Event Player.RanchPens));
+		If(Event Player.RanchCare == 1);
+			Set Global Variable At Index(NoticeMsg, Slot Of(Event Player), Custom String("소가 통통하게 컸다 — {0}마리 출하 준비 완료", Event Player.RanchReady));
+

@@ -1,0 +1,30 @@
+rule("[기금 01] 부흥의 불")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	conditions
+	{
+		Global Variable(Ready) == 1;
+		Global Variable(FundTier) <= 2;
+		Global Variable(Fund) >= Value In Array(Array(60000, 180000, 400000), Global Variable(FundTier));
+	}
+
+	actions
+	{
+		Modify Global Variable(FundTier, Add, 1);
+		If(Global Variable(FundTier) == 1);
+			Create Effect(All Players(All Teams), Sphere, Color(Orange), Add(Nearest Walkable Position(Multiply(Add(Value In Array(Global Variable(LocPos), 0), Value In Array(Global Variable(LocPos),
+			Create Effect(All Players(All Teams), Light Shaft, Color(Orange), Nearest Walkable Position(Multiply(Add(Value In Array(Global Variable(LocPos), 0), Value In Array(Global Variable(LocPos)
+			Create In-World Text(All Players(All Teams), Custom String("길손의 쉼터"), Add(Nearest Walkable Position(Multiply(Add(Value In Array(Global Variable(LocPos), 0), Value In Array(Global Variable
+			Big Message(All Players(All Teams), Custom String("부흥 기금 1단계!! 길손의 쉼터가 세워졌다 — 길목의 모닥불에서 몸을 데워라"));
+		Else If(Global Variable(FundTier) == 2);
+			Big Message(All Players(All Teams), Custom String("부흥 기금 2단계!! 역마차 급행로 개통 — 배달·금괴 호송 보수 +15%"));
+		Else;
+			Big Message(All Players(All Teams), Custom String("부흥 기금 3단계!! 국도 대축제 — 오늘의 직업 1.75배 · 밤마다 불꽃놀이 · 아침마다 명성 +1"));
+		End;
+		Play Effect(All Players(All Teams), Ring Explosion, Color(Orange), Nearest Walkable Position(Multiply(Add(Value In Array(Global Variable(LocPos), 0), Value In Array(Global Variable(LocPos)
+		Play Effect(All Players(All Teams), Buff Explosion Sound, Color(Orange), Nearest Walkable Position(Multiply(Add(Value In Array(Global Variable(LocPos), 0), Value In Array(Global Variable(L
+		Wait(0.5, Ignore Condition);

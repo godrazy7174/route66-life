@@ -1,0 +1,4 @@
+=== 세이브 복원 시 재건/금고 처리 ===
+  Set Player Variable(Event Player, Rebuild, Round To Integer(Divide(Event Player.EnterC, 100000), Down));
+ TownStage 복원 코드 존재: False
+  TownStage 쓰기: Modify Global Variable(TownStage, Add, 1);

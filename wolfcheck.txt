@@ -1,0 +1,86 @@
+[목동 01] 3797~3881
+ 3797 rule("[목동 01] 소몰이")
+ 3798 {
+ 3799 	event
+ 3800 	{
+ 3801 		Ongoing - Each Player;
+ 3802 		All;
+ 3803 		All;
+ 3804 	}
+ 3805 
+ 3806 	conditions
+ 3807 	{
+ 3808 		Event Player.Init == 1;
+ 3809 		Event Player.CowOn >= 1;
+ 3810 	}
+ 3811 
+ 3812 	actions
+ 3813 	{
+ 3814 		If(Or(Not(Is Alive(Event Player)), Total Time Elapsed() > Event Player.CowEnd));
+ 3815 			Set Player Variable(Event Player, CowOn, 0);
+ 3816 			Destroy Effect(Event Player.CowFx);
+ 3817 			Destroy Icon(Event Player.CowIco);
+ 3818 			Small Message(Event Player, Custom String("소를 잃어버렸다..."));
+ 3819 			Play Effect(Event Player, Debuff Impact Sound, Color(Red), Position Of(Event Player), 60);
+ 3820 			Abort;
+ 3821 		End;
+ 3822 		If(And(Event Player.DialCur < 12, Event Player.DialPin < 3));
+ 3823 			Small Message(Event Player, Custom String("늑대가 소에 붙어 있다 — 쫓아내야 우리에 넣는다"));
+ 3824 			Wait(1, Ignore Condition);
+ 3825 			Abort;
+ 3826 		End;
+ 3827 		If(Distance Between(Event Player.CowPos, Value In Array(Global Variable(LocPos), 12)) < 6);
+ 3828 			Destroy Effect(Event Player.CowFx);
+ 3829 			Destroy Icon(Event Player.CowIco);
+ 3830 			Set Player Variable(Event Player, RunPay, Add(220, Multiply(4, Min(10, Round To Integer(Divide(Value In Array(Event Player.JobX
+ 3831 			If(And(Event Player.Job == 6, Value In Array(Event Player.Adv, Event Player.Job) == 1));
+ 3832 				Set Player Variable(Event Player, RunPay, Round To Integer(Multiply(Event Player.RunPay, 1.15), To Nearest));
+ 3833 			End;
+ 3834 			If(Global Variable(TodayJob) == 6);
+ 3835 				Set Player Variable(Event Player, RunPay, Round To Integer(Multiply(Player Variable(Event Player, RunPay), Global Variable(Fun
+ 3836 			End;
+ 3837 			If(Event Player.CowOn == 2);
+ 3838 				Set Player Variable(Event Player, RunPay, Round To Integer(Multiply(Event Player.RunPay, 0.5), To Nearest));
+ 3839 				Small Message(Event Player, Custom String("고삐를 놓친 몰이 — 삯이 절반이다"));
+ 3840 			End;
+ 3841 			Set Player Variable(Event Player, CowOn, 0);
+ 3842 			Modify Player Variable(Event Player, Money, Add, Event Player.RunPay);
+ 3843 			Modify Player Variable(Event Player, Earned, Add, Event Player.RunPay);
+ 3844 			Set Player Variable At Index(Event Player, JobXP, 6, Add(Value In Array(Event Player.JobXP, 6), 25));
+ 3845 			Set Global Variable(JerkyStock, Min(60, Add(Global Variable(JerkyStock), 6)));
+ 3846 			Set Player Variable(Event Player, Energy, Max(0, Subtract(Event Player.Energy, 5)));
+ 3847 			Set Player Variable(Event Player, Hunger, Max(0, Subtract(Event Player.Hunger, 3)));
+ 3848 			Set Player Variable(Event Player, Thirst, Max(0, Subtract(Event Player.Thirst, 2.5)));
+ 3849 			Set Global Variable At Index(NoticeMsg, Slot Of(Event Player), Custom String("우리에 몰아넣었다!   +$ {0}   (잡화점 육포 재고 +6)", Event Play
+ 3850 			Set Global Variable At Index(NoticeEnd, Slot Of(Event Player), Add(Total Time Elapsed(), 2.5));
+ 3851 			If(And(Global Variable(ContractKind) == 4, Modulo(Player Variable(Event Player, Giant), 10) < 2));
+ 3852 				Modify Player Variable(Event Player, Giant, Add, 1);
+ 3853 				If(Modulo(Player Variable(Event Player, Giant), 10) == 2);
+ 3854 					Modify Player Variable(Event Player, Giant, Add, Subtract(9, 2));
+ 3855 					Modify Player Variable(Event Player, Money, Add, 150);
+ 3856 					Modify Player Variable(Event Player, Earned, Add, 150);
+ 3857 					Set Player Variable(Event Player, Fame, Min(100, Add(Player Variable(Event Player, Fame), 3)));
+ 3858 					Set Global Variable At Index(NoticeMsg, Slot Of(Event Player), Custom String("오늘의 계약 달성! +$150 · 명성 +3"));
+ 3859 					Set Global Variable At Index(NoticeEnd, Slot Of(Event Player), Add(Total Time Elapsed(), 2.5));
+ 3860 					Play Effect(Event Player, Buff Explosion Sound, Color(Yellow), Position Of(Event Player), 120);
+ 3861 				Else;
+ 3862 					Small Message(Event Player, Custom String("오늘의 계약 — 진행 {0} / {1}", Modulo(Player Variable(Event Player, Giant), 10), 2));
+ 3863 				End;
+ 3864 			End;
+ 3865 			Play Effect(All Players(All Teams), Good Explosion, Color(Lime Green), Value In Array(Global Variable(LocPos), 12), 2.5);
+ 3866 			Play Effect(Event Player, Buff Explosion Sound, Color(Lime Green), Position Of(Event Player), 130);
+ 3867 			Abort;
+ 3868 		End;
+ 3869 		If(Distance Between(Position Of(Event Player), Event Player.CowPos) < 4.5);
+ 3870 			Set Player Variable(Event Player, CowPos, Nearest Walkable Position(Add(Event Player.CowPos, Multiply(Normalize(Vector(X Compon
+ 3871 			Destroy Effect(Event Player.CowFx);
+ 3872 			Create Effect(All Players(All Teams), Sphere, Color(White), Event Player.CowPos, 0.7, None);
+ 3873 			Set Player Variable(Event Player, CowFx, Last Created Entity());
+ 3874 			Destroy Icon(Event Player.CowIco);
+ 3875 			Create Icon(All Players(All Teams), Add(Event Player.CowPos, Vector(0, 1.6, 0)), Circle, Visible To and Position, Color(White),
+ 3876 			Set Player Variable(Event Player, CowIco, Last Created Entity());
+ 3877 		End;
+ 3878 		Wait(0.25, Ignore Condition);
+ 3879 		Loop If(Event Player.CowOn >= 1);
+ 3880 	}
+ 3881 }

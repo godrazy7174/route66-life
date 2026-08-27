@@ -1,0 +1,4 @@
+len: 3257
+		Create HUD Text(Event Player, Value In Array(Array(Custom String("66번 국도"), Custom String("굶주림과 목마름"), Custom String("피로"), Custom String("직업"), Custom String("광부"), Custom String("사냥꾼"), Custom String("무법자"), Custom String("현상금 사냥꾼"), Custom String("파발꾼"), Custom String("목동"), Custom String("돈으로 바꾸기"), Custom String("장비"), Custom String("하루와 밤"), Custom String("사건"), Custom String("사흘의 리듬"), Cu
+...
+Array( 개수: 4

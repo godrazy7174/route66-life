@@ -1,0 +1,8 @@
+=== A) 상호 배타 매트릭스 검증 ===
+  [배달 수주] 확인: ['CowOn', 'Escort', 'HasParcel']
+  [금괴 호송] 확인: ['CowOn', 'Plan']
+  [소 몰기] 확인: ['HasParcel', 'Escort', 'Plan', 'CowOn']
+  [습격] 확인: ['CowOn', 'Escort', 'Plan']
+
+=== B) 안내 문구에 남은 옛 수치 ===
+  구 3단계: 1건 — ['/ 3)']

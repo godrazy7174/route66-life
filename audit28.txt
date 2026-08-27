@@ -1,0 +1,15 @@
+=== 감옥: 수감→출소 흐름 ===
+-- [감옥 01] --
+   Total Time Elapsed() >= Event Player.JailEnd;
+   Set Player Variable(Event Player, Noto, Max(0, Subtract(Event Player.Noto, 20)));
+   Big Message(Event Player, Custom String("만기 출소 — 죗값을 치렀다 (악명 -20)"));
+
+-- [감옥 02] --
+   Small Message(Event Player, Custom String("퍽! 벽이 흔들린다 — 내구도 {0}", Event Player.WallHP));
+   Set Player Variable(Event Player, Noto, Min(100, Add(Event Player.Noto, 15)));
+   Modify Player Variable(Event Player, Bounty, Add, 100);
+   Teleport(Event Player, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 7), Vector(6, 0, 6))));
+   Big Message(All Players(All Teams), Custom String("{0} — 유치장 벽을 부수고 탈옥했다!!", Event Player));
+
+=== 감옥 수감 지점 ===
+  [[범죄 01] 황야에서 강도 / 체포 (F)] Set Player Variable(Event Player.Target, JailEnd, Add(Total Time Elapsed(), Min(50, Add(30, Round To Integer(Divide(Play

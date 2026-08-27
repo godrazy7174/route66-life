@@ -1,0 +1,5 @@
+2167 [[조작 03c] 행동 실행 — 안내소] Else If(Event Player.MenuIdx == 3);
+2177 [[조작 03c] 행동 실행 — 안내소] Big Message(All Players(All Teams), Custom String("{0} — {1} 재건!! ({2}/5)", Event Player, Value In Array(Array(Custom String("마을 우물"), Custom String("
+2565 [[조작 03e] 행동 실행 — 정거장] Modify Global Variable(Fund, Add, 1000);
+5244 [[기금 01] 부흥의 불] Modify Global Variable(FundTier, Add, 1);
+--- 안내소 메뉴 항목 ---

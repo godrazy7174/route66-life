@@ -1,0 +1,40 @@
+				Set Player Variable(Event Player, EnterC, 0);
+				Set Player Variable(Event Player, EntryIdx, 0);
+				Set Player Variable(Event Player, EntryCur, 0);
+				Create HUD Text(Event Player, Custom String("코드 입력   {0}", Custom String("A {0}   B {1}   C {2}", Event Player.EnterA, Event Player.EnterB, Event Player.EnterC)), Custom String("자리 {0}/1
+				Set Player Variable(Event Player, KeyHud, Last Text ID());
+				Wait Until(Not(Is Button Held(Event Player, Button(Interact))), 5);
+				Set Player Variable(Event Player, SaveOn, 1);
+				Small Message(Event Player, Custom String("주의 — 복원하면 현재 진행이 덮어써집니다"));
+			Else If(Event Player.MenuIdx == 3);
+				If(Event Player.Rebuild >= 5);
+					Small Message(Event Player, Custom String("마을은 이미 되살아났다 — 당신의 이름과 함께"));
+					Play Effect(Event Player, Buff Impact Sound, Color(Yellow), Position Of(Event Player), 50);
+				Else;
+					Set Player Variable(Event Player, Amt, Value In Array(Array(60000, 100000, 160000, 260000, 420000), Event Player.Rebuild));
+					If(Event Player.Money >= Event Player.Amt);
+						Modify Player Variable(Event Player, Money, Subtract, Event Player.Amt);
+						Modify Player Variable(Event Player, Rebuild, Add, 1);
+						Set Global Variable(RebuildMax, Max(Global Variable(RebuildMax), Event Player.Rebuild));
+						Big Message(All Players(All Teams), Custom String("{0} — {1} 재건!! ({2}/5)", Event Player, Value In Array(Array(Custom String("마을 우물"), Custom String("전신국"), Custom String("마을 은행"), Cus
+						Small Message(Event Player, Custom String("특전 — {0}", Value In Array(Array(Custom String("갈증이 20% 느리게 마른다"), Custom String("오늘 목표 보너스 $400"), Custom String("재산세 절반 · 사망 손실 3%"), Custom
+						Play Effect(All Players(All Teams), Ring Explosion, Color(Yellow), Position Of(Event Player), 6);
+						Play Effect(All Players(All Teams), Buff Explosion Sound, Color(Yellow), Position Of(Event Player), 220);
+						If(Event Player.Rebuild >= 5);
+							Big Message(All Players(All Teams), Custom String("기차역이 복원되었다 — {0}, 66번 국도의 재건자!", Event Player));
+=== 야수 부활/스폰 규칙 목록 ===
+  rule("[직업 03-5] 야수 정원 감시 — 항상 3마리")
+  rule("[직업 03] 야수 은신")
+  rule("[직업 03-3] 야수 배회")
+  rule("[직업 03-4] 야수 위치 표시")
+  rule("[직업 03-2] 야수 처치")
+  rule("[야수 06] 급소의 빛")
+=== RevealEnd / 야수 재생성 ===
+  398: Create Dummy Bot(Hero(Jetpack Cat), Team 2, 0, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 6), Vector(Random Real(-7, 7), 0,
+  400: Create Dummy Bot(Hero(Jetpack Cat), Team 2, 1, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 6), Vector(Random Real(-7, 7), 0,
+  402: Create Dummy Bot(Hero(Jetpack Cat), Team 2, 2, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 6), Vector(Random Real(-7, 7), 0,
+  482: Set Respawn Max Time(Event Player, 4);
+  2791: Create Dummy Bot(Hero(Jetpack Cat), Team 2, 0, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 6), Vector(Random Real(-7, 7), 0,
+  2794: Create Dummy Bot(Hero(Jetpack Cat), Team 2, 1, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 6), Vector(Random Real(-7, 7), 0,
+  2797: Create Dummy Bot(Hero(Jetpack Cat), Team 2, 2, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 6), Vector(Random Real(-7, 7), 0,
+  2901: Set Respawn Max Time(Event Player, 4);

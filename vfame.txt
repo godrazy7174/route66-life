@@ -1,0 +1,28 @@
+rule("[평판 01] 죄는 이름을 갉는다")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Dummy Bot(Event Player) == False;
+		Event Player.Init == 1;
+		Event Player.Noto != Event Player.LastNoto;
+	}
+
+	actions
+	{
+		If(Event Player.Noto > Event Player.LastNoto);
+			If(Round To Integer(Divide(Subtract(Event Player.Noto, Event Player.LastNoto), 2), Up) >= 3);
+				Small Message(Event Player, Custom String("소문이 퍼진다 — 명성 {0} (-{1})", Max(0, Subtract(Event Player.Fame, Round To Integer(Divide(Subtract(Event Player.Noto, Event Player.LastNoto), 2), Up
+			End;
+			Set Player Variable(Event Player, Fame, Max(0, Subtract(Event Player.Fame, Round To Integer(Divide(Subtract(Event Player.Noto, Event Player.LastNoto), 2), Up))));
+		End;
+		Set Player Variable(Event Player, LastNoto, Event Player.Noto);
+	}
+}
+

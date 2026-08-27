@@ -1,0 +1,54 @@
+=== 배지 수령(현상금 사냥꾼 전직) 문맥 ===
+Modify Player Variable(Event Player, Money, Subtract, Event Player.Amt);
+Else;
+Modify Player Variable(Event Player, Deposit, Subtract, Subtract(Event Player.Amt, Event Player.Money));
+Set Player Variable(Event Player, Money, 0);
+End;
+Set Player Variable(Event Player, TaxPaidRound, Global Variable(TaxRound));
+Set Player Variable(Event Player, Fame, Min(100, Add(Event Player.Fame, 2)));
+Small Message(Event Player, Custom String("재산세 $ {0} 납부 — 성실한 시민이다 (명성 +2)", Event Player.Amt));
+Play Effect(Event Player, Buff Impact Sound, Color(Sky Blue), Position Of(Event Player), 60);
+End;
+Else;
+If(Event Player.Job == 3);
+Small Message(Event Player, Custom String("이미 현상금 사냥꾼이다"));
+Play Effect(Event Player, Debuff Impact Sound, Color(Red), Position Of(Event Player), 45);
+Else;
+Set Player Variable(Event Player, JobArg, 3);
+Call Subroutine(BecomeJob);
+Big Message(Event Player, Custom String("배지를 받았다 — 석궁의 프레야가 된다. 전단이 붙은 자($300+)를 산 채로 잡아라"));
+Play Effect(Event Player, Buff Impact Sound, Color(Sky Blue), Position Of(Event Player), 80);
+End;
+End;
+Else If(Event Player.Zone == 8);
+If(Event Player.MenuIdx == 0);
+If(Add(Value In Array(Event Player.Inv, 2), Value In Array(Event Player.Inv, 3)) <= 0);
+Small Message(Event Player, Custom String("넘길 원석도 가죽도 없다"));
+
+=== 아침 정산 명성 +1 조건 ===
+rule("[월드 05] 아침 정산")
+{
+event
+{
+Ongoing - Each Player;
+All;
+All;
+}
+
+conditions
+{
+Event Player.Init == 1;
+Event Player.LastDay != Global Variable(Day);
+}
+
+actions
+{
+Set Player Variable(Event Player, LastDay, Global Variable(Day));
+Set Player Variable(Event Player, Whisky, 0);
+Set Player Variable(Event Player, GoalDone, 0);
+Set Player Variable(Event Player, Giant, Multiply(Round To Integer(Divide(Event Player.Giant, 10), Down), 10));
+If(Global Variable(FundTier) >= 3);
+Set Player Variable(Event Player, Fame, Min(100, Add(Event Player.Fame, 1)));
+End;
+If(And(Event Player.Rebirth >= 1, Event Player.Earned > Event Player.DayStart));
+Set Player Variable(Event Player, Amt, Round To Integer(Multiply(Subtract(Event Player.Earned, Event Player.DayStart), Multiply(0.1, Event Player.Rebi

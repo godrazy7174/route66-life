@@ -1,0 +1,82 @@
+settings
+{
+	main
+	{
+		Description: "66번 국도 - 서부 인생게임 v0.1 (코어)"
+	}
+
+	lobby
+	{
+		Max Team 1 Players: 12
+		Max Team 2 Players: 0
+		Max FFA Players: 0
+		Max Spectators: 2
+		Return To Lobby: Never
+	}
+
+	modes
+	{
+		Skirmish
+		{
+			Enable Perks: Off
+
+			enabled maps
+			{
+				Route 66
+			}
+		}
+
+		General
+		{
+			Game Mode Start: Immediately
+			Hero Limit: Off
+			Limit Roles: Off
+			Spawn Health Packs: Disabled
+		}
+	}
+
+	heroes
+	{
+		General
+		{
+			enabled heroes
+			{
+				Ashe
+				Cassidy
+			}
+		}
+	}
+}
+
+variables
+{
+	global:
+		0: Day
+		1: Clock
+		2: IsNight
+		3: LocPos
+		4: LocRad
+		5: OrePrice
+		6: HidePrice
+		7: EventKind
+		8: EventEnd
+		9: TaxOn
+		10: Ready
+		11: Anchor
+		12: SignIds
+		13: ArchOn
+		14: ArchIdx
+		15: TaxRound
+		16: Idx
+		18: WagonOn
+		19: WagonPos
+		20: WagonFx
+		21: WagonIco
+		22: BldBase
+		17: Tmp
+		23: ArchHud
+		24: RankArr
+		25: DailyGoal
+		27: TreasurePos
+		28: TreasureOn
+		29

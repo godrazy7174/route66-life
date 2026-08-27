@@ -1,0 +1,10 @@
+규칙 수: 130
+
+=== A) 이벤트 대상 오용 후보 ===
+  [[생활 02] 사망 처리] Player Died 규칙에서 Event Player에 보상성 쓰기: Modify Player Variable(Event Player, Money, Subtract, Event Player.DeathLoss);
+
+=== B) 생성 후 파괴되지 않는 엔티티 변수 ===
+
+=== C) 도달 불가/죽은 코드 ===
+  [[직업 03-3] 야수 배회] 확률 0% 분기: Else If(Random Integer(1, 100) <= 0);
+  [[직업 03-3] 야수 배회] 확률 0% 분기: If(Random Integer(1, 100) <= 0);

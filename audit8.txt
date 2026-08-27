@@ -1,0 +1,39 @@
+=== 정거장 기금 버튼 (마지막 Else 분기) ===
+--- line 2227 주변 ---
+Else If(Event Player.MenuIdx == 3);
+If(Global Variable(TownStage) >= 8);
+Small Message(Event Player, Custom String("마을은 이미 되살아났다 — 당신의 이름과 함께"));
+Play Effect(Event Player, Buff Impact Sound, Color(Yellow), Position Of(Event Player), 50);
+Else If(Event Player.Money < 1000);
+Small Message(Event Player, Custom String("돈이 모자란다 ($1000 필요)"));
+Play Effect(Event Player, Debuff Impact Sound, Color(Red), Position Of(Event Player), 45);
+Else;
+Modify Player Variable(Event Player, Money, Subtract, 1000);
+Modify Global Variable(Fund, Add, 1000);
+Set Player Variable(Event Player, Contrib, 1);
+Set Player Variable(Event Player, Fame, Min(100, Add(Event Player.Fame, 2)));
+Set Player Variable(Event Player, Amt, Max(0, Subtract(Value In Array(Array(8000, 23000, 48000, 88000, 148000, 233000, 348000, 498000), Global Variabl
+Big Message(All Players(All Teams), Custom String("{0} — 마을 금고에 $1,000 · {1}까지 $ {2}", Event Player, Value In Array(Array(Custom String("마을 우물"), Cust
+Play Effect(All Players(All Teams), Buff Impact Sound, Color(Yellow), Position Of(Event Player), 90);
+End;
+Else If(Event Player.MenuIdx == 4);
+
+--- line 2610 주변 ---
+Big Message(Event Player, Custom String("정말 떠나는가 — 10초 안에 다시 실행하면 환생한다"));
+Small Message(Event Player, Custom String("전 재산·장비·부동산·사업·재건이 사라진다. 남는 것: 직업 경험 · 명성/악명 · 환생의 가호"));
+End;
+Else;
+If(Event Player.Money < 1000);
+Small Message(Event Player, Custom String("돈이 모자란다 ($1000 필요)"));
+Play Effect(Event Player, Debuff Impact Sound, Color(Red), Position Of(Event Player), 45);
+Else;
+Modify Player Variable(Event Player, Money, Subtract, 1000);
+Modify Global Variable(Fund, Add, 1000);
+Set Player Variable(Event Player, Contrib, 1);
+Set Player Variable(Event Player, Amt, Max(0, Subtract(Value In Array(Array(8000, 23000, 48000, 88000, 148000, 233000, 348000, 498000), Global Variabl
+Set Player Variable(Event Player, Fame, Min(100, Add(Event Player.Fame, 2)));
+Big Message(All Players(All Teams), Custom String("{0} — 마을 금고에 $1,000 · {1}까지 $ {2}", Event Player, Value In Array(Array(Custom String("마을 우물"), Cust
+Play Effect(All Players(All Teams), Buff Impact Sound, Color(Yellow), Position Of(Event Player), 90);
+End;
+End;
+

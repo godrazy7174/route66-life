@@ -1,0 +1,25 @@
+=== 주요 수입원 실측 ===
+  소몰이 1회: 발견 RunPay, Add(220, Multiply(4,
+  배달 1회: 미발견 
+  금괴 호송: 미발견 
+  역마차 습격: 발견 Prize, Random Integer(150, 350)
+  쥐 처치: 발견 Attacker, Money, Add, 400
+  보물 상자: 발견 Prize, Random Integer(150, 350)
+  금고 마차: 발견 Loot, Random Integer(250, 450)
+
+=== 역마차 습격 보상 상세 ===
+ 3345 Set Player Variable At Index(Event Player, JobXP, 4, Add(Value In Array(Event Player.JobXP, 4), 30));
+ 3346 Set Player Variable(Event Player, PlanPay, Random Integer(80, 140));
+ 3350 Modify Player Variable(Event Player, Money, Add, Event Player.PlanPay);
+ 3351 Modify Player Variable(Event Player, Earned, Add, Event Player.PlanPay);
+ 3352 Modify Player Variable(Event Player, Bounty, Add, 200);
+ 3353 Set Player Variable(Event Player, Noto, Min(100, Add(Event Player.Noto, 15)));
+ 3357 Small Message(Event Player, Custom String("현상금 $ {0} — 이제 쫓기는 몸이다", Event Player.Bounty));
+
+=== 은행/열차 금고 보상 ===
+ 4356 Set Player Variable(Event Player, Loot, Random Integer(600, 1000));
+ 4357 Modify Player Variable(Event Player, Sack, Add, Event Player.Loot);
+
+ 4544 Set Player Variable(Event Player, Loot, Random Integer(300, 500));
+ 4545 Modify Player Variable(Event Player, Sack, Add, Event Player.Loot);
+

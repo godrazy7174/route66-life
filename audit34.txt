@@ -1,0 +1,10 @@
+=== [코어 01]에서 초기화하는 전역 ===
+  ['AlarmIco', 'ArchIdx', 'ArchOn', 'BankLockDay', 'BldBase', 'BldOwner', 'BldPrice', 'Clock', 'DailyGoal', 'Day', 'EventEnd', 'EventKind', 'HidePrice', 'IsNight', 'JerkyStock', 'LocPos', 'NoticeEnd', 'NoticeMsg', 'OrePrice', 'PowderSet', 'RaidPath', 'RankArr', 'Ready', 'RebuildFxN', 'RebuildMax', 'SellMult', 'SignIds', 'StatueFx', 'StatueTxt', 'TaxOn', 'TaxRound', 'TickerEnd', 'TickerMsg', 'TodayJob', 'TrainEnd', 'TrainFx', 'TrainIco', 'TrainOn', 'TrainPos', 'TrainVault', 'TreasureFx', 'TreasureIco', 'TreasureOn', 'TreasurePos', 'WagonFx', 'WagonIco', 'WagonOn', 'WagonPos']
+
+=== 초기화되지 않는 전역 ===
+  ['LocRad', 'Anchor', 'Idx', 'Tmp', 'ArchHud', 'HuntPhase', 'HuntBeast', 'HuntTrackPos', 'HuntTrackIco', 'HuntTrackFx', 'HuntDay', 'HuntArr', 'HuntIdx', 'ContractKind', 'Fund', 'FundTier', 'SpawnPos', 'GasOn', 'GasFx', 'WeakOn', 'WeakFx', 'TownStage', 'RatOn', 'RatNext', 'RatFx', 'RatTgt', 'Money']
+
+=== 쥐 등장 타이머 초기값 ===
+  RatNext 초기화: False
+   Set Global Variable(RatNext, Add(Total Time Elapsed(), Random Real(240, 600)));
+  [쥐 01] 조건: Total Time Elapsed() >= Global Variable(RatNext)

@@ -1,0 +1,32 @@
+=== 세이브 코드 발급(패킹) ===
+ 2193 Set Player Variable(Event Player, SaveA, Add(Multiply(Min(9999, Round To Integer(Divide(Add(Event Player.Money, Event Player.Deposit), 100), Down)), 100), Add(Multiply(Event Player.Pick
+ 2194 Set Player Variable(Event Player, SaveB, Add(Multiply(Add(Multiply(Add(Multiply(Add(Multiply(Event Player.Job, 10), Value In Array(Event Player.Adv, Event Player.Job)), 10), Min(9, Roun
+ 2195 Set Player Variable(Event Player, SaveB, Add(Multiply(Event Player.SaveB, 10), Modulo(Add(Event Player.SaveA, Event Player.SaveB), 9)));
+ 2196 Set Player Variable(Event Player, PadA, Add(Add(Event Player.SaveA >= 10 ? 1 : 0, Event Player.SaveA >= 100 ? 1 : 0), Add(Event Player.SaveA >= 1000 ? 1 : 0, Add(Event Player.SaveA >= 1
+ 2197 Set Player Variable(Event Player, PadB, Add(Add(Event Player.SaveB >= 10 ? 1 : 0, Event Player.SaveB >= 100 ? 1 : 0), Add(Event Player.SaveB >= 1000 ? 1 : 0, Add(Event Player.SaveB >= 1
+ 2198 Set Player Variable(Event Player, SaveC, Add(Add(Multiply(Event Player.Rebuild, 100000), Multiply(Event Player.Rebirth, 10000)), Multiply(Min(9, Round To Integer(Divide(Event Player.Gia
+ 2199 Set Player Variable(Event Player, SaveC, Add(Event Player.SaveC, Modulo(Add(Add(Event Player.SaveA, Event Player.SaveB), Round To Integer(Divide(Event Player.SaveC, 10), Down)), 9)));
+ 2200 Set Player Variable(Event Player, PadC, Add(Add(Event Player.SaveC >= 10 ? 1 : 0, Event Player.SaveC >= 100 ? 1 : 0), Add(Event Player.SaveC >= 1000 ? 1 : 0, Add(Event Player.SaveC >= 1
+ 2201 Destroy HUD Text(Event Player.SaveHud);
+ 2202 Create HUD Text(Event Player, Null, Custom String("세이브 코드   {0} - {1} - {2}", Custom String("{0}{1}", Value In Array(Array(Custom String("00000"), Custom String("0000"), Custom String("
+ 2203 Set Player Variable(Event Player, SaveHud, Last Text ID());
+
+=== 세이브 복원(언패킹) ===
+ 5804 Set Player Variable(Event Player, Money, Multiply(Round To Integer(Divide(Event Player.EnterA, 100), Down), 100));
+ 5805 Set Player Variable(Event Player, Pick, Modulo(Round To Integer(Divide(Event Player.EnterA, 10), Down), 10));
+ 5806 Set Player Variable(Event Player, HasBag, Modulo(Event Player.EnterA, 2));
+ 5807 Set Player Variable(Event Player, HasHorse, Modulo(Round To Integer(Divide(Modulo(Event Player.EnterA, 10), 2), Down), 2));
+ 5808 Set Player Variable(Event Player, HasHome, Round To Integer(Divide(Modulo(Event Player.EnterA, 10), 4), Down));
+ 5809 Set Player Variable(Event Player, Job, Round To Integer(Divide(Event Player.Amt, 10000), Down));
+ 5810 Set Player Variable(Event Player, Adv, Array(0, 0, 0, 0, 0, 0, 0));
+ 5811 Set Player Variable At Index(Event Player, Adv, Event Player.Job, Modulo(Round To Integer(Divide(Event Player.Amt, 1000), Down), 10));
+ 5812 Set Player Variable At Index(Event Player, JobXP, Event Player.Job, Multiply(Modulo(Round To Integer(Divide(Event Player.Amt, 100), Down), 10), 250));
+ 5813 Set Player Variable(Event Player, Fame, Multiply(Modulo(Round To Integer(Divide(Event Player.Amt, 10), Down), 10), 10));
+ 5814 Set Player Variable(Event Player, Noto, Multiply(Modulo(Event Player.Amt, 10), 10));
+ 5815 Set Player Variable(Event Player, LastNoto, Event Player.Noto);
+ 5816 Set Player Variable(Event Player, Rebuild, Round To Integer(Divide(Event Player.EnterC, 100000), Down));
+ 5817 Set Global Variable(TownStage, Max(Global Variable(TownStage), Value In Array(Array(0, 1, 2, 4, 6, 8), Event Player.Rebuild)));
+ 5818 Set Global Variable(Fund, Max(Global Variable(Fund), Value In Array(Array(0, 8000, 23000, 88000, 233000, 498000), Event Player.Rebuild)));
+ 5819 Set Player Variable(Event Player, Rebirth, Modulo(Round To Integer(Divide(Event Player.EnterC, 10000), Down), 10));
+ 5820 Set Player Variable(Event Player, Giant, Multiply(Modulo(Round To Integer(Divide(Event Player.EnterC, 1000), Down), 10), 10));
+ 5821 Set Global Variable(RebuildMax, Max(Global Variable(RebuildMax), Event Player.Rebuild));

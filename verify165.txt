@@ -1,0 +1,17 @@
+=== 위치 선정 코드가 올바른 규칙에 있는가 ===
+  SmugglePos     L 4043 [[범죄 01] 황야에서 강도 / 체포 (F)]
+  DialTgt        L 5175 [[파발 02] 흔들리는 화물]
+  DialTgt        L 5177 [[파발 02] 흔들리는 화물]
+
+=== 샛길 규칙 본문 ===
+  5171: {
+  5172: Wait(Random Real(7, 14), Ignore Condition);
+  5173: If(And(And(Event Player.HasParcel >= 1, Event Player.Busy == 0), Is Alive(Event Player)));
+  5174: If(Count Of(Filtered Array(Filtered Array(Append To Array(Global Variable(RaidPath), Global Variable(LocPos)), Distance Between(Current Array Element,
+  5175: Set Player Variable(Event Player, DialTgt, Random Value In Array(Filtered Array(Filtered Array(Append To Array(Global Variable(RaidPath), Global Varia
+  5176: Else;
+  5177: Set Player Variable(Event Player, DialTgt, Random Value In Array(Filtered Array(Append To Array(Global Variable(RaidPath), Global Variable(LocPos)), D
+  5178: End;
+  5179: Create Effect(All Players(All Teams), Light Shaft, Color(Yellow), Event Player.DialTgt, 1.2, None);
+  5180: Set Player Variable(Event Player, DialPin, Last Created Entity());
+  5181: Create Icon(Event Player, Add(Event Player.DialTgt, Vector(0, 2.5, 0)), Circle, Visible To and Position, Color(Yellow), True);

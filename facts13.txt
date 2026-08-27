@@ -1,0 +1,19 @@
+=== 이름표 (NameId/NameSig) ===
+  177: 53: NameId
+  178: 54: NameSig
+  487: Set Player Variable(Event Player, NameId, Last Text ID());
+  488: Set Player Variable(Event Player, NameSig, Add(Multiply(Add(Add(Add(Add(Event Player.Money >= 300, Event Player.Money >= 1000), Event Player.Money >= 2500), Event Player.Money >= 6000), Event Player.Money >= 15000), 2), Event Play
+  530: Add(Multiply(Add(Add(Add(Add(Event Player.Money >= 300, Event Player.Money >= 1000), Event Player.Money >= 2500), Event Player.Money >= 6000), Event Player.Money >= 15000), 2), Event Player.Bounty > 0) != Event Player.NameSig;
+  535: Set Player Variable(Event Player, NameSig, Add(Multiply(Add(Add(Add(Add(Event Player.Money >= 300, Event Player.Money >= 1000), Event Player.Money >= 2500), Event Player.Money >= 6000), Event Player.Money >= 15000), 2), Event Play
+  536: Destroy In-World Text(Event Player.NameId);
+  538: Set Player Variable(Event Player, NameId, Last Text ID());
+
+=== 소 스폰 위치 ===
+  2518: Set Player Variable(Event Player, CowPos, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 12), Multiply(Direction Towards(Value In Array(Global Variable(LocPos), 12), Value In Array(Global Variable(LocPos), 1
+  3170: Set Player Variable(Event Player, CowPos, Nearest Walkable Position(Add(Value In Array(Global Variable(RaidPath), Round To Integer(Event Player.Roll, Down)), Multiply(Subtract(Value In Array(Global Variable(RaidPath), Add(Round To
+  3630: Set Player Variable(Event Player, CowPos, Nearest Walkable Position(Add(Event Player.CowPos, Multiply(Normalize(Vector(X Component Of(Add(Multiply(Direction Towards(Position Of(Event Player), Event Player.CowPos), 0.6), Multiply(D
+  4455: Set Player Variable(Event Player, CowPos, Nearest Walkable Position(Add(Position Of(Event Player), Multiply(Direction Towards(Position Of(Event Player), Event Player.EscortPos), 14))));
+  4978: Set Player Variable(Value In Array(All Players(Team 1), Event Player.Idx), CowPos, Nearest Walkable Position(Add(Player Variable(Value In Array(All Players(Team 1), Event Player.Idx), CowPos), Add(Multiply(Direction Towards(Value 
+  5014: Set Player Variable(Event Player, DialTgt, Nearest Walkable Position(Add(Event Player.CowPos, Multiply(Direction From Angles(Random Real(-180, 180), 0), 20))));
+  5023: Set Player Variable(Event Player, DialTgt, Nearest Walkable Position(Add(Event Player.DialTgt, Multiply(Direction Towards(Event Player.DialTgt, Event Player.CowPos), 1.4))));
+  5030: Set Player Variable(Event Player, CowPos, Nearest Walkable Position(Add(Event Player.CowPos, Add(Multiply(Direction Towards(Value In Array(Global Variable(LocPos), 12), Event Player.CowPos), Random Real(15, 20)), Vector(Random Rea

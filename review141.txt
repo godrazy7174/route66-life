@@ -1,0 +1,47 @@
+rule("[알림 01] 알림 줄 생성")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Dummy Bot(Event Player) == False;
+		Event Player.Init == 1;
+	}
+
+	actions
+	{
+		Create HUD Text(Event Player, Total Time Elapsed() < Value In Array(Global Variable(NoticeEnd), Slot Of(Event Player)) ? Value In Array(Global Variable(NoticeMsg), Slot Of(Event Player)) : Null, Null, Null, Top, 2, Color(Orange), Color(White), Color(Gray), Visible To Sort Order String and Color, Default Visibility);
+		Create HUD Text(Event Player, Total Time Elapsed() < Global Variable(TickerEnd) ? Global Variable(TickerMsg) : Null, Null, Null, Top, 3, Color(White), Color(White), Color(Gray), Visible To Sort Order String and Color, Default Visibility);
+	}
+}
+
+--- globals tail ---
+		65: WeakFx
+		66: NoticeMsg
+		67: NoticeEnd
+		68: TickerMsg
+		69: TickerEnd
+
+--- forbidden neighborhood ---
+Play Effect(Event Player, Debuff Impact Sound, Color(Red), Position Of(Event Player), 45);
+Abort;
+End;
+Big Message(Event Player.Target, Custom String("{0}이(가) 당신을 체포하려 한다 — 도망치거나 쏴서 뿌리쳐라", Event Player));
+Play Effect(Event Player.Target, Explosion Sound, Color(Sky Blue), Position Of(Event Player.Target), 160);
+Destroy Progress Bar HUD Text(Event Player.WorkBar);
+Create Progress Bar HUD Text(Event Player, Event Player.WorkProg, Custom String("체포 중..."), Top, 0, Color(Sky Blue), Color(White), Visible To Values a
+Else;
+Set Player Variable(Event Player, JobArg, 4);
+Call Subroutine(BecomeJob);
+Big Message(Event Player.Target, Custom String("{0}이(가) 총을 겨눴다 — 도망치거나 쏴서 뿌리쳐라", Event Player));
+Play Effect(Event Player.Target, Explosion Sound, Color(Red), Position Of(Event Player.Target), 160);
+Destroy Progress Bar HUD Text(Event Player.WorkBar);
+--- Big Message targets other than EP/ALL ---
+3737 Event Player.Target
+3744 Event Player.Target
+3796 Event Player.Target

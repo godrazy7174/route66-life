@@ -1,0 +1,23 @@
+=== 대사냥: 상태 변수 정합성 ===
+  [[대사냥 01] 대야수의 흔적] set=[('HuntDay', 'Global Variable(Day'), ('HuntPhase', '1')] cond=[]
+  [[대사냥 02] 흔적 조사 (F)] set=[('HuntPhase', '4')] cond=[('HuntPhase', '>=', '1'), ('HuntPhase', '<=', '3'), ('HuntPhase', '<=', '2')]
+  [[대사냥 03] 기여 기록] set=[] cond=[('HuntPhase', '==', '4')]
+  [[대사냥 04] 대야수 토벌] set=[('HuntPhase', '0'), ('HuntBeast', 'Null')] cond=[('HuntPhase', '==', '4')]
+  [[대사냥 05] 밤이 오면 물러난다] set=[('HuntPhase', '0'), ('HuntBeast', 'Null')] cond=[('HuntPhase', '>=', '1'), ('HuntPhase', '==', '4')]
+
+=== 열차: PowderSet / TrainOn 흐름 ===
+  [[코어 01] 월드 초기화] Set Global Variable(PowderSet, 0);
+  [[열차 01] 화약 설치 (F 8초)] Set Global Variable(PowderSet, 1);
+  [[열차 02] 열차 통과] Set Global Variable(PowderSet, 0);
+  [[코어 01] 월드 초기화] Set Global Variable(TrainOn, 0);
+  [[열차 02] 열차 통과] Set Global Variable(TrainOn, 1);
+  [[열차 02] 열차 통과] Set Global Variable(TrainOn, 0);
+  [[열차 03] 금고 개방 (F 5초)] Set Global Variable(TrainOn, 0);
+
+=== 대야수 처치 시 기여 분배 ===
+   Set Global Variable(HuntArr, Sorted Array(Filtered Array(All Players(All Teams), Player Variable(Current Array Element, HuntDmg) >= 1), Subt
+   Modify Player Variable At Index(Value In Array(Global Variable(HuntArr), Global Variable(HuntIdx)), Inv, 3, Add, 15);
+   Set Player Variable(Value In Array(Global Variable(HuntArr), Global Variable(HuntIdx)), Fame, Min(100, Add(Player Variable(Value In Array(Gl
+   Modify Player Variable(Value In Array(Global Variable(HuntArr), Global Variable(HuntIdx)), Money, Add, 200);
+   Modify Player Variable At Index(First Of(Global Variable(HuntArr)), Inv, 3, Add, 35);
+   Modify Player Variable(First Of(Global Variable(HuntArr)), Money, Add, 300);

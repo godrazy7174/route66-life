@@ -1,0 +1,29 @@
+=== A) 조용한 실패 (Abort 앞 3줄에 안내 없음) ===
+  [[조작 02] 육포 먹기 (E)] 안내 없이 중단: ...actions { If(Hero Of(Event Player) == Hero(Shion));
+  [[목동 01] 소몰이] 안내 없이 중단: ...layer, Buff Explosion Sound, Color(Lime Green), Position Of(Event Player), 130);
+
+=== B) 세금 시스템 ===
+-- [세금 01] --
+   Wait Until(And(Modulo(Global Variable(Day), 2) == 0, Global Variable(Clock) >= 600), 99999);
+   Modify Global Variable(TaxRound, Add, 1);
+   Big Message(All Players(All Teams), Custom String("징수원이 마을에 도착했다 — 2분 안에 보안관 초소에서 재산세를 내라"));
+   Small Message(All Players(All Teams), Custom String("재산의 5% — 예금도 재산이다 (명성 70+는 절반). 떼먹으면 10%가 현상금으로 붙는다"));
+   Small Message(All Players(All Teams), Custom String("징수원이 곧 떠난다 — 30초"));
+   Big Message(All Players(All Teams), Custom String("징수원이 떠났다 — 체납자에게 현상금이 붙는다"));
+   Wait Until(Modulo(Global Variable(Day), 2) == 1, 99999);
+
+-- [세금 02] --
+   Event Player.TaxSeenRound != Global Variable(TaxRound);
+   Set Player Variable(Event Player, TaxSeenRound, Global Variable(TaxRound));
+   Small Message(Event Player, Custom String("징수원이 기다린다 — 보안관 초소에서 재산세를 내라 (재산의 5%)"));
+
+-- [세금 03] --
+   Event Player.TaxSeenRound == Global Variable(TaxRound);
+   Event Player.TaxPaidRound != Global Variable(TaxRound);
+   Set Player Variable(Event Player, TaxPaidRound, Global Variable(TaxRound));
+   If(Add(Event Player.Money, Event Player.Deposit) < 100);
+   Small Message(Event Player, Custom String("털어봤자 먼지뿐 — 징수원이 포기하고 지나갔다"));
+   Set Player Variable(Event Player, Fine, Max(50, Round To Integer(Multiply(Add(Event Player.Money, Event Player.Deposit), 0.1), Dow
+   Modify Player Variable(Event Player, Bounty, Add, Event Player.Fine);
+   Big Message(Event Player, Custom String("세금을 떼먹었다 — 현상금 +$ {0} (악명 +10)", Event Player.Fine));
+

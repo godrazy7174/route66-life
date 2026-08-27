@@ -1,0 +1,5 @@
+3046 Set Global Variable At Index(NoticeMsg, Slot Of(Event Player), Custom String("오늘의 계약 달성! +$150 · 명성 +3"));
+3047 Set Global Variable At Index(NoticeEnd, Slot Of(Event Player), Add(Total Time Elapsed(), 5));
+3056 Big Message(All Players(All Teams), Custom String("{0} — 전설의 야수를 쓰러뜨렸다!! 가죽 +{1}장 + $250", Attacker, Player Variable(Attacker, Yield)));
+3062 Set Global Variable(TickerMsg, Custom String("{0} — 거대한 야수를 쓰러뜨렸다! 가죽 +{1}장 + $50", Attacker, Player Variable(Attacker, Yield)));
+3069 Set Global Variable(TickerMsg, Custom String("{0} — 큰 놈을 잡았다! 가죽 +{1}장 + $60", Attacker, Player Variable(Attacker, Yield)));
