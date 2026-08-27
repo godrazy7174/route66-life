@@ -2023,7 +2023,7 @@ rule("[조작 03b] 행동 실행 — 술집·개활지·초소·은신처")
 				Else;
 					Set Player Variable At Index(Event Player, Adv, Event Player.Job, 1);
 					Big Message(All Players(All Teams), Custom String("{0} — 맹수 사냥꾼으로 올라섰다!", Event Player));
-					Small Message(Event Player, Custom String("내 추적에서 거대 야수 확률 1.5% · 가죽 +1장"));
+					Small Message(Event Player, Custom String("내 추적에서 거대 야수 확률 4.4% → 6.4% · 가죽 +1장"));
 					Play Effect(All Players(All Teams), Ring Explosion, Color(Orange), Position Of(Event Player), 4);
 					Play Effect(Event Player, Buff Explosion Sound, Color(Orange), Position Of(Event Player), 200);
 				End;
@@ -2208,7 +2208,7 @@ rule("[조작 03b] 행동 실행 — 술집·개활지·초소·은신처")
 				Else;
 					Set Player Variable At Index(Event Player, Adv, Event Player.Job, 1);
 					Big Message(All Players(All Teams), Custom String("{0} — 갱단 두목으로 올라섰다!", Event Player));
-					Small Message(Event Player, Custom String("습격의 약탈 게이지가 절반 빠르다 · 강탈 쿨타임 30초"));
+					Small Message(Event Player, Custom String("습격의 약탈 게이지가 1.5배 빠르다 · 강탈 쿨타임 30초"));
 					Play Effect(All Players(All Teams), Ring Explosion, Color(Purple), Position Of(Event Player), 4);
 					Play Effect(Event Player, Buff Explosion Sound, Color(Purple), Position Of(Event Player), 200);
 				End;
