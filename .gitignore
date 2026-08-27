@@ -4,3 +4,5 @@ _tmp_*.ow
 _tmp_*.py
 # 코덱스 실행 로그에는 배포 토큰이 남는다 — 절대 올리지 않는다
 *.log
+ROUTE66_LIFE_TEST.ow
+_test_en.ow
