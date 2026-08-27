@@ -787,3 +787,64 @@ def retrigger_check(path):
 
 event_check(sys.argv[1])
 retrigger_check(sys.argv[1])
+
+
+def fact_check(path):
+    """게임 안 문구가 주장하는 수치를, 코드에서 뽑은 실제 값과 대조한다.
+
+    기대값을 하드코딩하지 않고 코드에서 유도하므로, 밸런스를 바꾸면
+    문구를 같이 안 고친 것만 걸린다. (튜토리얼의 '드러난 30초'가 이렇게 잡혔다)
+    """
+    src = io.open(path, encoding='utf-8').read()
+
+    def rule_body(tag):
+        i = src.find('rule("%s' % tag)
+        if i < 0:
+            return ''
+        j = src.find('rule("', i + 10)
+        return src[i:j if j > 0 else len(src)]
+
+    def vals(pattern, text=None, drop=()):
+        return set(int(m.group(1)) for m in re.finditer(pattern, text if text is not None else src)) - set(drop)
+
+    checks = []
+
+    # 야수 발현 시간
+    checks.append(('야수 발현 시간', r'드러난 (\d+)초',
+                   vals(r'RevealEnd, Add\(Total Time Elapsed\(\), (\d+)\)', drop=(9999,))))
+
+    # 숙박 피로 회복 (내 방 없을 때)
+    checks.append(('숙박 회복', r'피로를 (\d+) 되찾는다',
+                   vals(r'HasHome == 1 \? 80 : (\d+)')))
+
+    # 수배 전단 / 추방 임계
+    checks.append(('전단 임계', r'목값 \$(\d+)이면 전단',
+                   vals(r'Event Player\.Bounty >= (\d+);', rule_body('[수배 02]'))))
+    checks.append(('추방 임계', r'\$(\d+)이면 마을이 문을',
+                   vals(r'Event Player\.Bounty >= (\d+);', rule_body('[수배 03]'))))
+
+    # 하루 길이 (분) — Clock 증가폭과 Wait 주기에서 유도
+    day = rule_body('[월드 01]')
+    step = vals(r'Modify Global Variable\(Clock, Add, (\d+)\)', day)
+    tick = set(float(m.group(1)) for m in re.finditer(r'Wait\(([\d.]+), Ignore Condition\)', day))
+    if len(step) == 1 and len(tick) == 1:
+        checks.append(('하루 길이(분)', r'(\d+)분이 하루',
+                       {int(round(1440 / step.pop() * tick.pop() / 60))}))
+
+    bad = []
+    for label, textpat, expected in checks:
+        if not expected:
+            continue
+        said = set(int(m.group(1)) for m in re.finditer(textpat, src))
+        wrong = said - expected
+        if wrong:
+            bad.append((label, sorted(wrong), sorted(expected)))
+    if bad:
+        print('!! in-game text contradicts code:')
+        for label, said, exp in bad:
+            print('   %s: text says %s, code says %s' % (label, said, exp))
+    else:
+        print('fact check: OK')
+
+
+fact_check(sys.argv[1])
