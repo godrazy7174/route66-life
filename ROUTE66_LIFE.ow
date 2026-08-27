@@ -4762,7 +4762,7 @@ rule("[밀수 02] 접선 인계 (F 3초)")
 			Set Player Variable(Event Player, Noto, Min(100, Add(Event Player.Noto, 8)));
 			Set Player Variable(Event Player, Contraband, 0);
 			Destroy Icon(Event Player.SmuggleIco);
-			Set Player Variable(Event Player, SmuggleCd, Add(Total Time Elapsed(), 60));
+			Set Player Variable(Event Player, SmuggleCd, Add(Total Time Elapsed(), 30));
 			Small Message(Event Player, Custom String("화물을 넘겼다 — +$ {0} (악명 +8)", Event Player.SmugglePay));
 			Play Effect(Event Player, Buff Explosion Sound, Color(Purple), Position Of(Event Player), 120);
 		End;
