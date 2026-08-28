@@ -137,6 +137,7 @@ variables
 		85: HuntStuck
 		86: HuntSwing
 		87: RatKill
+		88: RatPop
 
 	player:
 		0: Money
@@ -3609,7 +3610,8 @@ rule("[쥐 05] 쥐떼의 가죽")
 
 	action
 	{
-		Set Damage Received(Event Player, Max(Count Of(Global Variable(RatHitters)) >= 3 ? 70 : 18, Divide(54, Max(1, Count Of(Filtered Array(All Players(Team 1), And(Is Alive(Current Array Element), Player Variable(Current Array Element, Init) == 1)))))));
+		Set Global Variable(RatPop, Count Of(Filtered Array(All Players(Team 1), And(And(Is Alive(Current Array Element), Player Variable(Current Array Element, Init) == 1), Player Variable(Current Array Element, TutOn) == 0))));
+		Set Damage Received(Event Player, Max(Count Of(Global Variable(RatHitters)) >= 3 ? 70 : 18, Global Variable(RatPop) >= 3 ? 0 : Divide(110, Max(1, Global Variable(RatPop)))));
 		Wait(0.25, Ignore Condition);
 		Loop If(And(Global Variable(RatOn) == 1, Is Alive(Event Player)));
 	}
