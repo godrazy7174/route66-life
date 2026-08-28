@@ -129,6 +129,11 @@ variables
 		80: PickIdx
 		81: PickN
 		82: TrainWay
+		83: HuntTgt
+		84: HuntLast
+		85: HuntStuck
+		86: HuntSwing
+		87: RatKill
 
 	player:
 		0: Money
@@ -3163,6 +3168,7 @@ rule("[직업 03-3] 야수 배회")
 		Is Alive(Event Player) == True;
 		Event Player.RevealEnd > Total Time Elapsed();
 		Slot Of(Event Player) <= 2;
+		Event Player != Global Variable(HuntBeast);
 	}
 
 	actions
@@ -3184,7 +3190,7 @@ rule("[직업 03-3] 야수 배회")
 			End;
 			Wait(Random Real(0.35, 0.9), Ignore Condition);
 		End;
-		Loop If(Event Player.RevealEnd > Total Time Elapsed());
+		Loop If(And(Event Player.RevealEnd > Total Time Elapsed(), Event Player != Global Variable(HuntBeast)));
 		Stop Throttle In Direction(Event Player);
 	}
 }
@@ -3476,18 +3482,26 @@ rule("[쥐 01] 쥐떼의 습격")
 		Set Move Speed(Players In Slot(3, Team 2), 130);
 		Set Player Variable(Players In Slot(3, Team 2), Roll, 0);
 		Set Global Variable(RatHitters, Empty Array);
+		Set Global Variable(RatKill, 0);
 		Set Damage Received(Players In Slot(3, Team 2), 18);
 		Big Message(All Players(All Teams), Custom String("쥐떼가 몰려온다!! 사람을 물고 육포를 노린다 — 혼자서는 못 막는다"));
 		Create Icon(All Players(All Teams), Players In Slot(3, Team 2), Skull, Visible To and Position, Color(Red), True);
 		Set Global Variable(RatFx, Last Created Entity());
 		Play Effect(All Players(All Teams), Debuff Impact Sound, Color(Red), Value In Array(Global Variable(LocPos), 2), 200);
 		Wait(45, Ignore Condition);
+		If(And(And(Global Variable(RatOn) == 1, Global Variable(JerkyStock) == 0), Global Variable(RatKill) == 0));
+			Big Message(All Players(All Teams), Custom String("육포가 바닥났다 — 쥐떼가 물러나지 않는다! 죽여야 끝난다"));
+			Wait Until(Or(Global Variable(RatOn) == 0, Global Variable(RatKill) == 1), 99999);
+		End;
 		If(Global Variable(RatOn) == 1);
 			Set Global Variable(RatOn, 0);
-			Set Global Variable(RatNext, Add(Total Time Elapsed(), 240));
 			Destroy Icon(Global Variable(RatFx));
-			Set Global Variable(JerkyStock, Max(0, Subtract(Global Variable(JerkyStock), 15)));
-			Big Message(All Players(All Teams), Custom String("쥐떼가 육포를 물고 달아났다 — 잡화점이 텅 비었다"));
+			If(Global Variable(RatKill) == 1);
+				Big Message(All Players(All Teams), Custom String("쥐떼가 사람을 물어 죽이고 물러갔다"));
+			Else;
+				Set Global Variable(JerkyStock, Max(0, Subtract(Global Variable(JerkyStock), 15)));
+				Big Message(All Players(All Teams), Custom String("쥐떼가 육포를 물고 달아났다 — 잡화점에 육포 {0} 남았다", Global Variable(JerkyStock)));
+			End;
 			Destroy Dummy Bot(Team 2, 3);
 		End;
 		Set Global Variable(RatNext, Add(Total Time Elapsed(), Random Real(240, 600)));
@@ -3512,8 +3526,14 @@ rule("[쥐 02] 쥐의 약탈")
 
 	actions
 	{
-		Set Global Variable(RatTgt, First Of(Sorted Array(Filtered Array(All Players(Team 1), And(And(Is Alive(Current Array Element), Player Variable(Current Array Element, Init) == 1), And(Player Variable(Current Array Element, JailOn) == 0, Player Variable(Current Array Element, TutOn) == 0))), Distance Between(Position Of(Current Array Element), Position Of(Event Player)))));
-		If(And(Entity Exists(Global Variable(RatTgt)), Distance Between(Position Of(Global Variable(RatTgt)), Position Of(Event Player)) < 40));
+		Set Global Variable(RatTgt, First Of(Sorted Array(Filtered Array(All Players(Team 1), And(And(Is Alive(Current Array Element), Player Variable(Current Array Element, Init) == 1), And(Has Status(Current Array Element, Phased Out) == False, And(Player Variable(Current Array Element, JailOn) == 0, Player Variable(Current Array Element, TutOn) == 0)))), Distance Between(Position Of(Current Array Element), Position Of(Event Player)))));
+		If(Global Variable(JerkyStock) > 0);
+			Start Throttle In Direction(Event Player, Direction Towards(Position Of(Event Player), Value In Array(Global Variable(LocPos), 2)), 1, To World, Replace existing throttle, None);
+			If(And(Entity Exists(Global Variable(RatTgt)), Distance Between(Position Of(Event Player), Position Of(Global Variable(RatTgt))) < 3.5));
+				Damage(Global Variable(RatTgt), Event Player, 20);
+				Play Effect(All Players(All Teams), Bad Explosion, Color(Red), Position Of(Event Player), 1.5);
+			End;
+		Else If(And(Entity Exists(Global Variable(RatTgt)), Distance Between(Position Of(Global Variable(RatTgt)), Position Of(Event Player)) < 40));
 			Start Throttle In Direction(Event Player, Direction Towards(Position Of(Event Player), Position Of(Global Variable(RatTgt))), 1, To World, Replace existing throttle, None);
 			If(Distance Between(Position Of(Event Player), Position Of(Global Variable(RatTgt))) < 3.5);
 				Damage(Global Variable(RatTgt), Event Player, 20);
@@ -3522,12 +3542,12 @@ rule("[쥐 02] 쥐의 약탈")
 		Else;
 			Start Throttle In Direction(Event Player, Direction Towards(Position Of(Event Player), Value In Array(Global Variable(LocPos), 2)), 1, To World, Replace existing throttle, None);
 		End;
-		If(Distance Between(Position Of(Event Player), Value In Array(Global Variable(LocPos), 2)) < 9);
+		If(And(Global Variable(JerkyStock) > 0, Distance Between(Position Of(Event Player), Value In Array(Global Variable(LocPos), 2)) < 9));
 			Set Global Variable(JerkyStock, Max(0, Subtract(Global Variable(JerkyStock), 2)));
 			Play Effect(All Players(All Teams), Bad Explosion, Color(Orange), Position Of(Event Player), 1);
 		End;
 		Modify Player Variable(Event Player, Roll, Add, 1);
-		If(And(Modulo(Event Player.Roll, 12) == 0, Distance Between(Position Of(Event Player), Value In Array(Global Variable(LocPos), 2)) > 34));
+		If(And(Global Variable(JerkyStock) > 0, And(Modulo(Event Player.Roll, 12) == 0, Distance Between(Position Of(Event Player), Value In Array(Global Variable(LocPos), 2)) > 34)));
 			Teleport(Event Player, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 2), Vector(Random Real(-5, 5), 0, Random Real(-5, 5)))));
 		End;
 		Wait(1, Ignore Condition);
@@ -3585,12 +3605,35 @@ rule("[쥐 05] 쥐떼의 가죽")
 
 	actions
 	{
-		Set Damage Received(Event Player, Count Of(Global Variable(RatHitters)) >= 3 ? 70 : 18);
+		Set Damage Received(Event Player, Max(Count Of(Global Variable(RatHitters)) >= 3 ? 70 : 18, Divide(54, Max(1, Count Of(Filtered Array(All Players(Team 1), And(Is Alive(Current Array Element), Player Variable(Current Array Element, Init) == 1)))))));
 		Wait(0.25, Ignore Condition);
 		Loop If(And(Global Variable(RatOn) == 1, Is Alive(Event Player)));
 	}
 }
 
+
+rule("[쥐 06] 쥐가 사람을 잡았다")
+{
+	event
+	{
+		Player Died;
+		Team 1;
+		All;
+	}
+
+	conditions
+	{
+		Global Variable(RatOn) == 1;
+		Event Player.Init == 1;
+		Entity Exists(Attacker) == True;
+		Attacker == Players In Slot(3, Team 2);
+	}
+
+	actions
+	{
+		Set Global Variable(RatKill, 1);
+	}
+}
 
 rule("[쥐 04] 쥐떼 퇴치")
 {
@@ -5024,6 +5067,11 @@ rule("[대사냥 02] 흔적 조사 (F)")
 				Big Message(All Players(All Teams), Custom String("대야수가 깨어났다!! 협곡 개활지다 — 쓰러뜨린 몫은 기여만큼 나눈다"));
 				Play Effect(All Players(All Teams), Ring Explosion, Color(Red), Position Of(Global Variable(HuntBeast)), 20);
 				Play Effect(All Players(All Teams), Explosion Sound, Color(Red), Position Of(Global Variable(HuntBeast)), 300);
+				Disable Movement Collision With Environment(Global Variable(HuntBeast), False);
+				Set Global Variable(HuntTgt, Null);
+				Set Global Variable(HuntLast, Position Of(Global Variable(HuntBeast)));
+				Set Global Variable(HuntStuck, 0);
+				Set Global Variable(HuntSwing, Total Time Elapsed());
 			End;
 		End;
 		Wait(0.3, Ignore Condition);
@@ -5088,6 +5136,7 @@ rule("[대사냥 04] 대야수 토벌")
 		Big Message(All Players(All Teams), Custom String("대야수가 쓰러졌다!! 참가자 모두에게 몫이 돌아간다"));
 		Play Effect(All Players(All Teams), Ring Explosion, Color(Red), Position Of(Victim), 20);
 		Play Effect(All Players(All Teams), Buff Explosion Sound, Color(Red), Position Of(Victim), 300);
+		Enable Movement Collision With Environment(Victim);
 		Set Player Variable(Victim, RevealEnd, 0);
 		Set Player Variable(All Players(All Teams), HuntDmg, 0);
 		Set Global Variable(HuntBeast, Null);
@@ -5111,6 +5160,7 @@ rule("[대사냥 05] 밤이 오면 물러난다")
 	{
 		If(Global Variable(HuntPhase) == 4);
 			Set Player Variable(Global Variable(HuntBeast), RevealEnd, 0);
+			Enable Movement Collision With Environment(Global Variable(HuntBeast));
 		Else;
 			Destroy Icon(Global Variable(HuntTrackIco));
 			Destroy Effect(Global Variable(HuntTrackFx));
@@ -5119,6 +5169,58 @@ rule("[대사냥 05] 밤이 오면 물러난다")
 		Set Global Variable(HuntBeast, Null);
 		Set Player Variable(All Players(All Teams), HuntDmg, 0);
 		Big Message(All Players(All Teams), Custom String("대야수의 기척이 밤 속으로 사라졌다 — 사흘 뒤를 노려라"));
+	}
+}
+
+rule("[대사냥 06] 대야수의 추격과 강타")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 2;
+		All;
+	}
+
+	conditions
+	{
+		Global Variable(HuntPhase) == 4;
+		Event Player == Global Variable(HuntBeast);
+		Is Alive(Event Player) == True;
+	}
+
+	actions
+	{
+		Set Global Variable(HuntTgt, First Of(Sorted Array(Filtered Array(All Players(Team 1), And(And(Is Alive(Current Array Element), Player Variable(Current Array Element, Init) == 1), And(Player Variable(Current Array Element, TutOn) == 0, Has Status(Current Array Element, Phased Out) == False))), Distance Between(Position Of(Current Array Element), Position Of(Event Player)))));
+		Set Move Speed(Event Player, 115);
+		If(Entity Exists(Global Variable(HuntTgt)));
+			Start Throttle In Direction(Event Player, Direction Towards(Position Of(Event Player), Position Of(Global Variable(HuntTgt))), 1, To World, Replace existing throttle, None);
+			Set Facing(Event Player, Direction Towards(Position Of(Event Player), Position Of(Global Variable(HuntTgt))), To World);
+			If(And(Distance Between(Position Of(Event Player), Position Of(Global Variable(HuntTgt))) <= 25, Total Time Elapsed() >= Global Variable(HuntSwing)));
+				Damage(Global Variable(HuntTgt), Event Player, 55);
+				Set Global Variable(HuntSwing, Add(Total Time Elapsed(), 1.6));
+				Play Effect(All Players(All Teams), Bad Explosion, Color(Red), Position Of(Global Variable(HuntTgt)), 3);
+				Play Effect(All Players(All Teams), Explosion Sound, Color(Red), Position Of(Global Variable(HuntTgt)), 120);
+			End;
+		Else;
+			Stop Throttle In Direction(Event Player);
+		End;
+		If(And(Entity Exists(Global Variable(HuntTgt)), Distance Between(Position Of(Event Player), Global Variable(HuntLast)) < 1.5));
+			Modify Global Variable(HuntStuck, Add, 1);
+		Else;
+			Set Global Variable(HuntStuck, 0);
+		End;
+		Set Global Variable(HuntLast, Position Of(Event Player));
+		If(And(Global Variable(HuntStuck) >= 6, And(Entity Exists(Global Variable(HuntTgt)), Distance Between(Position Of(Event Player), Position Of(Global Variable(HuntTgt))) > 25)));
+			Teleport(Event Player, First Of(Sorted Array(Global Variable(SpotPos), Distance Between(Current Array Element, Position Of(Global Variable(HuntTgt))))));
+			Set Global Variable(HuntStuck, 0);
+			Set Global Variable(HuntLast, Position Of(Event Player));
+			Play Effect(All Players(All Teams), Ring Explosion, Color(Red), Position Of(Event Player), 12);
+			Set Global Variable(TickerMsg, Custom String("대야수가 길을 질러 나타났다"));
+			Set Global Variable(TickerEnd, Add(Total Time Elapsed(), 3));
+		End;
+		Wait(0.5, Ignore Condition);
+		Loop If(And(Global Variable(HuntPhase) == 4, And(Is Alive(Event Player), Event Player == Global Variable(HuntBeast))));
+		Stop Throttle In Direction(Event Player);
 	}
 }
 
