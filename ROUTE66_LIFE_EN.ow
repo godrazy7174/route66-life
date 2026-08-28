@@ -340,6 +340,7 @@ rule("[코어 01] 월드 초기화")
 		Set Global Variable(StatueFx, 0);
 		Set Global Variable(StatueTxt, 0);
 		Set Global Variable(JerkyStock, 15);
+		Set Global Variable(RatNext, Add(Total Time Elapsed(), Random Real(240, 600)));
 		Set Global Variable(RankArr, Empty Array);
 		Set Global Variable(TreasureOn, 0);
 		Set Global Variable(TreasurePos, Vector(0, 0, 0));
