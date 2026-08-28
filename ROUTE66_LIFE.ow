@@ -5201,7 +5201,7 @@ rule("[대사냥 06] 대야수의 추격과 강타")
 		If(Entity Exists(Global Variable(HuntTgt)));
 			Start Throttle In Direction(Event Player, Direction Towards(Position Of(Event Player), Position Of(Global Variable(HuntTgt))), 1, To World, Replace existing throttle, None);
 			Set Facing(Event Player, Direction Towards(Position Of(Event Player), Position Of(Global Variable(HuntTgt))), To World);
-			If(And(Distance Between(Position Of(Event Player), Position Of(Global Variable(HuntTgt))) <= 12, Total Time Elapsed() >= Global Variable(HuntSwing)));
+			If(And(Distance Between(Position Of(Event Player), Position Of(Global Variable(HuntTgt))) <= 15, Total Time Elapsed() >= Global Variable(HuntSwing)));
 				Damage(Global Variable(HuntTgt), Event Player, 28);
 				Set Global Variable(HuntSwing, Add(Total Time Elapsed(), 1.6));
 				Play Effect(All Players(All Teams), Bad Explosion, Color(Red), Position Of(Global Variable(HuntTgt)), 3);
@@ -5216,7 +5216,7 @@ rule("[대사냥 06] 대야수의 추격과 강타")
 			Set Global Variable(HuntStuck, 0);
 		End;
 		Set Global Variable(HuntLast, Position Of(Event Player));
-		If(And(Global Variable(HuntStuck) >= 6, And(Entity Exists(Global Variable(HuntTgt)), Distance Between(Position Of(Event Player), Position Of(Global Variable(HuntTgt))) > 12)));
+		If(And(Global Variable(HuntStuck) >= 6, And(Entity Exists(Global Variable(HuntTgt)), Distance Between(Position Of(Event Player), Position Of(Global Variable(HuntTgt))) > 15)));
 			Teleport(Event Player, First Of(Sorted Array(Global Variable(SpotPos), Distance Between(Current Array Element, Position Of(Global Variable(HuntTgt))))));
 			Set Global Variable(HuntStuck, 0);
 			Set Global Variable(HuntLast, Position Of(Event Player));
