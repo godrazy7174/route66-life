@@ -131,6 +131,7 @@ variables
 		79: PickMax
 		80: PickIdx
 		81: PickN
+		82: TrainWay
 
 	player:
 		0: Money
@@ -1046,7 +1047,7 @@ rule("[코어 08] 공용 HUD 생성")
 		Create Progress Bar HUD Text(And(Local Player.TutOn == 0, Local Player.Job > 0) ? Local Player : False, Multiply(0.4, Modulo(Value In Array(Local Player.JobXP, Local Player.Job), 250)), Null, Left, 4, Color(Sky Blue), Null, Visible To Values and Color, Default Visibility);
 		Create HUD Text(Local Player.TutOn == 0 ? Local Player : False, Value In Array(Array(Custom String("황야"), Custom String("식당"), Custom String("협곡 광산"), Custom String("주유소 잡화점"), Custom String("모텔"), Custom String("정비소 고물상"), Custom String("술집"), Custom String("협곡 개활지"), Custom String("보안관 초소"), Custom String("무법자 은신처"), Custom String("안내소"), Custom String("대장간"), Custom String("역마차 정거장"), Custom String("목장"), Custom String("식당 2호점"), Custom String("식당 3호점")), Add(Local Player.Zone, 1)), Custom String("▶  {0}      ({1}/{2})", Value In Array(Array(Custom String("행동 없음 — 마을로 가라"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("식사 $18 — 허기·갈증 회복"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("채굴하기"), Custom String("정밀 탐사 $20"), Custom String("승급: 광산주 — Lv.4"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("육포 구매 $22"), Custom String("물통 구매 $15"), Custom String("육포 5개 묶음 $95"), Custom String("원석·가죽 전량 판매 — 시세 90%"), Custom String("-"), Custom String("-"), Custom String("숙박 $90 — 피로 회복"), Custom String("내 방 마련 $22000"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("원석 전량 판매"), Custom String("가죽 전량 판매"), Custom String("오늘의 시세"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("위스키 $38 — 피로 회복"), Custom String("카드 도박 $75"), Custom String("소문 듣기"), Custom String("뒷문 거래 — 밀주 납품"), Custom String("불꽃놀이 $5,000"), Custom String("뒷문 물통 $25"), Custom String("흔적 추적 — 야수 몰아내기"), Custom String("승급: 맹수 사냥꾼 — Lv.4"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("벌금 납부 — 현상금의 30% (최소 $100)"), Custom String("현상금 게시판"), Custom String("승급: 보안관 — Lv.4·명성 30"), Custom String("재산세 납부 — 징수 기간만"), Custom String("전직: 현상금 사냥꾼"), Custom String("-"), Custom String("장물 거래"), Custom String("역마차 습격"), Custom String("뒷골목 은신 $40"), Custom String("밀주 양조장"), Custom String("양조통 증설 $5000"), Custom String("승급: 갱단 두목 — Lv.4"), Custom String("튜토리얼 보기"), Custom String("세이브 코드 발급"), Custom String("코드 입력 — 저장 복원"), Custom String("마을 금고에 $1,000"), Custom String("은행 예금 — 전액 맡기기"), Custom String("은행 출금 — 전액 찾기"), Local Player.Pick >= 4 ? Custom String("곡괭이 — 최고 등급") : Custom String("곡괭이 강화 $ {0}", Value In Array(Array(800, 2000, 4000, 8000), Local Player.Pick)), Custom String("가죽 배낭 $4800"), Custom String("말 $11000"), Custom String("화약 $200 — 열차의 날"), Custom String("황금 동상 $40,000"), Custom String("-"), Custom String("배달 수주"), Custom String("승급: 역마차장 — Lv.4"), Custom String("금괴 호송 계약"), Custom String("가축 출하 — 마리당 $48"), Custom String("새 출발의 기차 — 환생"), Custom String("마을 금고에 $1,000"), Custom String("소 몰기 시작"), Custom String("승급: 목장주 — Lv.4"), Custom String("내 목장"), Custom String("우리 증설 $5000"), Custom String("-"), Custom String("-"), Custom String("식사 $18 — 허기·갈증 회복"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("식사 $18 — 허기·갈증 회복"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-")), Add(Multiply(Add(Local Player.Zone, 1), 6), Local Player.MenuIdx)), Add(Local Player.MenuIdx, 1), Value In Array(Array(1, 1, 3, 4, 2, 3, 6, 2, 5, 6, 6, 5, 6, 4, 1, 1), Add(Local Player.Zone, 1))), Value In Array(Array(Custom String("{0}{1}", Custom String("[{0}] 실행", Input Binding String(Button(Interact))), Custom String("      [{0}] 육포 · [{1}] 물", Input Binding String(Button(Ability 2)), Input Binding String(Button(Ultimate)))), Custom String("{0}{1}", Custom String("[{0}] 실행      [{1}] 다음", Input Binding String(Button(Interact)), Input Binding String(Button(Reload))), Custom String("      [{0}] 육포 · [{1}] 물", Input Binding String(Button(Ability 2)), Input Binding String(Button(Ultimate))))), Value In Array(Array(1, 1, 3, 4, 2, 3, 6, 2, 5, 6, 6, 5, 6, 4, 1, 1), Add(Local Player.Zone, 1)) > 1 ? 1 : 0), Right, 1, Color(Aqua), Color(흰색), Color(회색), Visible To Sort Order String and Color, Default Visibility);
 		Create HUD Text(Local Player.TutOn == 0 ? Local Player : False, Null, Null, Custom String("{0}   {1}", Custom String("[{0}] 달리기", Input Binding String(Button(Ability 1))), Custom String("[{0}] 강도/체포 · 앉아서 [{0}] 송금 · 가만히 웅크리면 피로 회복", Input Binding String(Button(Melee)))), Right, 2, Color(흰색), Color(흰색), Color(회색), Visible To Sort Order String and Color, Default Visibility);
-		Create HUD Text(Local Player.TutOn == 0 ? Local Player : False, Null, Global Variable(TrainOn) == 1 ? Custom String("열차가 섰다! 금고 3칸 — [F] 5초 선착순") : Custom String("{0}", Global Variable(WagonOn) == 1 ? Custom String("금고 마차 — 표식에서 [F] 5초, 선착 1명") : Custom String("{0}", And(Global Variable(HuntPhase) >= 1, Global Variable(HuntPhase) <= 3) ? Custom String("대사냥 — 주황 표식을 [F]로 조사 ({0}/3)", Global Variable(HuntPhase)) : Custom String("{0}", Global Variable(HuntPhase) == 4 ? Custom String("대사냥 — 협곡 개활지로! 기여한 만큼 나눈다") : Custom String("{0}", And(Modulo(Global Variable(Day), 3) == 0, Global Variable(IsNight) == 0) ? Custom String("{0}", Global Variable(PowderSet) == 1 ? Custom String("열차의 날 — 저녁 8시, 협곡 철길목에 열차가 선다") : Custom String("{0}", Local Player.HasPowder == 1 ? Custom String("열차의 날 — 협곡 철길목에 [F] 8초로 화약을 묻어라") : Custom String("{0}", Custom String("열차의 날 — 대장간에서 화약 $200을 사라")))) : Custom String(""))))), Null, Top, 3, Color(흰색), Color(Orange), Color(흰색), Visible To Sort Order String and Color, Default Visibility);
+		Create HUD Text(Local Player.TutOn == 0 ? Local Player : False, Null, Global Variable(TrainOn) == 1 ? Custom String("열차가 섰다! 금고 3칸 — [F] 5초 선착순") : Custom String("{0}", Global Variable(WagonOn) == 1 ? Custom String("금고 마차 — 표식에서 [F] 5초, 선착 1명") : Custom String("{0}", And(Global Variable(HuntPhase) >= 1, Global Variable(HuntPhase) <= 3) ? Custom String("대사냥 — 주황 표식을 [F]로 조사 ({0}/3)", Global Variable(HuntPhase)) : Custom String("{0}", Global Variable(HuntPhase) == 4 ? Custom String("대사냥 — 협곡 개활지로! 기여한 만큼 나눈다") : Custom String("{0}", And(Modulo(Global Variable(Day), 3) == 0, Global Variable(IsNight) == 0) ? Custom String("{0}", Global Variable(PowderSet) == 1 ? Custom String("화약을 심었다 — 저녁 8시까지 {0}분, 철길목을 지켜라", Round To Integer(Divide(Subtract(1200, Global Variable(Clock)), 120), Up)) : Custom String("{0}", Local Player.HasPowder == 1 ? Custom String("{0}", Distance Between(Position Of(Local Player), Global Variable(TrainPos)) < 5 ? Custom String("열차의 날 — 지금이다! [F]를 8초 누르고 있어라") : Custom String("열차의 날 — 철길목까지 {0}m, 주황 표식을 따라가라", Round To Integer(Distance Between(Position Of(Local Player), Global Variable(TrainPos)), Down))) : Custom String("{0}", Custom String("열차의 날 — 대장간에서 화약 $200을 사라")))) : Custom String(""))))), Null, Top, 3, Color(흰색), Color(Orange), Color(흰색), Visible To Sort Order String and Color, Default Visibility);
 		Create HUD Text(Local Player.TutOn == 0 ? Local Player : False, Null, Global Variable(ContractKind) >= 1 ? Custom String("계약   {0}   {1}", Value In Array(Array(Custom String("채굴 8회"), Custom String("야수 4마리"), Custom String("배달 3건"), Custom String("소몰이 2회")), Subtract(Global Variable(ContractKind), 1)), Modulo(Local Player.Giant, 10) >= Value In Array(Array(8, 4, 3, 2), Subtract(Global Variable(ContractKind), 1)) ? Custom String("완료") : Custom String("{0} / {1}", Modulo(Local Player.Giant, 10), Value In Array(Array(8, 4, 3, 2), Subtract(Global Variable(ContractKind), 1)))) : Custom String(""), Null, Left, 2, Color(흰색), Color(Aqua), Color(흰색), Visible To Sort Order String and Color, Default Visibility);
 		Create HUD Text(Local Player.TutOn == 0 ? Local Player : False, Null, Custom String("오늘 목표   $ {0} / {1}", Max(0, Round To Integer(Subtract(Local Player.Earned, Local Player.DayStart), Down)), Global Variable(DailyGoal)), Custom String("{0}{1}", Custom String("1위  {0}   $ {1}\r\n", Value In Array(Global Variable(RankArr), 0), Player Variable(Value In Array(Global Variable(RankArr), 0), Money)), Count Of(Global Variable(RankArr)) > 1 ? Custom String("2위  {0}   $ {1}", Value In Array(Global Variable(RankArr), 1), Player Variable(Value In Array(Global Variable(RankArr), 1), Money)) : Custom String("")), Left, 3, Color(흰색), Color(Yellow), Color(Aqua), Visible To Sort Order String and Color, Default Visibility);
 	}
@@ -4576,10 +4577,17 @@ rule("[열차 02] 열차 통과")
 
 	action
 	{
+		Wait Until(And(Modulo(Global Variable(Day), 3) == 0, Global Variable(Clock) >= 1080), 99999);
+		If(Global Variable(PowderSet) == 1);
+			Big Message(All Players(All Teams), Custom String("1분 뒤 열차가 선다 — 철길목으로 모여라"));
+		Else;
+			Big Message(All Players(All Teams), Custom String("1분 뒤 열차 — 아직 화약이 없다! 대장간 $200, 철길목에서 [F] 8초"));
+		End;
 		Wait Until(And(Modulo(Global Variable(Day), 3) == 0, Global Variable(Clock) >= 1200), 99999);
 		If(Global Variable(PowderSet) == 0);
-			Set Global Variable(TickerMsg, Custom String("열차가 협곡을 무사히 지나갔다"));
-			Set Global Variable(TickerEnd, Add(Total Time Elapsed(), 3));
+			Big Message(All Players(All Teams), Custom String("열차가 그냥 지나갔다 — 철길목에 화약이 없었다"));
+			Set Global Variable(TickerMsg, Custom String("다음 열차는 사흘 뒤 — 대장간 화약 $200을 철길목에 묻어야 선다"));
+			Set Global Variable(TickerEnd, Add(Total Time Elapsed(), 5));
 		Else;
 			Set Global Variable(PowderSet, 0);
 			Set Global Variable(TrainOn, 1);
@@ -4603,11 +4611,36 @@ rule("[열차 02] 열차 통과")
 				Destroy Effect(Value In Array(Global Variable(TrainFx), Global Variable(Idx)));
 			End;
 			Destroy Icon(Global Variable(TrainIco));
-			Set Global Variable(TickerMsg, Custom String("열차가 다시 움직인다 — 강도극이 끝났다"));
+			Set Global Variable(TickerMsg, Custom String("열차가 다시 움직인다 — 자루를 진 자는 은신처에서 정산해라"));
 			Set Global Variable(TickerEnd, Add(Total Time Elapsed(), 3));
 		End;
 		Wait Until(Modulo(Global Variable(Day), 3) != 0, 99999);
 		Loop();
+	}
+}
+
+rule("[열차 04] 철길목 표식 — 열차의 날 내내")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	condition
+	{
+		Global Variable(Ready) == 1;
+		Modulo(Global Variable(Day), 3) == 0;
+	}
+
+	action
+	{
+		Destroy Icon(Global Variable(TrainWay));
+		Create Icon(All Players(All Teams), Add(Global Variable(TrainPos), Vector(0, 3.5, 0)), Bolt, Visible To and Position, Color(Orange), True);
+		Set Global Variable(TrainWay, Last Created Entity());
+		Set Global Variable(TickerMsg, Custom String("철길목에 주황 표식이 섰다 — 저녁 8시, 열차"));
+		Set Global Variable(TickerEnd, Add(Total Time Elapsed(), 4));
+		Wait Until(Modulo(Global Variable(Day), 3) != 0, 99999);
+		Destroy Icon(Global Variable(TrainWay));
 	}
 }
 
@@ -4655,7 +4688,8 @@ rule("[열차 03] 금고 개방 (F 5초)")
 			Modify Player Variable(Event Player, Sack, Add, Event Player.Loot);
 			Set Player Variable(Event Player, Noto, Min(100, Add(Event Player.Noto, 10)));
 			Modify Player Variable(Event Player, Bounty, Add, 150);
-			Set Global Variable(TickerMsg, Custom String("{0}이(가) 열차 금고를 뜯었다! (+$ {1}) — 남은 금고 {2}", Event Player, Event Player.Loot, Global Variable(TrainVault)));
+			Set Global Variable(TickerMsg, Custom String("{0}이(가) 열차 금고를 뜯었다! 자루에 $ {1} — 남은 금고 {2}", Event Player, Event Player.Loot, Global Variable(TrainVault)));
+			Big Message(Event Player, Custom String("금고를 뜯었다 — 자루에 $ {0}. 은신처에서 부려야 돈이 된다", Event Player.Loot));
 			Set Global Variable(TickerEnd, Add(Total Time Elapsed(), 3));
 			Play Effect(All Players(All Teams), Ring Explosion, Color(Orange), Position Of(Event Player), 3);
 			If(Global Variable(TrainVault) <= 0);
