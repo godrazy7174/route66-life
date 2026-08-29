@@ -138,6 +138,12 @@ variables
 		86: HuntSwing
 		87: RatKill
 		88: RatPop
+		89: FireEnd
+		90: FireN
+		91: FirePos
+		92: RatGoal
+		93: RatLast
+		94: RatStuck
 
 	player:
 		0: Money
@@ -344,6 +350,7 @@ rule("[코어 01] 월드 초기화")
 		Set Global Variable(StatueFx, 0);
 		Set Global Variable(StatueTxt, 0);
 		Set Global Variable(JerkyStock, 15);
+		Set Global Variable(FireEnd, 0);
 		Set Global Variable(RatNext, Add(Total Time Elapsed(), Random Real(240, 600)));
 		Set Global Variable(RankArr, Empty Array);
 		Set Global Variable(TreasureOn, 0);
@@ -380,7 +387,7 @@ rule("[코어 02] BuildWorld")
 		Create In-World Text(All Players(All Teams), Custom String("협곡 철길목 — 사흘에 한 번, 저녁 8시 열차"), Add(Global Variable(TrainPos), Vector(0, 2.2, 0)), 1.2, Do Not Clip, Visible To and Position, Color(Orange), Default Visibility);
 		Set Global Variable(LocRad, Array(7, 7, 7, 6, 6, 6, 10, 6, 8, 5, 6, 6, 7, 5, 5));
 		Create In-World Text(All Players(All Teams), Custom String("식당"), Add(Value In Array(Global Variable(LocPos), 0), Vector(0, 2.6, 0)), 1.7, Do Not Clip, Visible To and Position, Color(Yellow), Default Visibility);
-		Create In-World Text(And(Distance Between(Local Player, Value In Array(Global Variable(LocPos), 0)) < 13, Local Player.TutOn == 0) ? Local Player : False, Custom String("{0}{1}", Custom String("따뜻한 식사 $18 — 허기와 갈증을 한 번에 채운다\r\n일을 하는 순간 그 직업이 된다 — 경험은 직업마다 남는다\r\n일할수록 레벨이 오르고, Lv.4면 그 일터에서 승급한다\r\n"), Custom String("[{0}] 행동 선택      [{1}] 실행", Input Binding String(Button(Reload)), Input Binding String(Button(Interact)))), Add(Value In Array(Global Variable(LocPos), 0), Vector(0, 1.5, 0)), 0.95, Do Not Clip, Visible To Position and String, Color(흰색), Default Visibility);
+		Create In-World Text(And(Distance Between(Local Player, Value In Array(Global Variable(LocPos), 0)) < 13, Local Player.TutOn == 0) ? Local Player : False, Custom String("{0}{1}", Custom String("따뜻한 식사 $36 — 허기와 갈증을 한 번에 채운다\r\n일을 하는 순간 그 직업이 된다 — 경험은 직업마다 남는다\r\n일할수록 레벨이 오르고, Lv.4면 그 일터에서 승급한다\r\n"), Custom String("[{0}] 행동 선택      [{1}] 실행", Input Binding String(Button(Reload)), Input Binding String(Button(Interact)))), Add(Value In Array(Global Variable(LocPos), 0), Vector(0, 1.5, 0)), 0.95, Do Not Clip, Visible To Position and String, Color(흰색), Default Visibility);
 		Create In-World Text(All Players(All Teams), Custom String("협곡 광산"), Add(Value In Array(Global Variable(LocPos), 1), Vector(0, 2.6, 0)), 1.7, Do Not Clip, Visible To and Position, Color(Yellow), Default Visibility);
 		Create In-World Text(And(Distance Between(Local Player, Value In Array(Global Variable(LocPos), 1)) < 13, Local Player.TutOn == 0) ? Local Player : False, Custom String("{0}{1}", Custom String("채굴 — 원석 획득 (허기 2 · 갈증 2.5 · 피로 5)\r\n정밀 탐사 $20\r\n오늘 원석 시세  $ {0}\r\n", Global Variable(OrePrice)), Custom String("[{0}] 행동 선택      [{1}] 실행", Input Binding String(Button(Reload)), Input Binding String(Button(Interact)))), Add(Value In Array(Global Variable(LocPos), 1), Vector(0, 1.5, 0)), 0.95, Do Not Clip, Visible To Position and String, Color(흰색), Default Visibility);
 		Create In-World Text(All Players(All Teams), Custom String("주유소 잡화점"), Add(Value In Array(Global Variable(LocPos), 2), Vector(0, 2.6, 0)), 1.7, Do Not Clip, Visible To and Position, Color(Yellow), Default Visibility);
@@ -394,7 +401,7 @@ rule("[코어 02] BuildWorld")
 		Create In-World Text(All Players(All Teams), Custom String("협곡 개활지"), Add(Value In Array(Global Variable(LocPos), 6), Vector(0, 2.6, 0)), 1.7, Do Not Clip, Visible To and Position, Color(Yellow), Default Visibility);
 		Create In-World Text(And(Distance Between(Local Player, Value In Array(Global Variable(LocPos), 6)) < 13, Local Player.TutOn == 0) ? Local Player : False, Custom String("{0}{1}", Global Variable(HuntPhase) == 4 ? Custom String("대야수가 개활지에 나와 있다\r\n쓰러뜨리기 전에는 일반 추적을 할 수 없다\r\n") : Custom String("숨은 야수 {0}마리 — 추적하면 전부 튀어나온다\r\n드러난 50초 안에 잡아라\r\n추적 1회 — 허기 1.5 · 갈증 2 · 피로 4\r\n", Count Of(Filtered Array(All Players(Team 2), And(Slot Of(Current Array Element) <= 2, And(Is Dummy Bot(Current Array Element), And(Is Alive(Current Array Element), Total Time Elapsed() >= Player Variable(Current Array Element, RevealEnd))))))), Custom String("[{0}] 실행", Input Binding String(Button(Interact)))), Add(Value In Array(Global Variable(LocPos), 6), Vector(0, 1.5, 0)), 0.95, Do Not Clip, Visible To Position and String, Color(흰색), Default Visibility);
 		Create In-World Text(All Players(All Teams), Custom String("보안관 초소"), Add(Value In Array(Global Variable(LocPos), 7), Vector(0, 2.6, 0)), 1.7, Do Not Clip, Visible To and Position, Color(Yellow), Default Visibility);
-		Create In-World Text(And(Distance Between(Local Player, Value In Array(Global Variable(LocPos), 7)) < 13, Local Player.TutOn == 0) ? Local Player : False, Custom String("{0}{1}", Custom String("{0}{1}", Custom String("벌금 = 현상금의 30% · 최소 $100 (명성 70+ 절반) — 수배 말소, 악명 -40\r\n현상금 게시판 — 수배범을 잡으면 그 목값을 갖는다\r\n체포 시도 — 허기 1 · 갈증 1 · 피로 3\r\n배지 — 체포는 "), Custom String("현상금 사냥꾼의 일, 제압(체력 절반)이 먼저다\r\n")), Custom String("[{0}] 행동 선택      [{1}] 실행", Input Binding String(Button(Reload)), Input Binding String(Button(Interact)))), Add(Value In Array(Global Variable(LocPos), 7), Vector(0, 1.5, 0)), 0.95, Do Not Clip, Visible To Position and String, Color(흰색), Default Visibility);
+		Create In-World Text(And(Distance Between(Local Player, Value In Array(Global Variable(LocPos), 7)) < 13, Local Player.TutOn == 0) ? Local Player : False, Custom String("{0}{1}", Custom String("{0}{1}", Custom String("벌금 = 현상금의 50% · 최소 $200 (명성 70+ 절반) — 수배 말소, 악명 -40\r\n현상금 게시판 — 수배범을 잡으면 그 목값을 갖는다\r\n체포 시도 — 허기 1 · 갈증 1 · 피로 3\r\n배지 — 체포는 "), Custom String("현상금 사냥꾼의 일, 제압(체력 절반)이 먼저다\r\n")), Custom String("[{0}] 행동 선택      [{1}] 실행", Input Binding String(Button(Reload)), Input Binding String(Button(Interact)))), Add(Value In Array(Global Variable(LocPos), 7), Vector(0, 1.5, 0)), 0.95, Do Not Clip, Visible To Position and String, Color(흰색), Default Visibility);
 		Create In-World Text(All Players(All Teams), Custom String("무법자 은신처"), Add(Value In Array(Global Variable(LocPos), 8), Vector(0, 2.6, 0)), 1.7, Do Not Clip, Visible To and Position, Color(Yellow), Default Visibility);
 		Create In-World Text(And(Distance Between(Local Player, Value In Array(Global Variable(LocPos), 8)) < 13, Local Player.TutOn == 0) ? Local Player : False, Custom String("{0}{1}", Custom String("{0}{1}", Custom String("강탈과 습격이 너를 무법자로 만든다\r\n강탈 — 허기 1 · 갈증 1 · 피로 3\r\n장물 — 무법자 165% (악명 50+ 180%) / 일반 130%\r\n습격 — 역마차를 쫓는다 (피로 8)\r\n"), Custom String("{0}{1}", Custom String("뒷골목 은신 $40 — 추방자도 여기선 먹고 잔다\r\n양조장 $2000 (악명 30) — 물통 2개가 하루 만에 밀주 3병\r\n밤의 큰 건 — 은행(금고 4단계)과 열차는 간 큰 자를 기다린다\r\n밀수 — [{0}]로 화물 ", Input Binding String(Button(Melee))), Custom String("수주, 접선지 인계 (질주 불가·죽으면 소실)\r\n"))), Custom String("[{0}] 행동 선택      [{1}] 실행", Input Binding String(Button(Reload)), Input Binding String(Button(Interact)))), Add(Value In Array(Global Variable(LocPos), 8), Vector(0, 1.5, 0)), 0.95, Do Not Clip, Visible To Position and String, Color(흰색), Default Visibility);
 		Create In-World Text(All Players(All Teams), Custom String("안내소"), Add(Value In Array(Global Variable(LocPos), 9), Vector(0, 2.1, 0)), 1.5, Do Not Clip, Visible To and Position, Color(Yellow), Default Visibility);
@@ -414,9 +421,9 @@ rule("[코어 02] BuildWorld")
 		Create In-World Text(All Players(All Teams), Custom String("목장"), Add(Value In Array(Global Variable(LocPos), 12), Vector(0, 2.6, 0)), 1.7, Do Not Clip, Visible To and Position, Color(Yellow), Default Visibility);
 		Create In-World Text(And(Distance Between(Local Player, Value In Array(Global Variable(LocPos), 12)) < 13, Local Player.TutOn == 0) ? Local Player : False, Custom String("{0}{1}", Custom String("{0}{1}", Custom String("벌판의 소를 몸으로 밀어 우리 안까지 몰아넣어라\r\n소는 네가 다가간 반대쪽으로 밀린다 · 360초 제한\r\n몰이 성공 — 허기 3 · 갈증 2.5 · 피로 5\r\n내 목장 $2000 (명성 30) — 물통 2·육포 1이"), Custom String(" 하루 만에 소가 된다\r\n")), Custom String("[{0}] 행동 선택      [{1}] 실행", Input Binding String(Button(Reload)), Input Binding String(Button(Interact)))), Add(Value In Array(Global Variable(LocPos), 12), Vector(0, 1.5, 0)), 0.95, Do Not Clip, Visible To Position and String, Color(흰색), Default Visibility);
 		Create In-World Text(All Players(All Teams), Custom String("식당 2호점"), Add(Value In Array(Global Variable(LocPos), 13), Vector(0, 2.6, 0)), 1.7, Do Not Clip, Visible To and Position, Color(Yellow), Default Visibility);
-		Create In-World Text(And(Distance Between(Local Player, Value In Array(Global Variable(LocPos), 13)) < 13, Local Player.TutOn == 0) ? Local Player : False, Custom String("{0}{1}", Custom String("따뜻한 식사 $18 — 허기와 갈증을 한 번에 채운다\r\n본점 주인이 자릿세를 걷는다\r\n"), Custom String("[{0}] 실행", Input Binding String(Button(Interact)))), Add(Value In Array(Global Variable(LocPos), 13), Vector(0, 1.5, 0)), 0.95, Do Not Clip, Visible To Position and String, Color(흰색), Default Visibility);
+		Create In-World Text(And(Distance Between(Local Player, Value In Array(Global Variable(LocPos), 13)) < 13, Local Player.TutOn == 0) ? Local Player : False, Custom String("{0}{1}", Custom String("따뜻한 식사 $36 — 허기와 갈증을 한 번에 채운다\r\n본점 주인이 자릿세를 걷는다\r\n"), Custom String("[{0}] 실행", Input Binding String(Button(Interact)))), Add(Value In Array(Global Variable(LocPos), 13), Vector(0, 1.5, 0)), 0.95, Do Not Clip, Visible To Position and String, Color(흰색), Default Visibility);
 		Create In-World Text(All Players(All Teams), Custom String("식당 3호점"), Add(Value In Array(Global Variable(LocPos), 14), Vector(0, 2.6, 0)), 1.7, Do Not Clip, Visible To and Position, Color(Yellow), Default Visibility);
-		Create In-World Text(And(Distance Between(Local Player, Value In Array(Global Variable(LocPos), 14)) < 13, Local Player.TutOn == 0) ? Local Player : False, Custom String("{0}{1}", Custom String("따뜻한 식사 $18 — 허기와 갈증을 한 번에 채운다\r\n본점 주인이 자릿세를 걷는다\r\n"), Custom String("[{0}] 실행", Input Binding String(Button(Interact)))), Add(Value In Array(Global Variable(LocPos), 14), Vector(0, 1.5, 0)), 0.95, Do Not Clip, Visible To Position and String, Color(흰색), Default Visibility);
+		Create In-World Text(And(Distance Between(Local Player, Value In Array(Global Variable(LocPos), 14)) < 13, Local Player.TutOn == 0) ? Local Player : False, Custom String("{0}{1}", Custom String("따뜻한 식사 $36 — 허기와 갈증을 한 번에 채운다\r\n본점 주인이 자릿세를 걷는다\r\n"), Custom String("[{0}] 실행", Input Binding String(Button(Interact)))), Add(Value In Array(Global Variable(LocPos), 14), Vector(0, 1.5, 0)), 0.95, Do Not Clip, Visible To Position and String, Color(흰색), Default Visibility);
 		Create Dummy Bot(Hero(제트팩 캣), Team 2, 0, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 6), Vector(Random Real(-7, 7), 0, Random Real(-7, 7)))), Vector(1, 0, 0));
 		Wait(0.25, Ignore Condition);
 		Create Dummy Bot(Hero(제트팩 캣), Team 2, 1, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 6), Vector(Random Real(-7, 7), 0, Random Real(-7, 7)))), Vector(1, 0, 0));
@@ -430,7 +437,7 @@ rule("[코어 03] 플레이어 최초 설정")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -534,7 +541,7 @@ rule("[코어 14] 스폰 즉시 식당으로")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -591,7 +598,7 @@ rule("[코어 15] 머리 위 이름표 갱신")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -683,7 +690,7 @@ rule("[코어 05] 캐서디 스킬 봉인")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -713,7 +720,7 @@ rule("[코어 06] 애쉬 스킬 봉인 (조준경 허용)")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -743,7 +750,7 @@ rule("[코어 20] 프레야 스킬 봉인 (조준 허용)")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -773,7 +780,7 @@ rule("[코어 16] 트레이서 설정 (배낭)")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -803,7 +810,7 @@ rule("[코어 17] 시온 설정 (말) — 바이크만 해금")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -838,7 +845,7 @@ rule("[코어 17-3] 운반 중 바이크 봉인")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -862,7 +869,7 @@ rule("[코어 17-4] 운반 종료 — 바이크 해금")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -887,7 +894,7 @@ rule("[코어 17-2] 바이크 쿨타임 2초")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -910,7 +917,7 @@ rule("[코어 17-5] 시온 — 안장 주머니 자동 취식")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -939,7 +946,7 @@ rule("[코어 18] 무한 탄창")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -963,7 +970,7 @@ rule("[코어 21] 현상금 사냥꾼은 프레야")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -986,7 +993,7 @@ rule("[코어 22] 배지를 반납하면")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -1017,7 +1024,7 @@ rule("[코어 07] 궁극기 게이지 상시 제거")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -1052,7 +1059,7 @@ rule("[코어 08] 공용 HUD 생성")
 		Create HUD Text(Local Player.TutOn == 0 ? Local Player : False, Custom String("{0}      {1}", Custom String("체력 {0}", Round To Integer(Health(Local Player), Down)), Custom String("허기 {0}  갈증 {1}  피로 {2}", Round To Integer(Local Player.Hunger, Down), Round To Integer(Local Player.Thirst, Down), Round To Integer(Local Player.Energy, Down))), Custom String("{0}      {1}", Custom String("육포 {0}", Value In Array(Local Player.Inv, 0)), Custom String("물통 {0}", Value In Array(Local Player.Inv, 1))), Custom String("{0}      {1}      {2}", Custom String("원석 {0}", Value In Array(Local Player.Inv, 2)), Custom String("가죽 {0}", Value In Array(Local Player.Inv, 3)), Custom String("현상금 $ {0}", Local Player.Bounty)), Left, 2, Color(Orange), Color(흰색), Color(Sky Blue), Visible To Sort Order String and Color, Default Visibility);
 		Create HUD Text(And(Local Player.TutOn == 0, Local Player.Job > 0) ? Local Player : False, Null, Null, Custom String("경험치 {0} / 250   누적 {1}", Modulo(Value In Array(Local Player.JobXP, Local Player.Job), 250), Value In Array(Local Player.JobXP, Local Player.Job)), Left, 3, Color(흰색), Color(흰색), Color(Sky Blue), Visible To Sort Order String and Color, Default Visibility);
 		Create Progress Bar HUD Text(And(Local Player.TutOn == 0, Local Player.Job > 0) ? Local Player : False, Multiply(0.4, Modulo(Value In Array(Local Player.JobXP, Local Player.Job), 250)), Null, Left, 4, Color(Sky Blue), Null, Visible To Values and Color, Default Visibility);
-		Create HUD Text(Local Player.TutOn == 0 ? Local Player : False, Value In Array(Array(Custom String("황야"), Custom String("식당"), Custom String("협곡 광산"), Custom String("주유소 잡화점"), Custom String("모텔"), Custom String("정비소 고물상"), Custom String("술집"), Custom String("협곡 개활지"), Custom String("보안관 초소"), Custom String("무법자 은신처"), Custom String("안내소"), Custom String("대장간"), Custom String("역마차 정거장"), Custom String("목장"), Custom String("식당 2호점"), Custom String("식당 3호점")), Add(Local Player.Zone, 1)), Custom String("▶  {0}      ({1}/{2})", Value In Array(Array(Custom String("행동 없음 — 마을로 가라"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("식사 $18 — 허기·갈증 회복"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("채굴하기"), Custom String("정밀 탐사 $20"), Custom String("승급: 광산주 — Lv.4"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("육포 구매 $22"), Custom String("물통 구매 $15"), Custom String("육포 5개 묶음 $95"), Custom String("원석·가죽 전량 판매 — 시세 90%"), Custom String("-"), Custom String("-"), Custom String("숙박 $90 — 피로 회복"), Custom String("내 방 마련 $22000"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("원석 전량 판매"), Custom String("가죽 전량 판매"), Custom String("오늘의 시세"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("위스키 $38 — 피로 회복"), Custom String("카드 도박 $75"), Custom String("소문 듣기"), Custom String("뒷문 거래 — 밀주 납품"), Custom String("불꽃놀이 $5,000"), Custom String("뒷문 물통 $25"), Custom String("흔적 추적 — 야수 몰아내기"), Custom String("승급: 맹수 사냥꾼 — Lv.4"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("벌금 납부 — 현상금의 30% (최소 $100)"), Custom String("현상금 게시판"), Custom String("승급: 보안관 — Lv.4·명성 30"), Custom String("재산세 납부 — 징수 기간만"), Custom String("전직: 현상금 사냥꾼"), Custom String("-"), Custom String("장물 거래"), Custom String("역마차 습격"), Custom String("뒷골목 은신 $40"), Custom String("밀주 양조장"), Custom String("양조통 증설 $5000"), Custom String("승급: 갱단 두목 — Lv.4"), Custom String("튜토리얼 보기"), Custom String("세이브 코드 발급"), Custom String("코드 입력 — 저장 복원"), Custom String("마을 금고에 $1,000"), Custom String("은행 예금 — 전액 맡기기"), Custom String("은행 출금 — 전액 찾기"), Local Player.Pick >= 4 ? Custom String("곡괭이 — 최고 등급") : Custom String("곡괭이 강화 $ {0}", Value In Array(Array(800, 2000, 4000, 8000), Local Player.Pick)), Custom String("가죽 배낭 $4800"), Custom String("말 $11000"), Custom String("화약 $200 — 열차의 날"), Custom String("황금 동상 $40,000"), Custom String("-"), Custom String("배달 수주"), Custom String("승급: 역마차장 — Lv.4"), Custom String("금괴 호송 계약"), Custom String("가축 출하 — 마리당 $48"), Custom String("새 출발의 기차 — 환생"), Custom String("마을 금고에 $1,000"), Custom String("소 몰기 시작"), Custom String("승급: 목장주 — Lv.4"), Custom String("내 목장"), Custom String("우리 증설 $5000"), Custom String("-"), Custom String("-"), Custom String("식사 $18 — 허기·갈증 회복"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("식사 $18 — 허기·갈증 회복"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-")), Add(Multiply(Add(Local Player.Zone, 1), 6), Local Player.MenuIdx)), Add(Local Player.MenuIdx, 1), Value In Array(Array(1, 1, 3, 4, 2, 3, 6, 2, 5, 6, 6, 5, 6, 4, 1, 1), Add(Local Player.Zone, 1))), Value In Array(Array(Custom String("{0}{1}", Custom String("[{0}] 실행", Input Binding String(Button(Interact))), Custom String("      [{0}] 육포 · [{1}] 물", Input Binding String(Button(Ability 2)), Input Binding String(Button(Ultimate)))), Custom String("{0}{1}", Custom String("[{0}] 실행      [{1}] 다음", Input Binding String(Button(Interact)), Input Binding String(Button(Reload))), Custom String("      [{0}] 육포 · [{1}] 물", Input Binding String(Button(Ability 2)), Input Binding String(Button(Ultimate))))), Value In Array(Array(1, 1, 3, 4, 2, 3, 6, 2, 5, 6, 6, 5, 6, 4, 1, 1), Add(Local Player.Zone, 1)) > 1 ? 1 : 0), Right, 1, Color(Aqua), Color(흰색), Color(회색), Visible To Sort Order String and Color, Default Visibility);
+		Create HUD Text(Local Player.TutOn == 0 ? Local Player : False, Value In Array(Array(Custom String("황야"), Custom String("식당"), Custom String("협곡 광산"), Custom String("주유소 잡화점"), Custom String("모텔"), Custom String("정비소 고물상"), Custom String("술집"), Custom String("협곡 개활지"), Custom String("보안관 초소"), Custom String("무법자 은신처"), Custom String("안내소"), Custom String("대장간"), Custom String("역마차 정거장"), Custom String("목장"), Custom String("식당 2호점"), Custom String("식당 3호점")), Add(Local Player.Zone, 1)), Custom String("▶  {0}      ({1}/{2})", Value In Array(Array(Custom String("행동 없음 — 마을로 가라"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("식사 $36 — 허기·갈증 회복"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("채굴하기"), Custom String("정밀 탐사 $20"), Custom String("승급: 광산주 — Lv.4"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("육포 구매 $22"), Custom String("물통 구매 $15"), Custom String("육포 5개 묶음 $95"), Custom String("원석·가죽 전량 판매 — 시세 90%"), Custom String("-"), Custom String("-"), Custom String("숙박 $90 — 피로 회복"), Custom String("내 방 마련 $22000"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("원석 전량 판매"), Custom String("가죽 전량 판매"), Custom String("오늘의 시세"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("위스키 $38 — 피로 회복"), Custom String("카드 도박 $75"), Custom String("소문 듣기"), Custom String("뒷문 거래 — 밀주 납품"), Custom String("불꽃놀이 $5,000"), Custom String("뒷문 물통 $25"), Custom String("흔적 추적 — 야수 몰아내기"), Custom String("승급: 맹수 사냥꾼 — Lv.4"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("벌금 납부 — 현상금의 50% (최소 $200)"), Custom String("현상금 게시판"), Custom String("승급: 보안관 — Lv.4·명성 30"), Custom String("재산세 납부 — 징수 기간만"), Custom String("전직: 현상금 사냥꾼"), Custom String("-"), Custom String("장물 거래"), Custom String("역마차 습격"), Custom String("뒷골목 은신 $40"), Custom String("밀주 양조장"), Custom String("양조통 증설 $5000"), Custom String("승급: 갱단 두목 — Lv.4"), Custom String("튜토리얼 보기"), Custom String("세이브 코드 발급"), Custom String("코드 입력 — 저장 복원"), Custom String("마을 금고에 $1,000"), Custom String("은행 예금 — 전액 맡기기"), Custom String("은행 출금 — 전액 찾기"), Local Player.Pick >= 4 ? Custom String("곡괭이 — 최고 등급") : Custom String("곡괭이 강화 $ {0}", Value In Array(Array(800, 2000, 4000, 8000), Local Player.Pick)), Custom String("가죽 배낭 $4800"), Custom String("말 $11000"), Custom String("화약 $200 — 열차의 날"), Custom String("황금 동상 $40,000"), Custom String("-"), Custom String("배달 수주"), Custom String("승급: 역마차장 — Lv.4"), Custom String("금괴 호송 계약"), Custom String("가축 출하 — 마리당 $48"), Custom String("새 출발의 기차 — 환생"), Custom String("마을 금고에 $1,000"), Custom String("소 몰기 시작"), Custom String("승급: 목장주 — Lv.4"), Custom String("내 목장"), Custom String("우리 증설 $5000"), Custom String("-"), Custom String("-"), Custom String("식사 $36 — 허기·갈증 회복"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("식사 $36 — 허기·갈증 회복"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-"), Custom String("-")), Add(Multiply(Add(Local Player.Zone, 1), 6), Local Player.MenuIdx)), Add(Local Player.MenuIdx, 1), Value In Array(Array(1, 1, 3, 4, 2, 3, 6, 2, 5, 6, 6, 5, 6, 4, 1, 1), Add(Local Player.Zone, 1))), Value In Array(Array(Custom String("{0}{1}", Custom String("[{0}] 실행", Input Binding String(Button(Interact))), Custom String("      [{0}] 육포 · [{1}] 물", Input Binding String(Button(Ability 2)), Input Binding String(Button(Ultimate)))), Custom String("{0}{1}", Custom String("[{0}] 실행      [{1}] 다음", Input Binding String(Button(Interact)), Input Binding String(Button(Reload))), Custom String("      [{0}] 육포 · [{1}] 물", Input Binding String(Button(Ability 2)), Input Binding String(Button(Ultimate))))), Value In Array(Array(1, 1, 3, 4, 2, 3, 6, 2, 5, 6, 6, 5, 6, 4, 1, 1), Add(Local Player.Zone, 1)) > 1 ? 1 : 0), Right, 1, Color(Aqua), Color(흰색), Color(회색), Visible To Sort Order String and Color, Default Visibility);
 		Create HUD Text(Local Player.TutOn == 0 ? Local Player : False, Null, Null, Custom String("{0}   {1}", Custom String("[{0}] 달리기", Input Binding String(Button(Ability 1))), Custom String("[{0}] 강도/체포 · 앉아서 [{0}] 송금 · 가만히 웅크리면 피로 회복", Input Binding String(Button(Melee)))), Right, 2, Color(흰색), Color(흰색), Color(회색), Visible To Sort Order String and Color, Default Visibility);
 		Create HUD Text(Local Player.TutOn == 0 ? Local Player : False, Null, Global Variable(TrainOn) == 1 ? Custom String("열차가 섰다! 금고 3칸 — [F] 5초 선착순") : Custom String("{0}", Global Variable(WagonOn) == 1 ? Custom String("금고 마차 — 표식에서 [F] 5초, 선착 1명") : Custom String("{0}", And(Global Variable(HuntPhase) >= 1, Global Variable(HuntPhase) <= 3) ? Custom String("대사냥 — 주황 표식을 [F]로 조사 ({0}/3)", Global Variable(HuntPhase)) : Custom String("{0}", Global Variable(HuntPhase) == 4 ? Custom String("대사냥 — 협곡 개활지로! 기여한 만큼 나눈다") : Custom String("{0}", And(Modulo(Global Variable(Day), 3) == 0, Global Variable(IsNight) == 0) ? Custom String("{0}", Global Variable(PowderSet) == 1 ? Custom String("화약을 심었다 — 저녁 8시까지 {0}분, 철길목을 지켜라", Round To Integer(Divide(Subtract(1200, Global Variable(Clock)), 120), Up)) : Custom String("{0}", Local Player.HasPowder == 1 ? Custom String("{0}", Distance Between(Position Of(Local Player), Global Variable(TrainPos)) < 5 ? Custom String("열차의 날 — 지금이다! [F]를 8초 누르고 있어라") : Custom String("열차의 날 — 철길목까지 {0}m, 주황 표식을 따라가라", Round To Integer(Distance Between(Position Of(Local Player), Global Variable(TrainPos)), Down))) : Custom String("{0}", Custom String("열차의 날 — 대장간에서 화약 $200을 사라")))) : Custom String(""))))), Null, Top, 3, Color(흰색), Color(Orange), Color(흰색), Visible To Sort Order String and Color, Default Visibility);
 		Create HUD Text(Local Player.TutOn == 0 ? Local Player : False, Null, Global Variable(ContractKind) >= 1 ? Custom String("계약   {0}   {1}", Value In Array(Array(Custom String("채굴 8회"), Custom String("야수 4마리"), Custom String("배달 3건"), Custom String("소몰이 2회")), Subtract(Global Variable(ContractKind), 1)), Modulo(Local Player.Giant, 10) >= Value In Array(Array(8, 4, 3, 2), Subtract(Global Variable(ContractKind), 1)) ? Custom String("완료") : Custom String("{0} / {1}", Modulo(Local Player.Giant, 10), Value In Array(Array(8, 4, 3, 2), Subtract(Global Variable(ContractKind), 1)))) : Custom String(""), Null, Left, 2, Color(흰색), Color(Aqua), Color(흰색), Visible To Sort Order String and Color, Default Visibility);
@@ -1113,7 +1120,7 @@ rule("[월드 02] 욕구 감소")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -1140,7 +1147,7 @@ rule("[월드 03] 결핍 패널티")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -1186,7 +1193,7 @@ rule("[월드 04] 구역 감지")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -1303,7 +1310,7 @@ rule("[평판 01] 죄는 이름을 갉는다")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -1332,7 +1339,7 @@ rule("[월드 05] 아침 정산")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -1376,7 +1383,7 @@ rule("[월드 06] 일일 목표 달성")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -1449,7 +1456,7 @@ rule("[조작 01] 행동 커서 이동 (R)")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -1475,7 +1482,7 @@ rule("[조작 02] 육포 먹기 (E)")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -1508,7 +1515,7 @@ rule("[조작 02-2] 물 마시기 (Q)")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -1543,7 +1550,7 @@ rule("[조작 04] 달리기 (Shift)")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -1586,7 +1593,7 @@ rule("[조작 05] 바이크 질주 (시온 E)")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -1627,7 +1634,7 @@ rule("[코어 12] 3인칭 시점 고정")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -1650,7 +1657,7 @@ rule("[조작 03a] 행동 실행 — 식당·광산·잡화점·모텔·정비�
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -1677,7 +1684,7 @@ rule("[조작 03a] 행동 실행 — 식당·광산·잡화점·모텔·정비�
 			Abort;
 		End;
 		If(Or(Or(Event Player.Zone == 0, Event Player.Zone == 13), Event Player.Zone == 14));
-			Set Player Variable(Event Player, Amt, Round To Integer(Multiply(18, Subtract(1, Multiply(Subtract(Event Player.Fame, Event Player.Noto), 0.002))), To Nearest));
+			Set Player Variable(Event Player, Amt, Round To Integer(Multiply(36, Subtract(1, Multiply(Subtract(Event Player.Fame, Event Player.Noto), 0.002))), To Nearest));
 			If(Event Player.Money >= Event Player.Amt);
 				Modify Player Variable(Event Player, Money, Subtract, Event Player.Amt);
 				If(And(Entity Exists(Value In Array(Global Variable(BldOwner), 0)), Value In Array(Global Variable(BldOwner), 0) != Event Player));
@@ -1875,7 +1882,7 @@ rule("[조작 03b] 행동 실행 — 술집·개활지·초소·은신처")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -1959,7 +1966,7 @@ rule("[조작 03b] 행동 실행 — 술집·개활지·초소·은신처")
 					Play Effect(Event Player, Debuff Impact Sound, Color(Red), Position Of(Event Player), 45);
 				End;
 			Else If(Event Player.MenuIdx == 2);
-				Small Message(Event Player, Value In Array(Array(Custom String("소문 — 오늘은 조용하다"), Custom String("소문 — 금맥 소동이 벌어졌다!"), Custom String("소문 — 모래폭풍이 온다"), Custom String("소문 — 야수들이 사납게 날뛴다"), Custom String("소문 — 역마차가 들어왔다"), Custom String("소문 — 누군가 누명을 썼다"), Custom String("소문 — 금광이 무너지고 있다")), Global Variable(EventKind)));
+				Small Message(Event Player, Global Variable(PowderSet) == 1 ? Custom String("소문 — 누가 철길목에 손을 댔다더군. 저녁 8시를 노려라") : Custom String("{0}", And(Modulo(Global Variable(Day), 3) == 0, Global Variable(IsNight) == 0) ? Custom String("소문 — 오늘 저녁 8시 열차가 선다. 대장간 화약이 동날 게다") : Custom String("{0}", Global Variable(HuntPhase) >= 1 ? Custom String("소문 — 큰 놈이 돌아다닌다. 주황 흔적을 쫓아라") : Custom String("{0}", Global Variable(RatOn) == 1 ? Custom String("소문 — 쥐떼가 잡화점을 털고 있다!") : Value In Array(Array(Custom String("소문 — 오늘은 조용하다"), Custom String("소문 — 금맥 소동이 벌어졌다!"), Custom String("소문 — 모래폭풍이 온다"), Custom String("소문 — 야수들이 사납게 날뛴다"), Custom String("소문 — 역마차가 들어왔다"), Custom String("소문 — 누군가 누명을 썼다"), Custom String("소문 — 금광이 무너지고 있다")), Global Variable(EventKind))))));
 				Play Effect(Event Player, Debuff Impact Sound, Color(Sky Blue), Position Of(Event Player), 25);
 			Else If(Event Player.MenuIdx == 3);
 				If(Event Player.BrewReady <= 0);
@@ -1995,11 +2002,9 @@ rule("[조작 03b] 행동 실행 — 술집·개활지·초소·은신처")
 						Modify Player Variable(Value In Array(Global Variable(BldOwner), 5), Money, Add, Player Variable(Value In Array(Global Variable(BldOwner), 5), Rent));
 						Small Message(Value In Array(Global Variable(BldOwner), 5), Custom String("임대 수입 +$ {0}", Player Variable(Value In Array(Global Variable(BldOwner), 5), Rent)));
 					End;
-				Big Message(All Players(All Teams), Custom String("{0}이(가) 하늘에 불꽃을 쏘아 올렸다!!", Event Player));
-					Play Effect(All Players(All Teams), Ring Explosion, Color(Yellow), Add(Position Of(Event Player), Vector(0, 18, 0)), 8);
-					Play Effect(All Players(All Teams), Ring Explosion, Color(Red), Add(Position Of(Event Player), Vector(-6, 24, 4)), 6);
-					Play Effect(All Players(All Teams), Ring Explosion, Color(Sky Blue), Add(Position Of(Event Player), Vector(5, 30, -5)), 7);
-					Play Effect(All Players(All Teams), Buff Explosion Sound, Color(Yellow), Position Of(Event Player), 250);
+				Set Global Variable(FireEnd, Add(Total Time Elapsed(), 4));
+					Big Message(All Players(All Teams), Custom String("{0}이(가) 불꽃을 사들였다 — 밖으로 나가 하늘을 봐라!", Event Player));
+					Play Effect(All Players(All Teams), Buff Impact Sound, Color(Yellow), Position Of(Event Player), 200);
 				Else;
 					Small Message(Event Player, Custom String("돈이 모자란다 ($5000 필요)"));
 					Play Effect(Event Player, Debuff Impact Sound, Color(Red), Position Of(Event Player), 45);
@@ -2038,7 +2043,7 @@ rule("[조작 03b] 행동 실행 — 술집·개활지·초소·은신처")
 			End;
 		Else If(Event Player.Zone == 7);
 			If(Event Player.MenuIdx == 0);
-				Set Player Variable(Event Player, Amt, Max(Event Player.Fame >= 70 ? 50 : 100, Round To Integer(Multiply(Event Player.Bounty, Event Player.Fame >= 70 ? 0.15 : 0.3), To Nearest)));
+				Set Player Variable(Event Player, Amt, Max(Event Player.Fame >= 70 ? 100 : 200, Round To Integer(Multiply(Event Player.Bounty, Event Player.Fame >= 70 ? 0.25 : 0.5), To Nearest)));
 				If(Event Player.Bounty <= 0);
 					Small Message(Event Player, Custom String("수배 중이 아니다 — 낼 벌금이 없다"));
 					Play Effect(Event Player, Debuff Impact Sound, Color(Red), Position Of(Event Player), 45);
@@ -2088,7 +2093,7 @@ rule("[조작 03b] 행동 실행 — 술집·개활지·초소·은신처")
 					Set Player Variable(Event Player, TaxPaidRound, Global Variable(TaxRound));
 					Small Message(Event Player, Custom String("낼 것도 없다 — 징수원이 혀를 차며 보내줬다"));
 				Else;
-					Set Player Variable(Event Player, Amt, Round To Integer(Multiply(Add(Event Player.Money, Event Player.Deposit), Event Player.Fame >= 70 ? 0.025 : 0.05), Down));
+					Set Player Variable(Event Player, Amt, Round To Integer(Multiply(Add(Event Player.Money, Event Player.Deposit), Event Player.Fame >= 70 ? 0.04 : 0.08), Down));
 					If(Event Player.Rebuild >= 3);
 						Set Player Variable(Event Player, Amt, Max(1, Round To Integer(Multiply(Event Player.Amt, 0.5), To Nearest)));
 					End;
@@ -2231,7 +2236,7 @@ rule("[조작 03c] 행동 실행 — 안내소")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -2335,7 +2340,7 @@ rule("[조작 03d] 행동 실행 — 대장간")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -2471,7 +2476,7 @@ rule("[조작 03e] 행동 실행 — 정거장")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -2701,7 +2706,7 @@ rule("[조작 03f] 행동 실행 — 목장")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -3367,7 +3372,7 @@ rule("[습격 01] 역마차 추격")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -3481,11 +3486,12 @@ rule("[쥐 01] 쥐떼의 습격")
 	action
 	{
 		Set Global Variable(RatOn, 1);
-		Create Dummy Bot(Hero(레킹볼), Team 2, 3, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 6), Vector(Random Real(-6, 6), 0, Random Real(-6, 6)))), Vector(1, 0, 0));
+		Create Dummy Bot(Hero(레킹볼), Team 2, 3, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 2), Vector(Random Real(-7, 7), 0, Random Real(-7, 7)))), Vector(1, 0, 0));
 		Wait(0.5, Ignore Condition);
 		Set Max Health(Players In Slot(3, Team 2), 667);
 		Set Move Speed(Players In Slot(3, Team 2), 130);
-		Set Player Variable(Players In Slot(3, Team 2), Roll, 0);
+		Set Global Variable(RatLast, Position Of(Players In Slot(3, Team 2)));
+		Set Global Variable(RatStuck, 0);
 		Set Global Variable(RatHitters, Empty Array);
 		Set Global Variable(RatKill, 0);
 		Set Damage Received(Players In Slot(3, Team 2), 18);
@@ -3532,28 +3538,31 @@ rule("[쥐 02] 쥐의 약탈")
 	action
 	{
 		Set Global Variable(RatTgt, First Of(Sorted Array(Filtered Array(All Players(Team 1), And(And(Is Alive(Current Array Element), Player Variable(Current Array Element, Init) == 1), And(Has Status(Current Array Element, Phased Out) == False, And(Player Variable(Current Array Element, JailOn) == 0, Player Variable(Current Array Element, TutOn) == 0)))), Distance Between(Position Of(Current Array Element), Position Of(Event Player)))));
-		If(Global Variable(JerkyStock) > 0);
-			Start Throttle In Direction(Event Player, Direction Towards(Position Of(Event Player), Value In Array(Global Variable(LocPos), 2)), 1, To World, Replace existing throttle, None);
-			If(And(Entity Exists(Global Variable(RatTgt)), Distance Between(Position Of(Event Player), Position Of(Global Variable(RatTgt))) < 3.5));
-				Damage(Global Variable(RatTgt), Event Player, 20);
-				Play Effect(All Players(All Teams), Bad Explosion, Color(Red), Position Of(Event Player), 1.5);
-			End;
-		Else If(And(Entity Exists(Global Variable(RatTgt)), Distance Between(Position Of(Global Variable(RatTgt)), Position Of(Event Player)) < 40));
-			Start Throttle In Direction(Event Player, Direction Towards(Position Of(Event Player), Position Of(Global Variable(RatTgt))), 1, To World, Replace existing throttle, None);
-			If(Distance Between(Position Of(Event Player), Position Of(Global Variable(RatTgt))) < 3.5);
-				Damage(Global Variable(RatTgt), Event Player, 20);
-				Play Effect(All Players(All Teams), Bad Explosion, Color(Red), Position Of(Event Player), 1.5);
-			End;
+		If(Or(Global Variable(JerkyStock) > 0, Not(Entity Exists(Global Variable(RatTgt)))));
+			Set Global Variable(RatGoal, Value In Array(Global Variable(LocPos), 2));
 		Else;
-			Start Throttle In Direction(Event Player, Direction Towards(Position Of(Event Player), Value In Array(Global Variable(LocPos), 2)), 1, To World, Replace existing throttle, None);
+			Set Global Variable(RatGoal, Position Of(Global Variable(RatTgt)));
+		End;
+		Start Throttle In Direction(Event Player, Direction Towards(Position Of(Event Player), Global Variable(RatGoal)), 1, To World, Replace existing throttle, None);
+		If(And(Entity Exists(Global Variable(RatTgt)), Distance Between(Position Of(Event Player), Position Of(Global Variable(RatTgt))) < 3.5));
+			Damage(Global Variable(RatTgt), Event Player, 20);
+			Play Effect(All Players(All Teams), Bad Explosion, Color(Red), Position Of(Event Player), 1.5);
 		End;
 		If(And(Global Variable(JerkyStock) > 0, Distance Between(Position Of(Event Player), Value In Array(Global Variable(LocPos), 2)) < 9));
 			Set Global Variable(JerkyStock, Max(0, Subtract(Global Variable(JerkyStock), 2)));
 			Play Effect(All Players(All Teams), Bad Explosion, Color(Orange), Position Of(Event Player), 1);
 		End;
-		Modify Player Variable(Event Player, Roll, Add, 1);
-		If(And(Global Variable(JerkyStock) > 0, And(Modulo(Event Player.Roll, 12) == 0, Distance Between(Position Of(Event Player), Value In Array(Global Variable(LocPos), 2)) > 34)));
-			Teleport(Event Player, Nearest Walkable Position(Add(Value In Array(Global Variable(LocPos), 2), Vector(Random Real(-5, 5), 0, Random Real(-5, 5)))));
+		If(Distance Between(Position Of(Event Player), Global Variable(RatLast)) < 1);
+			Modify Global Variable(RatStuck, Add, 1);
+		Else;
+			Set Global Variable(RatStuck, 0);
+		End;
+		Set Global Variable(RatLast, Position Of(Event Player));
+		If(And(Global Variable(RatStuck) >= 3, Distance Between(Position Of(Event Player), Global Variable(RatGoal)) > 6));
+			Set Global Variable(RatStuck, 0);
+			Teleport(Event Player, First Of(Sorted Array(Global Variable(SpotPos), Distance Between(Current Array Element, Global Variable(RatGoal)))));
+			Set Global Variable(RatLast, Position Of(Event Player));
+			Play Effect(All Players(All Teams), Bad Explosion, Color(Orange), Position Of(Event Player), 2);
 		End;
 		Wait(1, Ignore Condition);
 		Loop If(And(Global Variable(RatOn) == 1, Is Alive(Event Player)));
@@ -3714,6 +3723,24 @@ rule("[야수 06] 급소의 빛")
 	}
 }
 
+rule("[진단 01] 서버 부하 표시 — 호스트만")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	condition
+	{
+		Global Variable(Ready) == 1;
+	}
+
+	action
+	{
+		Create HUD Text(Local Player == Host Player() ? Local Player : False, Null, Null, Custom String("부하 {0} · 평균 {1} · 최고 {2}", Round To Integer(Server Load(), To Nearest), Round To Integer(Server Load Average(), To Nearest), Round To Integer(Server Load Peak(), To Nearest)), Left, 12, Color(흰색), Color(흰색), Color(Green), Visible To Sort Order String and Color, Default Visibility);
+	}
+}
+
 rule("[알림 01] 알림 줄 생성")
 {
 	event
@@ -3751,7 +3778,7 @@ rule("[세금 01] 징수원 도착")
 		Modify Global Variable(TaxRound, Add, 1);
 		Set Global Variable(TaxOn, 1);
 		Big Message(All Players(All Teams), Custom String("징수원이 마을에 도착했다 — 2분 안에 보안관 초소에서 재산세를 내라"));
-		Small Message(All Players(All Teams), Custom String("재산의 5% — 예금도 재산이다 (명성 70+는 절반). 떼먹으면 10%가 현상금으로 붙는다"));
+		Small Message(All Players(All Teams), Custom String("재산의 8% — 예금도 재산이다 (명성 70+는 절반). 떼먹으면 10%가 현상금으로 붙는다"));
 		Wait(90, Ignore Condition);
 		Small Message(All Players(All Teams), Custom String("징수원이 곧 떠난다 — 30초"));
 		Wait(30, Ignore Condition);
@@ -3767,7 +3794,7 @@ rule("[세금 02] 납세 의무 표시")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -3782,7 +3809,7 @@ rule("[세금 02] 납세 의무 표시")
 	action
 	{
 		Set Player Variable(Event Player, TaxSeenRound, Global Variable(TaxRound));
-		Small Message(Event Player, Custom String("징수원이 기다린다 — 보안관 초소에서 재산세를 내라 (재산의 5%)"));
+		Small Message(Event Player, Custom String("징수원이 기다린다 — 보안관 초소에서 재산세를 내라 (재산의 8%)"));
 		Play Effect(Event Player, Debuff Impact Sound, Color(Yellow), Position Of(Event Player), 60);
 	}
 }
@@ -3792,7 +3819,7 @@ rule("[세금 03] 체납 처벌")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -3896,7 +3923,7 @@ rule("[부동산 01] 건물 매입/인수 (웅크리기+F)")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -3944,7 +3971,7 @@ rule("[파발 01] 배달 도착 — 자동 정산")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -4008,7 +4035,7 @@ rule("[목동 01] 소몰이")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -4095,7 +4122,7 @@ rule("[범죄 01] 황야에서 강도 / 체포 (F)")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -4319,7 +4346,7 @@ rule("[수배 02] 전단 경고")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -4344,7 +4371,7 @@ rule("[수배 03] 추방 경고")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -4369,7 +4396,7 @@ rule("[수배 04] 전단 철회")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -4392,7 +4419,7 @@ rule("[장물 01] 자루 정산 — 은신처")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -4560,7 +4587,7 @@ rule("[열차 01] 화약 설치 (F 8초)")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -4665,6 +4692,37 @@ rule("[열차 02] 열차 통과")
 	}
 }
 
+rule("[축제 02] 불꽃놀이")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	condition
+	{
+		Global Variable(FireEnd) > 0;
+		Total Time Elapsed() >= Global Variable(FireEnd);
+	}
+
+	action
+	{
+		Set Global Variable(FireEnd, 0);
+		Set Global Variable(FireN, 0);
+		Big Message(All Players(All Teams), Custom String("하늘이 열린다 — 불꽃놀이!"));
+		While(Global Variable(FireN) < 20);
+			Set Global Variable(FirePos, Add(Value In Array(Global Variable(LocPos), 5), Vector(Random Real(-14, 14), Random Real(34, 48), Random Real(-14, 14))));
+			Play Effect(All Players(All Teams), Ring Explosion, Random Value In Array(Array(Color(Yellow), Color(Orange), Color(Red), Color(Rose), Color(Purple), Color(Sky Blue), Color(Lime Green))), Global Variable(FirePos), Random Real(7, 13));
+			Play Effect(All Players(All Teams), Good Explosion, Random Value In Array(Array(Color(Yellow), Color(Orange), Color(Rose), Color(Sky Blue))), Global Variable(FirePos), Random Real(4, 8));
+			Play Effect(All Players(All Teams), Buff Explosion Sound, Color(Yellow), Global Variable(FirePos), 200);
+			Modify Global Variable(FireN, Add, 1);
+			Wait(Random Real(0.45, 0.85), Ignore Condition);
+		End;
+		Set Global Variable(TickerMsg, Custom String("불꽃이 사그라들었다"));
+		Set Global Variable(TickerEnd, Add(Total Time Elapsed(), 3));
+	}
+}
+
 rule("[열차 04] 철길목 표식 — 열차의 날 내내")
 {
 	event
@@ -4695,7 +4753,7 @@ rule("[열차 03] 금고 개방 (F 5초)")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -4730,6 +4788,7 @@ rule("[열차 03] 금고 개방 (F 5초)")
 			Small Message(Event Player, Custom String("한발 늦었다 — 금고가 비어 있다"));
 		Else;
 			Modify Global Variable(TrainVault, Subtract, 1);
+			Destroy Effect(Value In Array(Global Variable(TrainFx), Global Variable(TrainVault)));
 			Set Player Variable(Event Player, Loot, Random Integer(300, 500));
 			Modify Player Variable(Event Player, Sack, Add, Event Player.Loot);
 			Set Player Variable(Event Player, Noto, Min(100, Add(Event Player.Noto, 10)));
@@ -4777,7 +4836,7 @@ rule("[밀수 01] 화물 냄새")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -4806,7 +4865,7 @@ rule("[밀수 02] 접선 인계 (F 3초)")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -4855,7 +4914,7 @@ rule("[호송 01] 금괴의 소문")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -4883,7 +4942,7 @@ rule("[호송 02] 금괴 인계 (F 3초)")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -4933,7 +4992,7 @@ rule("[호송 03] 길목의 매복")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -5011,7 +5070,7 @@ rule("[대사냥 02] 흔적 조사 (F)")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -5267,7 +5326,7 @@ rule("[재건 02] 오페라의 밤")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -5296,7 +5355,7 @@ rule("[마스터리 01] 한 길의 장인")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -5324,7 +5383,7 @@ rule("[거래 01] 돈 건네기 (웅크리기+V)")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -5364,7 +5423,7 @@ rule("[파발 02] 편지 · 급행 우편")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -5432,7 +5491,7 @@ rule("[파발 03] 그림자 강도")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -5490,7 +5549,7 @@ rule("[목동 02] 날뛰는 소")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -5535,7 +5594,7 @@ rule("[목동 03] 총성에 놀란 소")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -5570,7 +5629,7 @@ rule("[목동 04] 늑대의 습격")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -5768,7 +5827,7 @@ rule("[기금 02] 모닥불 곁")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -5827,7 +5886,7 @@ rule("[생활 03] 쪼그려 쉬기")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -5860,7 +5919,7 @@ rule("[목장 03] 이웃의 손길")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -5899,7 +5958,7 @@ rule("[감옥 01] 만기 출소")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -5928,7 +5987,7 @@ rule("[감옥 03] 유치장에서는 손발이 묶인다")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -5950,7 +6009,7 @@ rule("[감옥 02] 벽 부수기 (V 연타)")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -6034,7 +6093,7 @@ rule("[범죄 03] 총격 판정 (플레이어)")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -6361,7 +6420,7 @@ rule("[도파민 01] 길 위의 발견")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -6437,7 +6496,7 @@ rule("[밤 02] 금고 마차 털기 (F 5초)")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -6523,7 +6582,7 @@ rule("[도파민 03] 보물 획득")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -6617,7 +6676,7 @@ rule("[이벤트 04] 사건 알림")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
@@ -6641,7 +6700,7 @@ rule("[이벤트 03] 모래폭풍 효과")
 	event
 	{
 		Ongoing - Each Player;
-		All;
+		Team 1;
 		All;
 	}
 
