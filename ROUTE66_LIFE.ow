@@ -3723,24 +3723,6 @@ rule("[야수 06] 급소의 빛")
 	}
 }
 
-rule("[진단 01] 서버 부하 표시 — 호스트만")
-{
-	event
-	{
-		Ongoing - Global;
-	}
-
-	condition
-	{
-		Global Variable(Ready) == 1;
-	}
-
-	action
-	{
-		Create HUD Text(Local Player == Host Player() ? Local Player : False, Null, Null, Custom String("부하 {0} · 평균 {1} · 최고 {2}", Round To Integer(Server Load(), To Nearest), Round To Integer(Server Load Average(), To Nearest), Round To Integer(Server Load Peak(), To Nearest)), Left, 12, Color(흰색), Color(흰색), Color(Green), Visible To Sort Order String and Color, Default Visibility);
-	}
-}
-
 rule("[알림 01] 알림 줄 생성")
 {
 	event
