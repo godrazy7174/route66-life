@@ -44,9 +44,10 @@ sub('\t\tIs Dummy Bot(Event Player) == False;\n\t\tEvent Player.Init != 1;',
     '1팀 봇에게 SetupPlayer 허용')
 
 # ── 2) 편지 대상 필터에서 봇 제외를 푼다 ─────────────────────────
+# [경비 01] 신설로 같은 조각이 2곳이 됐다 — 둘 다 풀면 경비 계약도 봇으로 테스트된다.
 sub('And(Current Array Element != Event Player, Is Dummy Bot(Current Array Element) == False)',
     'Current Array Element != Event Player',
-    '편지 대상에 봇 허용')
+    '편지·경비 대상에 봇 허용', 2)
 
 # ── 3) 쥐떼 게이트를 1인으로 낮춘다 ──────────────────────────────
 sub('Count Of(Global Variable(RatHitters)) >= 3 ? 70 : 18',
