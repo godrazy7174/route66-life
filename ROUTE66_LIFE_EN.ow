@@ -1083,8 +1083,8 @@ rule("[월드 01] 시간 흐름")
 		If(Global Variable(Clock) >= 1440);
 			Set Global Variable(Clock, 0);
 			Modify Global Variable(Day, Add, 1);
-			Set Global Variable(OrePrice, Random Integer(2, 5));
-			Set Global Variable(HidePrice, Random Integer(3, 6));
+			Set Global Variable(OrePrice, Random Integer(1, 6));
+			Set Global Variable(HidePrice, Random Integer(1, 8));
 			Set Global Variable(DailyGoal, Add(320, Multiply(Global Variable(Day), 64)));
 			Set Global Variable(TodayJob, Random Integer(1, 6));
 			Big Message(All Players(All Teams), Custom String("새 아침 — 오늘은 {0}의 날! 해당 직업 보수 1.5배", Value In Array(Array(Custom String("뜨내기"), Custom String("광부"), Custom String("사냥꾼"), Custom String("현상금 사냥꾼"), Custom String("무법자"), Custom String("파발꾼"), Custom String("목동")), Global Variable(TodayJob))));
@@ -3087,6 +3087,7 @@ rule("[직업 02] DoHunt")
 				Remove All Health Pools From Player(Value In Array(Event Player.Target, Event Player.Idx));
 				Add Health Pool To Player(Value In Array(Event Player.Target, Event Player.Idx), Health, 2500, True, True);
 				Start Scaling Player(Value In Array(Event Player.Target, Event Player.Idx), 50, False);
+				Disable Movement Collision With Environment(Value In Array(Event Player.Target, Event Player.Idx), False);
 				Heal(Value In Array(Event Player.Target, Event Player.Idx), Null, 9999);
 				Big Message(All Players(All Teams), Custom String("전설의 야수가 깨어났다!! 보상 50배"));
 				Play Effect(All Players(All Teams), Ring Explosion, Color(Red), Position Of(Value In Array(Event Player.Target, Event Player.Idx)), 14);
@@ -3101,6 +3102,7 @@ rule("[직업 02] DoHunt")
 			Else;
 				Set Max Health(Value In Array(Event Player.Target, Event Player.Idx), 35);
 				Stop Scaling Player(Value In Array(Event Player.Target, Event Player.Idx));
+				Enable Movement Collision With Environment(Value In Array(Event Player.Target, Event Player.Idx));
 			End;
 			Clear Status(Value In Array(Event Player.Target, Event Player.Idx), Phased Out);
 			Set Invisible(Value In Array(Event Player.Target, Event Player.Idx), None);
@@ -3139,6 +3141,7 @@ rule("[직업 03] 야수 은신")
 			Remove All Health Pools From Player(Event Player);
 			Set Respawn Max Time(Event Player, 4);
 			Stop Scaling Player(Event Player);
+			Enable Movement Collision With Environment(Event Player);
 			Set Player Variable(Event Player, Giant, 0);
 			Set Ability 1 Enabled(Event Player, False);
 			Set Ability 2 Enabled(Event Player, False);
@@ -3308,6 +3311,7 @@ rule("[직업 03-2] 야수 처치")
 		Set Player Variable(Victim, IcoId, 0);
 		Set Player Variable(Victim, Giant, 0);
 		Stop Scaling Player(Victim);
+		Enable Movement Collision With Environment(Victim);
 		Remove All Health Pools From Player(Victim);
 		Set Max Health(Victim, 35);
 		Set Player Variable(Victim, RevealEnd, 0);
@@ -5498,7 +5502,7 @@ rule("[파발 03] 그림자 강도")
 			Set Global Variable At Index(NoticeEnd, Slot Of(Event Player), Add(Total Time Elapsed(), 2.5));
 			Play Effect(Event Player, Debuff Impact Sound, Color(Red), Position Of(Event Player), 80);
 			While(And(And(Event Player.HasParcel == 2, Is Alive(Event Player)), Event Player.EscortPay < 3));
-				Set Player Variable(Event Player, EscortPos, Add(Event Player.EscortPos, Multiply(Direction Towards(Event Player.EscortPos, Position Of(Event Player)), 1.7)));
+				Set Player Variable(Event Player, EscortPos, Add(Event Player.EscortPos, Multiply(Direction Towards(Event Player.EscortPos, Position Of(Event Player)), 2.0)));
 				If(And(Is Button Held(Event Player, Button(Primary Fire)), And(Distance Between(Position Of(Event Player), Event Player.EscortPos) < 30, Dot Product(Facing Direction Of(Event Player), Direction Towards(Eye Position(Event Player), Event Player.EscortPos)) >= 0.96)));
 					Modify Player Variable(Event Player, EscortPay, Add, 1);
 					Play Effect(Event Player, Buff Impact Sound, Color(Orange), Event Player.EscortPos, 40);
@@ -6305,15 +6309,15 @@ rule("[코어 10] 서버 부하 보호")
 
 	conditions
 	{
-		Server Load() > 230;
+		Server Load Peak() > 200;
 	}
 
 	actions
 	{
-		Wait(2, Abort When False);
 		Small Message(All Players(All Teams), Custom String("서버가 버겁다 — 구역 감지를 잠시 늦춘다"));
-		Wait Until(Server Load() < 190, 120);
+		Wait Until(Server Load Peak() < 170, 120);
 		Small Message(All Players(All Teams), Custom String("서버가 다시 안정됐다"));
+		Wait(5, Ignore Condition);
 	}
 }
 
